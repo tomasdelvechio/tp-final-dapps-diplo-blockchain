@@ -1,6 +1,6 @@
-# Project: UNQ Academic Credentials Verification (TP Final)
+# Project: UNLu Academic Credentials Verification (TP Final)
 
-This project is a decentralized application (dApp) for issuing and verifying academic credentials at the Universidad Nacional de Quilmes (UNQ). It uses "Soulbound" tokens (non-transferable NFTs) to represent academic achievements.
+This project is a decentralized application (dApp) for issuing and verifying academic credentials at the Universidad Nacional de Luján (UNLu). It uses "Soulbound" tokens (non-transferable NFTs) to represent academic achievements.
 
 ## 🏗 Architecture & Tech Stack
 

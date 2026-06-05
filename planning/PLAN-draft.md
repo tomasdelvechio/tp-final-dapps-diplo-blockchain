@@ -4,9 +4,9 @@
 
 El objetivo es tener una estructura limpia donde convivan el contrato y el frontend.
 
-* **Paso 1.1:** Creá una carpeta vacía para tu proyecto final (ej. `unq-credenciales-blockchain`) e inicializá Git:
+* **Paso 1.1:** Creá una carpeta vacía para tu proyecto final (ej. `unlu-credenciales-blockchain`) e inicializá Git:
 ```bash
-mkdir unq-credenciales-blockchain && cd unq-credenciales-blockchain
+mkdir unlu-credenciales-blockchain && cd unlu-credenciales-blockchain
 git init
 
 ```

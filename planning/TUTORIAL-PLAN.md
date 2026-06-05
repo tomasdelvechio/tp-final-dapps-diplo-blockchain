@@ -1,4 +1,4 @@
-# 🚀 Tutorial: Construcción del Proyecto "Credenciales Académicas UNQ"
+# 🚀 Tutorial: Construcción del Proyecto "Credenciales Académicas UNLu"
 
 Este documento es una guía paso a paso y detallada para construir el proyecto final de la diplomatura. Está pensado para seguirse de principio a fin, adoptando una arquitectura de **Monorepo** donde el código del contrato inteligente y el de la aplicación web conviven armónicamente.
 
@@ -13,8 +13,8 @@ Primero, vamos a crear la estructura principal. Abrí tu terminal y ejecutá:
 
 ```bash
 # Crea la carpeta principal del proyecto y entra en ella
-mkdir unq-credenciales-blockchain
-cd unq-credenciales-blockchain
+mkdir unlu-credenciales-blockchain
+cd unlu-credenciales-blockchain
 
 # Inicializa un repositorio de Git vacío
 git init
@@ -33,7 +33,7 @@ forge init blockchain
 Para el frontend, usaremos un template base de Next.js proveído por la cátedra. Lo clonaremos en la carpeta `frontend`, pero borraremos su historial de Git para que sea parte de nuestro monorepo principal.
 
 ```bash
-# Asegurate de estar en la raíz del proyecto (unq-credenciales-blockchain)
+# Asegurate de estar en la raíz del proyecto (unlu-credenciales-blockchain)
 # Clona el repositorio starter en la carpeta 'frontend'
 git clone https://github.com/dpetrocelli/diplo-unq-blockchain-tp-final-starter frontend
 
@@ -44,7 +44,7 @@ rm -rf frontend/.git
 ### Paso 1.4: Configuración de Git
 Es crucial evitar subir archivos pesados o sensibles (como claves privadas) a GitHub.
 
-Crea un archivo llamado `.gitignore` en la **raíz del proyecto** (`unq-credenciales-blockchain/.gitignore`) y agregá lo siguiente:
+Crea un archivo llamado `.gitignore` en la **raíz del proyecto** (`unlu-credenciales-blockchain/.gitignore`) y agregá lo siguiente:
 
 ```text
 # Node
