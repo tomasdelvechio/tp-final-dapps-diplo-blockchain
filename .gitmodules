@@ -1,0 +1,6 @@
+[submodule "unlu-cert-token/lib/forge-std"]
+	path = unlu-cert-token/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "unlu-cert-token/lib/openzeppelin-contracts"]
+	path = unlu-cert-token/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

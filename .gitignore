@@ -1,0 +1,11 @@
+# Node
+node_modules/
+frontend/.next/
+
+# Foundry
+blockchain/out/
+blockchain/cache/
+blockchain/broadcast/
+
+# Entorno y variables sensibles
+.env
