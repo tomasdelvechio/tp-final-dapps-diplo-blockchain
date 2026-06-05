@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://dpetrocelli.github.io/diplounq2026/tp-final.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="generator" content="pandoc + UNLu/DCB template">
+  <title>Trabajo Final — Verificación de credenciales académicas UNQ —
+UNQ Diplo Blockchain</title>
+  <link rel="stylesheet" href="./Trabajo Final — Verificación de credenciales académicas UNQ — UNQ Diplo Blockchain 2_files/style.css">
+  <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+
+<header class="unq-header">
+  <a href="https://dpetrocelli.github.io/diplounq2026/index.html" class="brand" title="Volver al menú principal">
+    <img src="./Trabajo Final — Verificación de credenciales académicas UNQ — UNQ Diplo Blockchain 2_files/unq-logo-white.png" alt="Universidad Nacional de Quilmes" class="logo unq">
+    <div class="brand-text">
+      <div class="institution">Universidad Nacional de Quilmes</div>
+      <div class="department">Diplomatura en Blockchain</div>
+    </div>
+  </a>
+  <div class="course-bar">
+    <span class="course">Desarrollo de Smart Contracts y dApps</span>
+    <span class="year">2026</span>
+    <span class="instructor">Dr. David Petrocelli &amp; Esp. Ciro Romero</span>
+  </div>
+</header>
+
+<button type="button" id="sidebar-show" class="sidebar-toggle-btn sidebar-show visible" aria-label="Mostrar índice lateral" title="Mostrar índice lateral">☰</button>
+
+<div class="layout sidebar-hidden">
+  <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">
+      <div class="toc-title">Contenidos</div>
+      <button type="button" id="sidebar-hide" class="sidebar-toggle-btn sidebar-hide" aria-label="Ocultar índice lateral" title="Ocultar índice lateral">×</button>
+    </div>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#trabajo-final--sistema-de-verificaci%C3%B3n-de-credenciales-acad%C3%A9micas-unq" id="toc-trabajo-final--sistema-de-verificación-de-credenciales-académicas-unq">Trabajo
+    Final — Sistema de Verificación de Credenciales Académicas (UNQ)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#por-qu%C3%A9-este-tp" id="toc-por-qué-este-tp">¿Por qué
+    este TP?</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#punto-de-partida" id="toc-punto-de-partida">Punto de
+    partida</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#reglas" id="toc-reglas">Reglas</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-0--hook-unq--modelado-de-datos-20" id="toc-parte-0--hook-unq--modelado-de-datos-20">Parte 0 — Hook UNQ
+    + Modelado de datos (20%)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#01-hook-unq-5--por-qu%C3%A9-este-tp" id="toc-01-hook-unq-5--por-qué-este-tp">0.1 Hook UNQ (5%) — por qué
+    este TP</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#02-modelado-de-datos--arquitectura-15" id="toc-02-modelado-de-datos--arquitectura-15">0.2 Modelado de datos
+    / arquitectura (15%)</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-1--smart-contract-35" id="toc-parte-1--smart-contract-35">Parte 1 — Smart contract
+    (35%)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#lo-que-ya-tienen" id="toc-lo-que-ya-tienen">Lo que ya
+    tienen</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#lo-que-tienen-que-agregar" id="toc-lo-que-tienen-que-agregar">Lo que tienen que
+    agregar</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#funciones-obligatorias" id="toc-funciones-obligatorias">Funciones obligatorias</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios-de-aprobaci%C3%B3n" id="toc-criterios-de-aprobación">Criterios de aprobación</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-2--testing-10" id="toc-parte-2--testing-10">Parte 2 — Testing (10%)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#tests-obligatorios" id="toc-tests-obligatorios">Tests
+    obligatorios</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#coverage" id="toc-coverage">Coverage</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios" id="toc-criterios">Criterios</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-3--seguridad-10" id="toc-parte-3--seguridad-10">Parte 3 — Seguridad (10%)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#slither" id="toc-slither">Slither</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#checklist-obligatorio" id="toc-checklist-obligatorio">Checklist obligatorio</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#an%C3%A1lisis-propio-secci%C3%B3n-obligatoria-del-securitymd" id="toc-análisis-propio-sección-obligatoria-del-securitymd">Análisis
+    propio (sección obligatoria del <code>SECURITY.md</code>)</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios-1" id="toc-criterios-1">Criterios</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-4--frontend--deploy-a-l2-20" id="toc-parte-4--frontend--deploy-a-l2-20">Parte 4 — Frontend +
+    Deploy a L2 (20%)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#41-frontend-10" id="toc-41-frontend-10">4.1 Frontend
+    (10%)</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#stack-obligatorio-ya-cableado-en-el-starter" id="toc-stack-obligatorio-ya-cableado-en-el-starter">Stack
+    obligatorio (ya cableado en el starter)</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#42-deploy-a-l2-10--obligatorio" id="toc-42-deploy-a-l2-10--obligatorio">4.2 Deploy a L2 (10%) —
+    <strong>OBLIGATORIO</strong></a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios-de-la-parte-4" id="toc-criterios-de-la-parte-4">Criterios de la parte 4</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-5--demo--entregables-finales-5" id="toc-parte-5--demo--entregables-finales-5">Parte 5 — Demo +
+    entregables finales (5%)</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#demo-end-to-end" id="toc-demo-end-to-end">Demo
+    end-to-end</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#readme" id="toc-readme">README</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#resumen-de-la-r%C3%BAbrica" id="toc-resumen-de-la-rúbrica">Resumen de la rúbrica</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#bonus-suman-pero-no-son-obligatorios" id="toc-bonus-suman-pero-no-son-obligatorios">Bonus (suman pero no
+    son obligatorios)</a></li>
+    </ul></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#recursos" id="toc-recursos">Recursos</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#origen" id="toc-origen">Origen</a></li>
+    </ul></li>
+    </ul>
+    <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--light-gray);font-size:12px;">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html" style="color:var(--gray);">← Volver al índice</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html">Inicio</a>
+      <span class="sep">›</span>
+      <span class="current">TP FINAL</span>
+    </nav>
+    <nav class="page-nav-top">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html" class="back-to-menu">← Volver al menú principal</a>
+      <span class="banner-pill">TP FINAL</span>
+    </nav>
+
+    <details class="toc-inline">
+      <summary>📑 Índice del documento</summary>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#trabajo-final--sistema-de-verificaci%C3%B3n-de-credenciales-acad%C3%A9micas-unq" id="toc-trabajo-final--sistema-de-verificación-de-credenciales-académicas-unq">Trabajo
+      Final — Sistema de Verificación de Credenciales Académicas
+      (UNQ)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#por-qu%C3%A9-este-tp" id="toc-por-qué-este-tp">¿Por qué
+      este TP?</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#punto-de-partida" id="toc-punto-de-partida">Punto de
+      partida</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#reglas" id="toc-reglas">Reglas</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-0--hook-unq--modelado-de-datos-20" id="toc-parte-0--hook-unq--modelado-de-datos-20">Parte 0 — Hook
+      UNQ + Modelado de datos (20%)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#01-hook-unq-5--por-qu%C3%A9-este-tp" id="toc-01-hook-unq-5--por-qué-este-tp">0.1 Hook UNQ (5%) — por
+      qué este TP</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#02-modelado-de-datos--arquitectura-15" id="toc-02-modelado-de-datos--arquitectura-15">0.2 Modelado de
+      datos / arquitectura (15%)</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-1--smart-contract-35" id="toc-parte-1--smart-contract-35">Parte 1 — Smart contract
+      (35%)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#lo-que-ya-tienen" id="toc-lo-que-ya-tienen">Lo que
+      ya tienen</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#lo-que-tienen-que-agregar" id="toc-lo-que-tienen-que-agregar">Lo que tienen que
+      agregar</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#funciones-obligatorias" id="toc-funciones-obligatorias">Funciones obligatorias</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios-de-aprobaci%C3%B3n" id="toc-criterios-de-aprobación">Criterios de aprobación</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-2--testing-10" id="toc-parte-2--testing-10">Parte 2 — Testing (10%)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#tests-obligatorios" id="toc-tests-obligatorios">Tests obligatorios</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#coverage" id="toc-coverage">Coverage</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios" id="toc-criterios">Criterios</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-3--seguridad-10" id="toc-parte-3--seguridad-10">Parte 3 — Seguridad (10%)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#slither" id="toc-slither">Slither</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#checklist-obligatorio" id="toc-checklist-obligatorio">Checklist obligatorio</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#an%C3%A1lisis-propio-secci%C3%B3n-obligatoria-del-securitymd" id="toc-análisis-propio-sección-obligatoria-del-securitymd">Análisis
+      propio (sección obligatoria del <code>SECURITY.md</code>)</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios-1" id="toc-criterios-1">Criterios</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-4--frontend--deploy-a-l2-20" id="toc-parte-4--frontend--deploy-a-l2-20">Parte 4 — Frontend +
+      Deploy a L2 (20%)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#41-frontend-10" id="toc-41-frontend-10">4.1 Frontend
+      (10%)</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#stack-obligatorio-ya-cableado-en-el-starter" id="toc-stack-obligatorio-ya-cableado-en-el-starter">Stack
+      obligatorio (ya cableado en el starter)</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#42-deploy-a-l2-10--obligatorio" id="toc-42-deploy-a-l2-10--obligatorio">4.2 Deploy a L2 (10%) —
+      <strong>OBLIGATORIO</strong></a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#criterios-de-la-parte-4" id="toc-criterios-de-la-parte-4">Criterios de la parte 4</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#parte-5--demo--entregables-finales-5" id="toc-parte-5--demo--entregables-finales-5">Parte 5 — Demo +
+      entregables finales (5%)</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#demo-end-to-end" id="toc-demo-end-to-end">Demo
+      end-to-end</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#readme" id="toc-readme">README</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#resumen-de-la-r%C3%BAbrica" id="toc-resumen-de-la-rúbrica">Resumen de la rúbrica</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#bonus-suman-pero-no-son-obligatorios" id="toc-bonus-suman-pero-no-son-obligatorios">Bonus (suman pero no
+      son obligatorios)</a></li>
+      </ul></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#recursos" id="toc-recursos">Recursos</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#origen" id="toc-origen">Origen</a></li>
+      </ul></li>
+      </ul>
+      <div class="toc-controls">
+        <button type="button" class="toc-btn" data-action="expand-all">Expandir todo</button>
+        <button type="button" class="toc-btn" data-action="collapse-all">Colapsar todo</button>
+      </div>
+    </details>
+
+<h1 id="trabajo-final--sistema-de-verificación-de-credenciales-académicas-unq">Trabajo
+Final — Sistema de Verificación de Credenciales Académicas (UNQ)</h1>
+<blockquote>
+<p><strong>Objetivo</strong>: construir un sistema que permita a la UNQ
+emitir títulos universitarios verificables on-chain, sin pasar por la
+oficina de alumnos y sin depender de servidores centralizados. Es el
+<strong>TP final de la materia Desarrollo de Smart Contracts y
+DApps</strong> (una de las materias de la diplomatura).</p>
+</blockquote>
+<details open="" class="section-collapsible"><summary id="por-qué-este-tp">¿Por qué este TP?</summary>
+<p>Las otras materias de la diplomatura están orientando sus trabajos
+finales a <strong>resolver problemas reales de la UNQ</strong>. La pieza
+que armamos acá es <strong>la base técnica del sistema</strong>; otras
+materias pueden encargarse de la integración administrativa, la UX, el
+modelo de datos pedagógico, etc.</p>
+<table>
+<thead>
+<tr>
+<th>Problema clásico</th>
+<th>Cómo lo resuelve blockchain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>El servidor de la universidad se rompe / se borra / lo hackean</td>
+<td>El estado vive replicado en miles de nodos, inmutable</td>
+</tr>
+<tr>
+<td>Un certificado en PDF se puede falsificar</td>
+<td>El emisor (UNQ) firma criptográficamente, cualquiera verifica</td>
+</tr>
+<tr>
+<td>Verificar un título requiere llamar a la universidad y esperar
+días</td>
+<td>Cualquiera con la dirección del contrato y el <code>tokenId</code>
+verifica en segundos</td>
+</tr>
+<tr>
+<td>El egresado depende de la universidad para “demostrar” su
+título</td>
+<td>Lo tiene en su wallet — nadie se lo puede sacar (salvo
+revocación)</td>
+</tr>
+</tbody>
+</table>
+</details><details open="" class="section-collapsible"><summary id="punto-de-partida">Punto de partida</summary>
+<p>Lo que escribieron en clase 3 (<code>AcademicCredentials</code>) es
+el <strong>esqueleto</strong> del TP. Lo que hacen acá es
+<strong>extenderlo</strong> con todo lo que hace falta para un sistema
+productivo.</p>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="reglas">Reglas</summary>
+<table>
+<tbody>
+<tr>
+<td><strong>Plazo de entrega</strong></td>
+<td>Lunes <strong>08/06/2026 · 18:00</strong></td>
+</tr>
+<tr>
+<td><strong>Grupos</strong></td>
+<td>Individual o <strong>pareja</strong> (máximo 2 personas)</td>
+</tr>
+<tr>
+<td><strong>Alcance</strong></td>
+<td>Solo <strong>títulos finales</strong> (Licenciatura, Tecnicatura,
+Profesorado). No incluye certificados de cursos / diplomas
+intermedios</td>
+</tr>
+<tr>
+<td><strong>Datos</strong></td>
+<td><strong>Caso ficticio</strong> — UNQ “Demo”. Inventar 3-5 personas
+con DNI ficticios. <strong>No usar datos reales de
+alumnos</strong>.</td>
+</tr>
+<tr>
+<td><strong>Nota mínima</strong></td>
+<td>60 / 100</td>
+</tr>
+<tr>
+<td><strong>Cómo se entrega</strong></td>
+<td>Repositorio Git (público o privado con permisos a los docentes) +
+video demo <strong>o</strong> URL pública de la aplicación
+funcional</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="parte-0--hook-unq--modelado-de-datos-20">Parte 0 — Hook UNQ +
+Modelado de datos (20%)</summary>
+<blockquote>
+<p>Esto va al <strong>principio del README</strong>, antes que cualquier
+otra cosa. Es lo primero que vamos a leer al evaluar.</p>
+</blockquote>
+<h3 id="01-hook-unq-5--por-qué-este-tp">0.1 Hook UNQ (5%) — por qué este
+TP</h3>
+<h4 id="el-problema-real">El problema real</h4>
+<p>En mayo de 2023, la Policía Federal desbarata la <strong>“Operación
+Alejo”</strong>: una red que había vendido más de <strong>500 títulos
+secundarios y universitarios truchos</strong>, principalmente para
+ejercer en <strong>medicina y educación</strong> (<a href="https://www.infobae.com/sociedad/2023/05/04/una-banda-de-falsificadores-vendio-titulos-secundarios-y-universitarios-truchos-a-mas-de-500-clientes/" target="_blank" rel="noopener noreferrer">Infobae,
+2023</a>). Dos años antes, en Río Cuarto, <strong>un chico de 19 años se
+hizo pasar por médico durante la pandemia</strong> usando una matrícula
+ajena, coordinó hisopados y reemplazó a profesionales en dispensarios
+(<a href="https://www.lanacion.com.ar/sociedad/escandalo-en-cordoba-el-medico-trucho-suma-antecedentes-y-hasta-lo-investigan-por-homicidio-nid10022021/" target="_blank" rel="noopener noreferrer">La
+Nación, 2021</a>). En 2025, la Cámara Federal sigue procesando casos
+similares.</p>
+<p>El problema no es que falten sistemas — es que los que hay <strong>no
+permiten verificar al instante</strong> quién emitió el título, ni con
+qué autoridad. Hoy en Argentina:</p>
+<ul>
+<li><strong>SIDCER</strong> (Ministerio de Educación) digitalizó los
+diplomas, pero es <strong>centralizado</strong>: si el sistema cae o un
+dato se altera internamente, no hay verificación independiente.</li>
+<li><strong>Apostillar un título argentino</strong> para usarlo afuera
+cuesta <strong>USD 30-40 y 20-30 días corridos</strong> (<a href="https://www.cancilleria.gob.ar/es/servicios/apostilla-legalizacion-con-validez-internacional-tad" target="_blank" rel="noopener noreferrer">Cancillería,
+TAD</a>).</li>
+<li>En Argentina hay un precedente: la <strong><a href="https://www.unc.edu.ar/inform%C3%A1tica/blockchain-y-educaci%C3%B3n-la-unc-premiada-por-su-innovaci%C3%B3n-en-gesti%C3%B3n-acad%C3%A9mica" target="_blank" rel="noopener noreferrer">Universidad
+Nacional de Córdoba</a></strong> implementó un Sistema de Validación
+Académica con smart contracts sobre blockchain, integrado a SIU Guaraní.
+Redujo el trámite de <strong>4 meses a 2 semanas</strong> y ganó el
+<strong>Premio Internacional MetaRed TIC 2025</strong> (categoría
+Tecnología para la Gestión Universitaria). El resto del sistema
+universitario nacional (UBA, UNLP, UTN, ITBA, UNQ) todavía no tiene nada
+institucional — UNC es el caso a estudiar y a emular.</li>
+</ul>
+<h4 id="lo-que-ya-hicieron-otras-universidades">Lo que ya hicieron otras
+universidades</h4>
+<table>
+<thead>
+<tr>
+<th>Año</th>
+<th>Institución</th>
+<th>Stack</th>
+<th>Volumen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2014</td>
+<td><strong>Universidad de Nicosia</strong> (Chipre)</td>
+<td>Bitcoin</td>
+<td>Primera del mundo en emitir certificados blockchain</td>
+</tr>
+<tr>
+<td>2017</td>
+<td><strong>MIT</strong></td>
+<td>Blockcerts (BTC)</td>
+<td>~600 graduados en el primer año (<a href="https://news.mit.edu/2017/mit-debuts-secure-digital-diploma-using-bitcoin-blockchain-technology-1017" target="_blank" rel="noopener noreferrer">MIT
+News</a>)</td>
+</tr>
+<tr>
+<td>2018-19</td>
+<td><strong>Malta</strong></td>
+<td>Blockcerts (BTC)</td>
+<td><strong>País entero</strong> — todas las instituciones
+educativas</td>
+</tr>
+<tr>
+<td>2018</td>
+<td><strong>UE — EBSI</strong></td>
+<td>Verifiable Credentials W3C</td>
+<td>25+ proyectos activos, diplomas transfronterizos</td>
+</tr>
+<tr>
+<td>2018</td>
+<td><strong>Tec de Monterrey</strong> (México)</td>
+<td>IBM blockchain</td>
+<td>5.000-10.000 certificados/año</td>
+</tr>
+<tr>
+<td>2019</td>
+<td><strong>Univ. Nacional de Colombia</strong></td>
+<td>eTítulo</td>
+<td>Primera pública latinoamericana</td>
+</tr>
+<tr>
+<td>2025</td>
+<td><strong>W3C</strong></td>
+<td>—</td>
+<td><strong>Verifiable Credentials 2.0</strong> <a href="https://www.w3.org/press-releases/2025/verifiable-credentials-2-0/" target="_blank" rel="noopener noreferrer">es
+estándar oficial</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="por-qué-este-tp-importa">Por qué este TP importa</h4>
+<p>UNQ tiene ~11.000 estudiantes activos, 18 carreras de grado,
+modalidad virtual desde 1999 (pionera nacional). El sistema que ustedes
+están armando, si funciona, <strong>resuelve un problema real</strong>:
+que cualquier RRHH del mundo pueda verificar un título de UNQ en 3
+segundos pegando un <code>tokenId</code> en una web pública, en vez de
+esperar 30 días por una apostilla.</p>
+<p>Y el modelo es replicable. Argentina tiene <strong>60+ universidades
+nacionales</strong>, ~140.000 egresados/año (CONEAU/SPU). Existe
+infraestructura pública sin uso (<a href="https://bfa.ar/blockchain/casos-de-uso/titulos-academicos" target="_blank" rel="noopener noreferrer">Blockchain
+Federal Argentina</a>) — falta el sistema que la consuma. <strong>No
+están haciendo un toy project. Están prototipando una pieza de
+infraestructura.</strong></p>
+<h4 id="referencias-académicas">Referencias académicas</h4>
+<p>Si en su README quieren citar literatura para defender decisiones de
+diseño (lo que un buen TP hace), estas son las fuentes más citadas y
+aplicables al TP:</p>
+<h5 id="fundacionales--conceptuales">Fundacionales / conceptuales</h5>
+<ul>
+<li><p><strong>Grech, A. &amp; Camilleri, A. F. (2017)</strong>.
+<em>Blockchain in Education</em>. Joint Research Centre, European
+Commission. Luxembourg: Publications Office of the EU. EUR 28778 EN,
+doi:<a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC108255" target="_blank" rel="noopener noreferrer">10.2760/60649</a>.
+Reporte fundacional del JRC sobre adopción de blockchain en educación.
+Propone <strong>8 escenarios de uso</strong> y discute privacidad y
+gobernanza. ~180 citas Scholar.</p></li>
+<li><p><strong>Ohlhaver, P., Weyl, E. G. &amp; Buterin, V.
+(2022)</strong>. <em>Decentralized Society: Finding Web3’s Soul</em>.
+SSRN <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4105763" target="_blank" rel="noopener noreferrer">4105763</a>.
+<strong>Paper que define el concepto de Soulbound Tokens (SBTs)</strong>
+— credenciales no transferibles atadas a una identidad. Es exactamente
+el diseño que ustedes están implementando con el override de
+<code>_update</code>. Si alguien pregunta “¿por qué no transferible?” en
+la defensa, este es el paper a citar. Uno de los más descargados de
+SSRN.</p></li>
+</ul>
+<h5 id="diseño--arquitectura">Diseño / arquitectura</h5>
+<ul>
+<li><p><strong>Turkanović, M., Hölbl, M., Košič, K., Heričko, M. &amp;
+Kamišalić, A. (2018)</strong>. <em>EduCTX: A Blockchain-Based Higher
+Education Credit Platform</em>. IEEE Access, 6, 5112-5127. doi:<a href="https://ieeexplore.ieee.org/document/8247166" target="_blank" rel="noopener noreferrer">10.1109/ACCESS.2018.2789929</a>.
+Diseño de referencia para credenciales académicas distribuidas inspirado
+en ECTS europeo. Patrón <strong>token por crédito</strong> + trade-offs
+on-chain vs off-chain — directamente aplicable al modelado del struct
+<code>Credential</code>.</p></li>
+<li><p><strong>Pericàs-Gornals, R., Mut-Puigserver, M., Payeras-Capellà,
+M. M., Cabot-Nadal, M. À. &amp; Ramis, J. (2024)</strong>. <em>Digital
+credentials management system using rejectable soulbound tokens</em>.
+Annals of Telecommunications (Springer), 79, 843-855. doi:<a href="https://link.springer.com/article/10.1007/s12243-024-01032-6" target="_blank" rel="noopener noreferrer">10.1007/s12243-024-01032-6</a>.
+Extensión académica directa del concepto SBT: <strong>implementación en
+Solidity de “Rejectable Soulbound Tokens”</strong> (RejSBT) que resuelve
+un agujero del SBT original — el receptor puede rechazar la credencial
+antes de que se le adjudique (no-repudio + consentimiento explícito,
+requisito GDPR). Cierra el gap teoría→código entre Buterin (2022) y un
+contrato real.</p></li>
+<li><p><strong>Farabi, A., Khandaker, I., Ahsan, J., Shanto, I. K.,
+Jahan, N. &amp; Khan, M. J. (2025)</strong>. <em>ShikkhaChain: A
+Blockchain-Powered Academic Credential Verification System for
+Bangladesh</em>. arXiv preprint, <a href="https://arxiv.org/abs/2508.05334" target="_blank" rel="noopener noreferrer">arXiv:2508.05334</a>.
+<strong>Implementación completa con role-based access control de 4 roles
+distintos</strong> (gobierno, reguladores, instituciones emisoras,
+verificadores públicos) — exactamente el patrón que están implementando
+con <code>AccessControl</code> de OpenZeppelin. Hay <strong>código en
+GitHub</strong>: <a href="https://github.com/TheAhsanFarabi/ShikkhaChain" target="_blank" rel="noopener noreferrer">TheAhsanFarabi/ShikkhaChain</a>
+— útil para comparar arquitectura.</p></li>
+</ul>
+<h5 id="implementación-reciente">Implementación reciente</h5>
+<ul>
+<li><p><strong>Tiwari, A. et al. (2025)</strong>. <em>Blockchain
+ensuring academic integrity with a degree verification prototype</em>.
+<strong>Scientific Reports</strong> (Nature), 15, 7943. doi:<a href="https://www.nature.com/articles/s41598-025-93913-6" target="_blank" rel="noopener noreferrer">10.1038/s41598-025-93913-6</a>.
+Prototipo de verificación de <strong>títulos universitarios</strong> con
+red blockchain híbrida y nodos Docker. <strong>Nature, 2025</strong> —
+el más reciente y el de stack más cercano al que van a usar
+(Ethereum-like + Docker).</p></li>
+<li><p><strong>Fartitchou, M., Lamaakal, I., El Makkaoui, K., El Allali,
+Z. &amp; Maleh, Y. (2024)</strong>. <em>BlockMEDC: Blockchain Smart
+Contracts for Securing Moroccan Higher Education Digital
+Certificates</em>. arXiv preprint, <a href="https://arxiv.org/abs/2410.07258" target="_blank" rel="noopener noreferrer">arXiv:2410.07258</a>.
+<strong>Caso de país en desarrollo comparable a Argentina</strong> —
+sistema universitario público, presupuesto acotado, fraude documental.
+Stack idéntico al del TP: <strong>Ethereum + Solidity + IPFS</strong>,
+alineado a una estrategia nacional de digitalización (“Maroc Digital
+2030”). El argumento “esto se puede aplicar acá” tiene precedente con
+este paper.</p></li>
+</ul>
+<h5 id="estado-del-arte">Estado del arte</h5>
+<ul>
+<li><strong>Nasir, A., Rasheed, M. et al. (2025)</strong>. <em>A
+Systematic Review of Blockchain-Based Initiatives in Comparison to Best
+Practices Used in Higher Education Institutions</em>. Computers (MDPI),
+14(4), 141. doi:<a href="https://www.mdpi.com/2073-431X/14/4/141" target="_blank" rel="noopener noreferrer">10.3390/computers14040141</a>.
+Revisión sistemática reciente — best practices y gaps. Menciona
+Blockcerts y EBSI como benchmarks.</li>
+</ul>
+<blockquote>
+<p>Si justifican una decisión técnica con un paper, suma puntos en la
+rúbrica de modelado (parte 0.2). Ejemplos:</p>
+<ul>
+<li>“Elegimos soulbound siguiendo Ohlhaver, Weyl &amp; Buterin (2022),
+agregando el flujo de aceptación explícita propuesto por Pericàs-Gornals
+et al. (2024)…”</li>
+<li>“La separación de roles entre admin e issuer replica el modelo de
+Farabi et al. (2025) en ShikkhaChain…”</li>
+<li>“El patrón hash on-chain + PDF off-chain está validado en Tiwari et
+al. (2025)…”</li>
+</ul>
+</blockquote>
+<h4 id="lo-que-les-pedimos-en-esta-sección">Lo que les pedimos en esta
+sección</h4>
+<p>En 2-3 párrafos en el README, justificar:</p>
+<ul>
+<li><strong>¿Qué área de UNQ operaría el sistema?</strong> (rectorado,
+secretaría académica, decanato de facultad)</li>
+<li><strong>¿Cómo encaja en el flujo actual?</strong> (¿reemplaza
+SIDCER? ¿corre en paralelo? ¿es una capa de verificación pública sobre
+lo que ya hay?)</li>
+<li><strong>¿Quién es el usuario que se beneficia?</strong> (egresado
+que aplica afuera, empleador que verifica, la propia universidad)</li>
+<li><strong>¿Por qué blockchain y no una base de datos firmada?</strong>
+(defender la elección — si una BD centralizada alcanza, decirlo)</li>
+</ul>
+<blockquote>
+<p>Si no logran enmarcar el “para qué”, pierden estos 5 puntos enteros.
+La parte técnica sin contexto vale poco.</p>
+</blockquote>
+<h3 id="02-modelado-de-datos--arquitectura-15">0.2 Modelado de datos /
+arquitectura (15%)</h3>
+<p>Diagrama + texto explicando:</p>
+<ol type="1">
+<li><strong>Diagrama de componentes</strong>: qué piezas hay (smart
+contract, IPFS, frontend, wallet del rector, wallet del decano, browser
+del verificador) y cómo se conectan.</li>
+<li><strong>Modelado del struct <code>Credential</code></strong>: qué
+campos guarda y por qué cada uno está on-chain o off-chain. Justificar:
+<ul>
+<li>¿Por qué <code>studentNameHash</code> y no <code>studentName</code>
+en clear?</li>
+<li>¿Por qué <code>documentHash</code> separado del
+<code>metadataURI</code>?</li>
+<li>¿Qué pasa si la universidad pierde el JSON de IPFS?</li>
+</ul></li>
+<li><strong>Diagrama de flujo de emisión</strong>: rector da rol a
+decano → decano firma transacción → contrato emite → evento → frontend
+lo ve.</li>
+<li><strong>Diagrama de flujo de verificación pública</strong>:
+empleador entra a <code>/verify/&lt;tokenId&gt;</code> → frontend lee
+del contrato → muestra datos.</li>
+</ol>
+<blockquote>
+<p>Aceptamos diagramas en draw.io, Excalidraw, Mermaid (en el README), o
+foto de papel/pizarra si está prolijo.</p>
+</blockquote>
+<blockquote>
+<p>📐 <strong>Material de referencia</strong>: revisar <a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html">los diagramas de arquitectura de la
+cátedra</a> — especialmente el #2 (las 3 capas: edge / web2 / on-chain)
+y el #3 (arquitectura real del sistema). No tienen que copiarlo tal
+cual: les da un piso del nivel de detalle que esperamos en sus propios
+diagramas.</p>
+</blockquote>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="parte-1--smart-contract-35">Parte 1 — Smart contract (35%)</summary>
+<h3 id="lo-que-ya-tienen">Lo que ya tienen</h3>
+<p>De clase 3: ERC-721 con URIStorage + Ownable +
+<code>issueCredential</code> + <code>revoke</code> +
+<code>isValid</code>.</p>
+<h3 id="lo-que-tienen-que-agregar">Lo que tienen que agregar</h3>
+<h4 id="1-roles-con-accesscontrol">1. Roles con
+<code>AccessControl</code></h4>
+<p>Reemplazar <code>Ownable</code> por <code>AccessControl</code> con
+dos roles:</p>
+<ul>
+<li><code>ISSUER_ROLE</code> — quien puede emitir y revocar credenciales
+(decanos, secretarías).</li>
+<li><code>DEFAULT_ADMIN_ROLE</code> — quien puede agregar/quitar issuers
+(rector).</li>
+</ul>
+<pre class="solidity"><code>import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+
+bytes32 public constant ISSUER_ROLE = keccak256("ISSUER_ROLE");</code></pre>
+<h4 id="2-soulbound-no-transferible">2. Soulbound (no transferible)</h4>
+<p>Los títulos NO se pueden transferir. Sobrescribir
+<code>_update</code> para revertir cualquier transfer (mintear y quemar
+siguen funcionando):</p>
+<pre class="solidity"><code>function _update(address to, uint256 tokenId, address auth)
+    internal override returns (address)
+{
+    address from = _ownerOf(tokenId);
+    if (from != address(0) &amp;&amp; to != address(0)) {
+        revert("Soulbound: non-transferable");
+    }
+    return super._update(to, tokenId, auth);
+}</code></pre>
+<h4 id="3-struct-credential-extendido">3. Struct <code>Credential</code>
+extendido</h4>
+<pre class="solidity"><code>struct Credential {
+    string degreeName;       // "Licenciatura en Sistemas de Información"
+    bytes32 studentNameHash; // keccak256(nombre completo + DNI) — privacidad
+    uint256 issueDate;       // timestamp de emisión
+    bytes32 documentHash;    // keccak256 del PDF original del título
+    bool active;             // false si fue revocado
+}
+
+mapping(uint256 =&gt; Credential) public credentials;</code></pre>
+<blockquote>
+<p><strong>¿Por qué hashear el nombre?</strong> El ledger es público. Si
+guardás <code>"Juan Pérez DNI 12345678"</code> en clear, cualquiera lo
+lee. Guardando el hash, <strong>solo quien ya conoce los datos</strong>
+puede verificar la coincidencia. Es un <em>commitment scheme</em>.</p>
+</blockquote>
+<h4 id="4-eventos">4. Eventos</h4>
+<pre class="solidity"><code>event CredentialIssued(address indexed student, uint256 indexed tokenId, string degreeName, bytes32 studentNameHash);
+event CredentialRevoked(uint256 indexed tokenId, address indexed by, string reason);
+event IssuerGranted(address indexed account, address indexed by);
+event IssuerRevoked(address indexed account, address indexed by);</code></pre>
+<h3 id="funciones-obligatorias">Funciones obligatorias</h3>
+<table>
+<thead>
+<tr>
+<th>Función</th>
+<th>Quién</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grantIssuer(address)</code></td>
+<td><code>DEFAULT_ADMIN_ROLE</code></td>
+<td>Agrega un nuevo emisor</td>
+</tr>
+<tr>
+<td><code>revokeIssuer(address)</code></td>
+<td><code>DEFAULT_ADMIN_ROLE</code></td>
+<td>Quita un emisor</td>
+</tr>
+<tr>
+<td><code>issueCredential(student, tokenId, degreeName, studentNameHash, documentHash, metadataURI)</code></td>
+<td><code>ISSUER_ROLE</code></td>
+<td>Emite y guarda los datos</td>
+</tr>
+<tr>
+<td><code>revoke(tokenId, reason)</code></td>
+<td><code>ISSUER_ROLE</code></td>
+<td>Revoca con motivo</td>
+</tr>
+<tr>
+<td><code>verify(tokenId)</code> returns
+<code>(Credential, bool isValid)</code></td>
+<td>Cualquiera</td>
+<td>Devuelve datos + estado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="criterios-de-aprobación">Criterios de aprobación</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Compila sin warnings</label></li>
+<li><label><input type="checkbox">Roles funcionan: solo
+<code>ISSUER_ROLE</code> emite/revoca, solo
+<code>DEFAULT_ADMIN_ROLE</code> agrega/quita issuers</label></li>
+<li><label><input type="checkbox">Soulbound: mintear y quemar OK,
+transferir falla</label></li>
+<li><label><input type="checkbox">Cada credencial guarda los 5 campos
+del struct</label></li>
+<li><label><input type="checkbox">Los 4 eventos se emiten
+correctamente con sus <code>indexed</code></label></li>
+</ul>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="parte-2--testing-10">Parte 2 — Testing (10%)</summary>
+<h3 id="tests-obligatorios">Tests obligatorios</h3>
+<h4 id="camino-feliz">Camino feliz</h4>
+<ol type="1">
+<li>Admin agrega un issuer y se verifica con
+<code>hasRole(ISSUER_ROLE, addr)</code></li>
+<li>Issuer emite una credencial y todos los campos se guardan</li>
+<li><code>verify()</code> devuelve los datos correctos</li>
+<li>Issuer revoca y <code>verify()</code> devuelve
+<code>isValid = false</code></li>
+</ol>
+<h4 id="casos-de-error">Casos de error</h4>
+<ol start="5" type="1">
+<li>Una address sin <code>ISSUER_ROLE</code> no puede emitir
+(revierte)</li>
+<li><strong>Transferir una credencial entre dos addresses
+revierte</strong> (soulbound)</li>
+<li>Emitir con <code>tokenId</code> duplicado revierte</li>
+<li>Revocar un <code>tokenId</code> inexistente revierte</li>
+<li>Una address sin <code>DEFAULT_ADMIN_ROLE</code> no puede agregar
+issuers</li>
+</ol>
+<h4 id="fuzz">Fuzz</h4>
+<ol start="10" type="1">
+<li><code>fuzz_issueCredential(address student, uint256 tokenId)</code>
+— verificar que <code>ownerOf(tokenId) == student</code> para cualquier
+<code>student != address(0)</code></li>
+</ol>
+<h3 id="coverage">Coverage</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> coverage <span class="at">--report</span> lcov</span></code></pre></div>
+<p>Mínimo <strong>80%</strong> en
+<code>AcademicCredentials.sol</code>.</p>
+<h3 id="criterios">Criterios</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Todos los tests pasan</label></li>
+<li><label><input type="checkbox">Coverage ≥ 80%</label></li>
+<li><label><input type="checkbox">Al menos 1 fuzz test</label></li>
+<li><label><input type="checkbox">Test que valida soulbound (transfer
+revierte)</label></li>
+</ul>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="parte-3--seguridad-10">Parte 3 — Seguridad (10%)</summary>
+<h3 id="slither">Slither</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install slither-analyzer</span>
+<span id="cb6-2"><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">slither</span> .</span></code></pre></div>
+<p>Documentar <strong>cada finding</strong> en un archivo
+<code>SECURITY.md</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Severidad</th>
+<th>¿Real?</th>
+<th>Cómo lo arreglé / por qué es false positive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<h3 id="checklist-obligatorio">Checklist obligatorio</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Solidity 0.8.20+ (overflow
+protection nativa)</label></li>
+<li><label><input type="checkbox"><code>AccessControl</code>
+correctamente aplicado</label></li>
+<li><label><input type="checkbox">Eventos en TODA mutación de
+estado</label></li>
+<li><label><input type="checkbox">Validación de inputs (no permitir
+<code>address(0)</code>, <code>tokenId</code> duplicado, hash
+vacío)</label></li>
+<li><label><input type="checkbox">Soulbound implementado
+correctamente</label></li>
+<li><label><input type="checkbox">No hay <code>selfdestruct</code>,
+<code>delegatecall</code> a addresses arbitrarias, ni
+<code>tx.origin</code> en checks de auth</label></li>
+<li><label><input type="checkbox">El <code>documentHash</code> es
+<code>bytes32</code> (no <code>string</code> — gas +
+integridad)</label></li>
+</ul>
+<h3 id="análisis-propio-sección-obligatoria-del-securitymd">Análisis
+propio (sección obligatoria del <code>SECURITY.md</code>)</h3>
+<p>Slither detecta lo conocido. Lo más interesante es <strong>lo que
+pensaste vos</strong>. Agreguen una sección <strong>“Análisis
+propio”</strong> con 3-5 párrafos respondiendo:</p>
+<ul>
+<li><strong>¿Qué pasa si el rector pierde la wallet del
+<code>DEFAULT_ADMIN_ROLE</code>?</strong> ¿Cómo se recupera el
+sistema?</li>
+<li><strong>¿Qué pasa si una wallet con <code>ISSUER_ROLE</code> se
+compromete?</strong> ¿Cuántos títulos truchos se pueden emitir antes de
+detectarlo?</li>
+<li><strong>¿Qué pasa si emiten una credencial por error</strong> (al
+alumno equivocado, con datos errados)? ¿Cómo se corrige sin perder
+trazabilidad?</li>
+<li><strong>¿Qué riesgo hay en el front-running</strong> (alguien ve la
+tx en la mempool y…)?</li>
+<li><strong>Privacidad</strong>: el <code>studentNameHash</code> es
+público. ¿Se puede hacer ataque de diccionario contra él?</li>
+</ul>
+<p>No hace falta resolver todo — sí pensarlo. Una credencial buena viene
+con un análisis de amenazas honesto, no con “todo bien”.</p>
+<h3 id="criterios-1">Criterios</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Slither corrió y todos los findings
+están documentados en <code>SECURITY.md</code></label></li>
+<li><label><input type="checkbox">El checklist está 100%
+cumplido</label></li>
+<li><label><input type="checkbox">No hay High/Medium severity sin
+justificar</label></li>
+<li><label><input type="checkbox">Sección <strong>“Análisis
+propio”</strong> completada en <code>SECURITY.md</code></label></li>
+</ul>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="parte-4--frontend--deploy-a-l2-20">Parte 4 — Frontend + Deploy a
+L2 (20%)</summary>
+<blockquote>
+<p>🎁 <strong>Starter repo</strong>: les dejamos un frontend de partida
+ya cableado con wagmi + RainbowKit en <a href="https://github.com/dpetrocelli/diplo-unq-blockchain-tp-final-starter" target="_blank" rel="noopener noreferrer">https://github.com/dpetrocelli/diplo-unq-blockchain-tp-final-starter</a>.
+Forkean, cambian la <code>CREDENTIALS_ADDRESS</code> y el ABI con el que
+generaron al deployar el contrato, y arrancan. <strong>No tienen que
+armar el frontend desde cero</strong> — el foco está en cablear los
+modos correctamente y entender qué hace cada llamada.</p>
+</blockquote>
+<h3 id="41-frontend-10">4.1 Frontend (10%)</h3>
+<p><strong>Obligatorio</strong> — dos modos:</p>
+<h4 id="modo-público--verificador-cualquiera-sin-login">Modo público —
+verificador (cualquiera, sin login)</h4>
+<ul>
+<li>Form para ingresar <code>tokenId</code></li>
+<li>Muestra: ¿existe?, ¿está activo?, nombre del título, fecha de
+emisión, address del estudiante (corta), <code>documentHash</code> para
+cotejar con el PDF físico</li>
+</ul>
+<h4 id="modo-issuer-issuer_role">Modo issuer
+(<code>ISSUER_ROLE</code>)</h4>
+<ul>
+<li>Form para emitir credencial:
+<ul>
+<li>Address del estudiante</li>
+<li>tokenId (auto-incremental ideal, manual está OK)</li>
+<li>Nombre del título (dropdown con las opciones de la facultad)</li>
+<li>Datos del estudiante → el frontend hashea y manda solo el hash</li>
+<li><code>metadataURI</code> puede ser un string placeholder (ej.
+<code>ipfs://demo/cred-001.json</code>) — la integración real con IPFS
+es <strong>opcional</strong> (ver bonus)</li>
+</ul></li>
+<li>Form para revocar credencial (con razón)</li>
+</ul>
+<p><strong>Opcional</strong> — suma puntos como bonus:</p>
+<h4 id="modo-super-admin-default_admin_role--5-bonus">Modo super-admin
+(<code>DEFAULT_ADMIN_ROLE</code>) — <strong>+5 bonus</strong></h4>
+<ul>
+<li>Form para agregar/quitar issuers</li>
+</ul>
+<h4 id="integración-real-con-ipfs-pinata--5-bonus">Integración real con
+IPFS (Pinata) — <strong>+5 bonus</strong></h4>
+<ul>
+<li>Upload PDF a IPFS desde el navegador</li>
+<li>El frontend hashea el PDF y manda hash + CID real como
+<code>metadataURI</code></li>
+</ul>
+<h3 id="stack-obligatorio-ya-cableado-en-el-starter">Stack obligatorio
+(ya cableado en el starter)</h3>
+<ul>
+<li>Next.js 14 (App Router)</li>
+<li>wagmi v2 + viem</li>
+<li>RainbowKit para conexión de wallet</li>
+</ul>
+<h3 id="42-deploy-a-l2-10--obligatorio">4.2 Deploy a L2 (10%) —
+<strong>OBLIGATORIO</strong></h3>
+<p>El sistema tiene que estar deployado en una <strong>L2</strong>
+(Layer 2). Recomendamos <strong>Base Sepolia</strong> porque:</p>
+<ul>
+<li>Tiene los costos más bajos del ecosistema (~$0.005/tx).</li>
+<li>Misma EVM que Ethereum, mismo Solidity.</li>
+<li>Tiene Etherscan compatible (<code>sepolia.basescan.org</code>).</li>
+</ul>
+<p>Pasos:</p>
+<ol type="1">
+<li>Agregar Base Sepolia a MetaMask (chain ID <code>84532</code>).</li>
+<li>Conseguir ETH de testnet en Base Sepolia (<a href="https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet" target="_blank" rel="noopener noreferrer">Coinbase
+Faucet</a> o <a href="https://www.alchemy.com/faucets/base-sepolia" target="_blank" rel="noopener noreferrer">Alchemy</a>).</li>
+<li><code>forge create</code> con
+<code>--rpc-url https://sepolia.base.org</code>.</li>
+<li><code>forge verify-contract</code> para que aparezca el código
+fuente en Basescan.</li>
+<li>Cambiar el frontend de Sepolia → Base Sepolia
+(<code>wagmi.ts</code>).</li>
+<li>Emitir 3 credenciales de prueba reales en Base Sepolia.</li>
+<li><strong>(Opcional, recomendado)</strong> Deployar el frontend del
+verificador online (Vercel free tier o GitHub Pages) para que cualquiera
+pueda probarlo con una URL. Si no logran deployarlo, el video demo
+cumple la misma función — pero la URL pública suma puntos.</li>
+</ol>
+<h3 id="criterios-de-la-parte-4">Criterios de la parte 4</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">La DApp anda en
+<code>localhost:3000</code> después de un
+<code>npm install + npm run dev</code></label></li>
+<li><label><input type="checkbox">Conecta wallet (MetaMask) en Base
+Sepolia</label></li>
+<li><label><input type="checkbox">La UI cambia según el rol del
+usuario conectado</label></li>
+<li><label><input type="checkbox">Verificación pública anda (modo
+lectura sin login)</label></li>
+<li><label><input type="checkbox">Emisión anda con el
+<code>ISSUER_ROLE</code></label></li>
+<li><label><input type="checkbox">Maneja loading + errores con
+mensajes claros</label></li>
+<li><label><input type="checkbox">Contrato deployado en Base Sepolia y
+<strong>verificado en Basescan</strong></label></li>
+<li><label><input type="checkbox"><strong>Video demo</strong>
+mostrando la app funcionando <strong>o</strong> frontend deployado
+online</label></li>
+<li><label><input type="checkbox"><strong>3 credenciales emitidas
+reales</strong> en Base Sepolia (visibles en Basescan)</label></li>
+</ul>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="parte-5--demo--entregables-finales-5">Parte 5 — Demo +
+entregables finales (5%)</summary>
+<h3 id="demo-end-to-end">Demo end-to-end</h3>
+<p>Pueden entregar <strong>una de las dos opciones</strong>:</p>
+<h4 id="opción-a--video-demo-3-5-min">Opción A — Video demo (3-5
+min)</h4>
+<p>Sin cortes ni post-producción rara. Subir a YouTube unlisted, Google
+Drive con link público, o adjuntar al campus.</p>
+<h4 id="opción-b--app-deployada-url-pública">Opción B — App deployada
+(URL pública)</h4>
+<p>El frontend online + el contrato en Base Sepolia con 3 credenciales
+reales emitidas, listas para verificar. Se evalúa probando la URL.</p>
+<h4 id="cubrir-este-flujo-en-cualquiera-de-las-dos-opciones">Cubrir este
+flujo (en cualquiera de las dos opciones)</h4>
+<ol type="1">
+<li>Verificación pública de un título (<code>tokenId</code> → muestra
+los datos).</li>
+<li>Wallet con <code>DEFAULT_ADMIN_ROLE</code> agrega un issuer.</li>
+<li>Wallet con <code>ISSUER_ROLE</code> emite un título → evento en
+Basescan.</li>
+<li>El egresado ve el NFT en MetaMask.</li>
+<li>Intento de transfer → falla (soulbound).</li>
+<li>El issuer revoca el título → la verificación pública pasa de ✅ a
+❌.</li>
+</ol>
+<blockquote>
+<p>Si eligen video y se animan, lo pueden hacer también en vivo el día
+de la corrección — pero el TP entregable formal es uno de los dos de
+arriba.</p>
+</blockquote>
+<h3 id="readme">README</h3>
+<p>El README del repo tiene que tener:</p>
+<ol type="1">
+<li><strong>Hook UNQ</strong> + <a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html"><strong>diagramas de
+arquitectura</strong></a> (parte 0).</li>
+<li><strong>Cómo correr local</strong> (<code>forge install</code>,
+<code>forge test</code>, <code>npm install</code>,
+<code>npm run dev</code>).</li>
+<li><strong>Direcciones deployadas</strong>:
+<ul>
+<li>Address del contrato en Base Sepolia.</li>
+<li>Link a Basescan verificado.</li>
+<li>URL del frontend deployado (si lo deployaron) <strong>o</strong>
+link al video demo.</li>
+</ul></li>
+<li><strong>Cómo se evalúa la rúbrica</strong> (linkear a esta
+página).</li>
+</ol>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="resumen-de-la-rúbrica">Resumen de la rúbrica</summary>
+<table>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Pts</th>
+<th>Qué se evalúa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 — Hook UNQ + modelado</td>
+<td>20</td>
+<td>README arranca con contexto institucional + diagramas claros</td>
+</tr>
+<tr>
+<td>1 — Smart contract</td>
+<td>35</td>
+<td>AccessControl + soulbound + struct + eventos + funciones
+obligatorias</td>
+</tr>
+<tr>
+<td>2 — Testing</td>
+<td>10</td>
+<td>Coverage ≥ 80% + soulbound + fuzz + casos error</td>
+</tr>
+<tr>
+<td>3 — Seguridad</td>
+<td>10</td>
+<td>Slither documentado + checklist completo</td>
+</tr>
+<tr>
+<td>4 — Frontend + Deploy L2</td>
+<td>20</td>
+<td>Verifier + issuer + Base Sepolia verificado + frontend online</td>
+</tr>
+<tr>
+<td>5 — Demo + README</td>
+<td>5</td>
+<td>Video demo (3-5 min) <strong>o</strong> app deployada con flujo
+end-to-end + README completo</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aprueba con 60 puntos.</strong></p>
+<h3 id="bonus-suman-pero-no-son-obligatorios">Bonus (suman pero no son
+obligatorios)</h3>
+<ul>
+<li><strong>+5</strong>: Modo super-admin en el frontend
+(<code>DEFAULT_ADMIN_ROLE</code>) — agregar/quitar issuers vía UI.</li>
+<li><strong>+5</strong>: Integración real con
+<strong>Pinata/IPFS</strong> — upload de PDF al emitir + hash
+on-chain.</li>
+<li><strong>+10</strong>: Multi-firma (un título solo se emite si firma
+decano + secretario, vía Gnosis Safe).</li>
+<li><strong>+10</strong>: QR code en el frontend que abre la
+verificación.</li>
+<li><strong>+5</strong>: Indexer con The Graph.</li>
+<li><strong>+5</strong>: Integración con DID (W3C Decentralized
+Identifiers).</li>
+<li><strong>+5</strong>: Notificación on-chain → email/Slack vía
+Chainlink Functions.</li>
+</ul>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="recursos">Recursos</summary>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repo de partida (clase 3)</td>
+<td><a href="https://github.com/dpetrocelli/diplo-unq-blockchain-clase3" target="_blank" rel="noopener noreferrer">https://github.com/dpetrocelli/diplo-unq-blockchain-clase3</a></td>
+</tr>
+<tr>
+<td>Frontend de referencia (clase 4)</td>
+<td><a href="https://github.com/dpetrocelli/diplo-unq-blockchain-clase4" target="_blank" rel="noopener noreferrer">https://github.com/dpetrocelli/diplo-unq-blockchain-clase4</a></td>
+</tr>
+<tr>
+<td>OpenZeppelin AccessControl</td>
+<td><a href="https://docs.openzeppelin.com/contracts/access-control" target="_blank" rel="noopener noreferrer">https://docs.openzeppelin.com/contracts/access-control</a></td>
+</tr>
+<tr>
+<td>OpenZeppelin ERC-721</td>
+<td><a href="https://docs.openzeppelin.com/contracts/erc721" target="_blank" rel="noopener noreferrer">https://docs.openzeppelin.com/contracts/erc721</a></td>
+</tr>
+<tr>
+<td>Pinata IPFS</td>
+<td><a href="https://www.pinata.cloud/" target="_blank" rel="noopener noreferrer">https://www.pinata.cloud/</a></td>
+</tr>
+<tr>
+<td>Slither</td>
+<td><a href="https://github.com/crytic/slither" target="_blank" rel="noopener noreferrer">https://github.com/crytic/slither</a></td>
+</tr>
+<tr>
+<td>Base Docs (L2)</td>
+<td><a href="https://docs.base.org/" target="_blank" rel="noopener noreferrer">https://docs.base.org/</a></td>
+</tr>
+<tr>
+<td>Base Sepolia Faucet</td>
+<td><a href="https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet" target="_blank" rel="noopener noreferrer">https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="origen">Origen</summary>
+<p>Esta consigna surge de una conversación entre la cátedra (Petrocelli
++ Romero) y los alumnos, donde varios trabajos finales en otras materias
+de la diplomatura están apuntando a resolver problemas de gestión
+universitaria (certificación, identidad, autenticación). Esta versión
+del TP les da <strong>una pieza técnica concreta y reutilizable</strong>
+que puede integrarse con esos otros trabajos.</p>
+
+    <nav class="page-prev-next" aria-label="Navegación entre páginas">
+      <a class="prev-link" href="https://dpetrocelli.github.io/diplounq2026/clase-4-tarea.html" data-slot="prev">
+        <span class="arrow">←</span>
+        <span class="nav-meta">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title" data-slot="prev-title">Tarea de clase 4</span>
+        </span>
+      </a>
+      <a class="next-link" href="https://dpetrocelli.github.io/diplounq2026/index.html" data-slot="next">
+        <span class="nav-meta">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title" data-slot="next-title">Menú principal</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <nav class="page-nav-bottom">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html" class="back-to-menu">← Volver al menú principal</a>
+    </nav>
+  </details></main>
+</div>
+
+<footer class="unq-footer">
+  <div>
+    UNQ · Diplomatura en Blockchain · Desarrollo de Smart Contracts y dApps <strong>2026</strong>
+    · Dr. David Petrocelli &amp; Esp. Ciro Romero
+  </div>
+</footer>
+
+<script>
+// Sidebar show/hide toggle (preference persisted in localStorage)
+(function () {
+  const sidebar = document.getElementById('toc-sidebar');
+  const layout = document.querySelector('.layout');
+  const hideBtn = document.getElementById('sidebar-hide');
+  const showBtn = document.getElementById('sidebar-show');
+  if (!sidebar || !layout || !hideBtn || !showBtn) return;
+
+  const KEY = 'unlu.dcb.sidebar.hidden';
+
+  function apply(hidden) {
+    layout.classList.toggle('sidebar-hidden', hidden);
+    showBtn.classList.toggle('visible', hidden);
+  }
+
+  apply(localStorage.getItem(KEY) === '1');
+
+  hideBtn.addEventListener('click', () => {
+    localStorage.setItem(KEY, '1');
+    apply(true);
+  });
+  showBtn.addEventListener('click', () => {
+    localStorage.removeItem(KEY);
+    apply(false);
+  });
+})();
+
+// Wrap each H2 (and its following content until the next H2) in a <details open>
+// element so users can collapse/expand sections.
+(function () {
+  const main = document.querySelector('main.content');
+  if (!main) return;
+
+  // Collect direct-child H2 headings so we don't touch nested ones (e.g., inside details we'll create)
+  const headings = Array.from(main.children).filter(el => el.tagName === 'H2');
+
+  headings.forEach(h2 => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'section-collapsible';
+
+    const summary = document.createElement('summary');
+    // Move heading content (incl. anchor) into the summary so anchors keep working
+    summary.innerHTML = h2.innerHTML;
+    if (h2.id) summary.id = h2.id;
+    details.appendChild(summary);
+
+    // Move siblings until next H2 into details
+    const parent = h2.parentNode;
+    let next = h2.nextSibling;
+    parent.replaceChild(details, h2);
+    while (next && !(next.nodeType === 1 && next.tagName === 'H2')) {
+      const node = next;
+      next = next.nextSibling;
+      details.appendChild(node);
+    }
+  });
+
+  // If there's a hash in the URL, ensure the target's <details> is open
+  function openDetailsForHash(hash) {
+    if (!hash) return;
+    const target = document.getElementById(hash.replace(/^#/, ''));
+    if (!target) return;
+    let p = target.closest('details');
+    while (p) { p.open = true; p = p.parentElement && p.parentElement.closest('details'); }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  openDetailsForHash(window.location.hash);
+  window.addEventListener('hashchange', () => openDetailsForHash(window.location.hash));
+
+  // Wire up "Expand all" / "Collapse all" controls in the inline TOC
+  document.querySelectorAll('.toc-controls [data-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const open = action === 'expand-all';
+      document.querySelectorAll('details.section-collapsible').forEach(d => { d.open = open; });
+    });
+  });
+})();
+
+// Populate prev/next navigation based on the current page's banner-num
+(function () {
+  const pill = document.querySelector('.banner-pill');
+  const nav = document.querySelector('.page-prev-next');
+  if (!pill || !nav) return;
+
+  const key = (pill.textContent || '').trim().toUpperCase();
+
+  // Map banner-num → { prev, next }
+  // Each entry: { href, title } (or null if not present)
+  const MAP = {
+    // ----- Clase 1 -----
+    'C1 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' }
+    },
+    'C1 · TAREA': {
+      prev: { href: 'clase-1-clase.html', title: 'Material en clase 1' },
+      next: { href: 'clase-2-clase.html', title: 'Clase 2' }
+    },
+    // ----- Clase 2 -----
+    'C2 · CLASE': {
+      prev: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' },
+      next: { href: 'clase-2-tarea.html', title: 'Tarea de clase 2' }
+    },
+    'C2 · TAREA': {
+      prev: { href: 'clase-2-clase.html', title: 'Material en clase 2' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 3 -----
+    'C3 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-3-tarea.html', title: 'Tarea de clase 3' }
+    },
+    'C3 · TAREA': {
+      prev: { href: 'clase-3-clase.html', title: 'Material en clase 3' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 4 -----
+    'C4 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' }
+    },
+    'C4 · TAREA': {
+      prev: { href: 'clase-4-clase.html', title: 'Material en clase 4' },
+      next: { href: 'tp-final.html',      title: 'Trabajo final' }
+    },
+    // ----- TP final -----
+    'TP FINAL': {
+      prev: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Material transversal -----
+    'DIAGRAMAS': {
+      prev: { href: 'index.html',  title: 'Menú principal' },
+      next: { href: 'glosario.html', title: 'Glosario' }
+    },
+    'GLOSARIO': {
+      prev: { href: 'diagramas-arquitectura.html', title: 'Diagramas' },
+      next: { href: 'cheat-sheet.html',            title: 'Cheat sheet' }
+    },
+    'CHEAT-SHEET': {
+      prev: { href: 'glosario.html', title: 'Glosario' },
+      next: { href: 'index.html',    title: 'Menú principal' }
+    }
+  };
+
+  const entry = MAP[key];
+  if (!entry) return;
+
+  const prevLink = nav.querySelector('[data-slot="prev"]');
+  const nextLink = nav.querySelector('[data-slot="next"]');
+  const prevTitle = nav.querySelector('[data-slot="prev-title"]');
+  const nextTitle = nav.querySelector('[data-slot="next-title"]');
+
+  if (entry.prev && prevLink && prevTitle) {
+    prevLink.setAttribute('href', entry.prev.href);
+    prevTitle.textContent = entry.prev.title;
+    prevLink.hidden = false;
+  }
+  if (entry.next && nextLink && nextTitle) {
+    nextLink.setAttribute('href', entry.next.href);
+    nextTitle.textContent = entry.next.title;
+    nextLink.hidden = false;
+  }
+
+  // If neither slot is shown, hide the whole nav
+  if ((!entry.prev) && (!entry.next)) {
+    nav.style.display = 'none';
+  }
+})();
+
+// Click-to-copy on every <pre> code block
+(function () {
+  document.querySelectorAll('pre').forEach(pre => {
+    pre.addEventListener('click', async (e) => {
+      // Don't trigger if user is selecting text
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0 && pre.contains(sel.anchorNode)) return;
+
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        pre.classList.add('copied');
+        setTimeout(() => pre.classList.remove('copied'), 1400);
+      } catch (err) {
+        // Fallback: select all
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel2 = window.getSelection();
+        sel2.removeAllRanges();
+        sel2.addRange(range);
+      }
+    });
+  });
+})();
+
+// Open all external links in a new tab (preserves the current page).
+// Internal anchors (#hash), relative links and same-origin links stay in-tab.
+(function () {
+  const here = window.location.hostname;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // Skip anchors and pure relative links
+    if (href.startsWith('#') || href.startsWith('/') || !/^https?:\/\//i.test(href)) return;
+    try {
+      const url = new URL(href);
+      if (url.hostname && url.hostname !== here) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    } catch (_) {
+      // Malformed URL — ignore
+    }
+  });
+})();
+</script>
+
+
+
+</body></html>

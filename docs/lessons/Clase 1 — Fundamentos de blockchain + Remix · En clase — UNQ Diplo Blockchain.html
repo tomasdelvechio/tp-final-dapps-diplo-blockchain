@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="generator" content="pandoc + UNLu/DCB template">
+  <title>Clase 1 — Fundamentos de blockchain + Remix · En clase — UNQ
+Diplo Blockchain</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="unq-header">
+  <a href="index.html" class="brand" title="Volver al menú principal">
+    <img src="assets/unq-logo-white.png" alt="Universidad Nacional de Quilmes" class="logo unq">
+    <div class="brand-text">
+      <div class="institution">Universidad Nacional de Quilmes</div>
+      <div class="department">Diplomatura en Blockchain</div>
+    </div>
+  </a>
+  <div class="course-bar">
+    <span class="course">Desarrollo de Smart Contracts y dApps</span>
+    <span class="year">2026</span>
+    <span class="instructor">Dr. David Petrocelli &amp; Esp. Ciro Romero</span>
+  </div>
+</header>
+
+<button type="button" id="sidebar-show" class="sidebar-toggle-btn sidebar-show" aria-label="Mostrar índice lateral" title="Mostrar índice lateral">☰</button>
+
+<div class="layout">
+  <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">
+      <div class="toc-title">Contenidos</div>
+      <button type="button" id="sidebar-hide" class="sidebar-toggle-btn sidebar-hide" aria-label="Ocultar índice lateral" title="Ocultar índice lateral">×</button>
+    </div>
+    <ul>
+    <li><a href="#clase-1--fundamentos--tu-primer-contrato-en-remix"
+    id="toc-clase-1--fundamentos--tu-primer-contrato-en-remix">Clase 1 —
+    Fundamentos + tu primer contrato en Remix</a>
+    <ul>
+    <li><a href="#qué-vamos-a-hacer" id="toc-qué-vamos-a-hacer">¿Qué
+    vamos a hacer?</a>
+    <ul>
+    <li><a href="#en-clase" id="toc-en-clase">🏫 En clase (en vivo con
+    Ciro)</a></li>
+    <li><a href="#house-tarea" id="toc-house-tarea">🏠 Tarea</a></li>
+    <li><a href="#movie_camera-la-teoría"
+    id="toc-movie_camera-la-teoría">🎥 La teoría</a></li>
+    </ul></li>
+    <li><a href="#parte-1--instalar-metamask"
+    id="toc-parte-1--instalar-metamask">Parte 1 — Instalar
+    Metamask</a></li>
+    <li><a href="#parte-2--activar-sepolia"
+    id="toc-parte-2--activar-sepolia">Parte 2 — Activar Sepolia</a></li>
+    <li><a href="#parte-3--pedir-eth-a-una-faucet"
+    id="toc-parte-3--pedir-eth-a-una-faucet">Parte 3 — Pedir ETH a una
+    faucet</a></li>
+    <li><a href="#parte-4--verificar-tu-address-en-etherscan"
+    id="toc-parte-4--verificar-tu-address-en-etherscan">Parte 4 —
+    Verificar tu address en Etherscan</a></li>
+    <li><a href="#parte-5--remix-tu-primer-contrato"
+    id="toc-parte-5--remix-tu-primer-contrato">Parte 5 — Remix: tu
+    primer contrato</a>
+    <ul>
+    <li><a href="#51-la-interfaz" id="toc-51-la-interfaz">5.1 La
+    interfaz</a></li>
+    <li><a href="#52-el-contrato-simplestorage"
+    id="toc-52-el-contrato-simplestorage">5.2 El contrato
+    <code>SimpleStorage</code></a></li>
+    <li><a href="#53-compilar" id="toc-53-compilar">5.3
+    Compilar</a></li>
+    <li><a href="#54-deployar--primero-en-remix-vm"
+    id="toc-54-deployar--primero-en-remix-vm">5.4 Deployar — primero en
+    Remix VM</a></li>
+    <li><a href="#55-deployar--ahora-en-sepolia-real"
+    id="toc-55-deployar--ahora-en-sepolia-real">5.5 Deployar — ahora en
+    Sepolia real</a></li>
+    <li><a href="#56-y-si-re-deployás" id="toc-56-y-si-re-deployás">5.6
+    ¿Y si re-deployás?</a></li>
+    </ul></li>
+    <li><a href="#parte-6--qué-viene-en-clase-2"
+    id="toc-parte-6--qué-viene-en-clase-2">Parte 6 — ¿Qué viene en clase
+    2?</a></li>
+    <li><a href="#después-de-clase" id="toc-después-de-clase">Después de
+    clase</a></li>
+    <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+    falla</a></li>
+    </ul></li>
+    </ul>
+    <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--light-gray);font-size:12px;">
+      <a href="index.html" style="color:var(--gray);">← Volver al índice</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span class="sep">›</span>
+      <span class="current">C1 · CLASE</span>
+    </nav>
+    <nav class="page-nav-top">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+      <span class="banner-pill">C1 · CLASE</span>
+    </nav>
+
+    <details class="toc-inline" open>
+      <summary>📑 Índice del documento</summary>
+      <ul>
+      <li><a href="#clase-1--fundamentos--tu-primer-contrato-en-remix"
+      id="toc-clase-1--fundamentos--tu-primer-contrato-en-remix">Clase 1
+      — Fundamentos + tu primer contrato en Remix</a>
+      <ul>
+      <li><a href="#qué-vamos-a-hacer" id="toc-qué-vamos-a-hacer">¿Qué
+      vamos a hacer?</a>
+      <ul>
+      <li><a href="#en-clase" id="toc-en-clase">🏫 En clase (en vivo con
+      Ciro)</a></li>
+      <li><a href="#house-tarea" id="toc-house-tarea">🏠 Tarea</a></li>
+      <li><a href="#movie_camera-la-teoría"
+      id="toc-movie_camera-la-teoría">🎥 La teoría</a></li>
+      </ul></li>
+      <li><a href="#parte-1--instalar-metamask"
+      id="toc-parte-1--instalar-metamask">Parte 1 — Instalar
+      Metamask</a></li>
+      <li><a href="#parte-2--activar-sepolia"
+      id="toc-parte-2--activar-sepolia">Parte 2 — Activar
+      Sepolia</a></li>
+      <li><a href="#parte-3--pedir-eth-a-una-faucet"
+      id="toc-parte-3--pedir-eth-a-una-faucet">Parte 3 — Pedir ETH a una
+      faucet</a></li>
+      <li><a href="#parte-4--verificar-tu-address-en-etherscan"
+      id="toc-parte-4--verificar-tu-address-en-etherscan">Parte 4 —
+      Verificar tu address en Etherscan</a></li>
+      <li><a href="#parte-5--remix-tu-primer-contrato"
+      id="toc-parte-5--remix-tu-primer-contrato">Parte 5 — Remix: tu
+      primer contrato</a>
+      <ul>
+      <li><a href="#51-la-interfaz" id="toc-51-la-interfaz">5.1 La
+      interfaz</a></li>
+      <li><a href="#52-el-contrato-simplestorage"
+      id="toc-52-el-contrato-simplestorage">5.2 El contrato
+      <code>SimpleStorage</code></a></li>
+      <li><a href="#53-compilar" id="toc-53-compilar">5.3
+      Compilar</a></li>
+      <li><a href="#54-deployar--primero-en-remix-vm"
+      id="toc-54-deployar--primero-en-remix-vm">5.4 Deployar — primero
+      en Remix VM</a></li>
+      <li><a href="#55-deployar--ahora-en-sepolia-real"
+      id="toc-55-deployar--ahora-en-sepolia-real">5.5 Deployar — ahora
+      en Sepolia real</a></li>
+      <li><a href="#56-y-si-re-deployás"
+      id="toc-56-y-si-re-deployás">5.6 ¿Y si re-deployás?</a></li>
+      </ul></li>
+      <li><a href="#parte-6--qué-viene-en-clase-2"
+      id="toc-parte-6--qué-viene-en-clase-2">Parte 6 — ¿Qué viene en
+      clase 2?</a></li>
+      <li><a href="#después-de-clase" id="toc-después-de-clase">Después
+      de clase</a></li>
+      <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+      falla</a></li>
+      </ul></li>
+      </ul>
+      <div class="toc-controls">
+        <button type="button" class="toc-btn" data-action="expand-all">Expandir todo</button>
+        <button type="button" class="toc-btn" data-action="collapse-all">Colapsar todo</button>
+      </div>
+    </details>
+
+<h1 id="clase-1--fundamentos--tu-primer-contrato-en-remix">Clase 1 —
+Fundamentos + tu primer contrato en Remix</h1>
+<blockquote>
+<p><strong>Objetivo de hoy</strong>: salir de la clase con
+<strong>Metamask instalado</strong>, <strong>ETH de testnet en
+Sepolia</strong> y un <strong>contrato deployado</strong> en la red de
+prueba. La teoría va en los videos del campus — acá nos enfocamos en la
+parte práctica.</p>
+</blockquote>
+<h2 id="qué-vamos-a-hacer">¿Qué vamos a hacer?</h2>
+<h3 id="en-clase">🏫 En clase (en vivo con Ciro)</h3>
+<ol type="1">
+<li><strong>Instalar Metamask</strong> y configurar la red de prueba
+<strong>Sepolia</strong>.</li>
+<li><strong>Pedir ETH de prueba</strong> a una faucet y verificar el
+saldo en Etherscan.</li>
+<li><strong>Conocer Remix</strong>, la IDE online de Ethereum.</li>
+<li><strong>Compilar y deployar</strong> un contrato
+<code>SimpleStorage</code> — primero en la VM de Remix, después en
+Sepolia.</li>
+<li><strong>Verlo on-chain</strong> en
+<code>sepolia.etherscan.io</code>.</li>
+</ol>
+<h3 id="house-tarea">🏠 Tarea</h3>
+<p>La tarea va en una página aparte: <a href="clase-1-tarea.html">ver
+tarea de clase 1</a>.</p>
+<h3 id="movie_camera-la-teoría">🎥 La teoría</h3>
+<p>Los conceptos (qué es blockchain, hash, bloques, EVM, gas, consenso,
+L1/L2) están explicados <strong>en los videos del campus</strong>. Esta
+página es solo el paso a paso de lo que hacemos en vivo.</p>
+<hr />
+<h2 id="parte-1--instalar-metamask">Parte 1 — Instalar Metamask</h2>
+<ol type="1">
+<li>Ir a <a href="https://metamask.io">metamask.io</a> e instalar la
+<strong>extensión de navegador</strong> (Chrome / Firefox / Brave). Para
+esta diplomatura usamos la extensión, no la app móvil — más cómoda para
+conectarse a Remix.</li>
+<li>Crear una cuenta nueva y <strong>anotar la frase semilla en
+papel</strong>.</li>
+<li>La cuenta arranca en mainnet. <strong>No vamos a usar
+mainnet</strong> — usamos Sepolia (testnet, sin plata real).</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>Tres reglas de la frase semilla</strong>: nunca digital,
+nunca en la nube, nunca compartida. Si la perdés y tenías plata real, no
+se recupera.</p>
+</blockquote>
+<hr />
+<h2 id="parte-2--activar-sepolia">Parte 2 — Activar Sepolia</h2>
+<ol type="1">
+<li>En Metamask, abrir el menú de redes (arriba a la izquierda).</li>
+<li>Settings → Advanced → activar <strong>“Show test
+networks”</strong>.</li>
+<li>Volver al selector y elegir <strong>Sepolia</strong>.</li>
+<li>El balance va a estar en 0 — es esperable.</li>
+</ol>
+<hr />
+<h2 id="parte-3--pedir-eth-a-una-faucet">Parte 3 — Pedir ETH a una
+faucet</h2>
+<p>Una <strong>faucet</strong> es un servicio gratis que tira ETH de
+testnet para experimentar.</p>
+<ol type="1">
+<li>Copiar la address de tu wallet (en Metamask, click en el nombre de
+la cuenta — se copia automáticamente). Es un hash que arranca con
+<code>0x...</code>.</li>
+<li>Ir a una faucet de Sepolia. Si una falla, probá otra:
+<ul>
+<li><a href="https://sepoliafaucet.com">sepoliafaucet.com</a>
+(Alchemy)</li>
+<li><a
+href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia">cloud.google.com/application/web3/faucet/ethereum/sepolia</a></li>
+<li><a
+href="https://sepolia-faucet.pk910.de">sepolia-faucet.pk910.de</a> (PoW
+— minás un poco antes de recibir)</li>
+</ul></li>
+<li>Pegar la address, resolver el captcha y pedir.</li>
+<li>Esperar (instantáneo o unos minutos según la faucet).</li>
+<li>Verificar el saldo en Metamask.</li>
+</ol>
+<blockquote>
+<p>💡 Las faucets tiran cantidades chicas (0.05 a 0.5 ETH) para evitar
+abuso. Con eso te alcanza para deployar varios contratos.</p>
+</blockquote>
+<hr />
+<h2 id="parte-4--verificar-tu-address-en-etherscan">Parte 4 — Verificar
+tu address en Etherscan</h2>
+<ol type="1">
+<li>Ir a <a
+href="https://sepolia.etherscan.io">sepolia.etherscan.io</a>.</li>
+<li>Pegar tu address en el buscador.</li>
+<li>Vas a ver: balance, transacciones, hashes, números de bloque, gas
+consumido.</li>
+</ol>
+<p>Esto demuestra el punto de transparencia de blockchain:
+<strong>cualquiera con tu address puede ver tus transacciones</strong>.
+Tenelo presente cuando trabajes con direcciones reales.</p>
+<hr />
+<h2 id="parte-5--remix-tu-primer-contrato">Parte 5 — Remix: tu primer
+contrato</h2>
+<p><a href="https://remix.ethereum.org">Remix</a> es la IDE online
+oficial del ecosistema Ethereum. Sirve para escribir, compilar, deployar
+y testear smart contracts sin instalar nada.</p>
+<blockquote>
+<p>💡 A partir de <strong>clase 2</strong> pasamos a
+<strong>Foundry</strong> (toolkit profesional, terminal + VS Code). Para
+arrancar, Remix es perfecto porque ya viene todo configurado.</p>
+</blockquote>
+<h3 id="51-la-interfaz">5.1 La interfaz</h3>
+<p>Cuatro paneles en la barra lateral izquierda:</p>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Para qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>File explorer</strong></td>
+<td>Crear / organizar archivos <code>.sol</code></td>
+</tr>
+<tr>
+<td><strong>Solidity compiler</strong></td>
+<td>Compilar el código (tiene auto-compile)</td>
+</tr>
+<tr>
+<td><strong>Deploy &amp; run transactions</strong></td>
+<td>Deployar y llamar funciones</td>
+</tr>
+<tr>
+<td><strong>Plugins / debugger</strong></td>
+<td>Herramientas extra</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-el-contrato-simplestorage">5.2 El contrato
+<code>SimpleStorage</code></h3>
+<p>Crear un archivo nuevo
+(<code>File explorers → contracts → New File → SimpleStorage.sol</code>)
+y pegar:</p>
+<pre class="solidity"><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleStorage {
+    uint256 public storedNumber;
+
+    function set(uint256 _number) public {
+        storedNumber = _number;
+    }
+
+    function get() public view returns (uint256) {
+        return storedNumber;
+    }
+}</code></pre>
+<p>Cosas a notar de la sintaxis (lo vamos a ver en detalle en clase
+2):</p>
+<ul>
+<li><code>contract SimpleStorage { ... }</code> — todo se agrupa adentro
+de un contrato, parecido a una clase en POO.</li>
+<li><code>uint256 public storedNumber;</code> — variable de estado
+pública. Solidity le genera un getter automático.</li>
+<li><code>function set(...)</code> modifica estado → cuesta gas.</li>
+<li><code>function get(...) view</code> solo lee → no cuesta gas si la
+llamás desde afuera.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Hilo conductor</strong>: este mismo
+<code>SimpleStorage</code> lo retomamos en <strong>clase 2</strong>
+corriéndolo localmente con Foundry en vez de en el browser.</p>
+</blockquote>
+<h3 id="53-compilar">5.3 Compilar</h3>
+<ol type="1">
+<li>Click en el panel <strong>Solidity compiler</strong>.</li>
+<li>Verificar que la versión coincida con el <code>pragma</code> del
+archivo.</li>
+<li>Click en <strong>“Compile”</strong>. Si todo va bien, el botón se
+pone verde.</li>
+<li>Si hay errores, Remix los muestra inline.</li>
+</ol>
+<h3 id="54-deployar--primero-en-remix-vm">5.4 Deployar — primero en
+Remix VM</h3>
+<p><strong>Remix VM</strong> = blockchain virtual local. No toca
+testnet, no usa Metamask, no consume nada. Sirve para probar antes de
+gastar gas de testnet.</p>
+<ol type="1">
+<li>Panel <strong>Deploy &amp; run transactions</strong>.</li>
+<li><strong>Environment</strong>: dejar <code>Remix VM (Cancun)</code>
+(o la versión que aparezca por default).</li>
+<li><strong>Account</strong>: viene precargada con 100 ETH de
+juguete.</li>
+<li>Seleccionar <code>SimpleStorage</code> en el dropdown.</li>
+<li>Click en <strong>Deploy</strong>.</li>
+<li>El contrato aparece abajo en “Deployed contracts”. Expandirlo: ves
+los botones (<code>set</code>, <code>get</code>,
+<code>storedNumber</code>).</li>
+<li>Probar: poner un número en <code>set</code>, click. Después click en
+<code>get</code>. Tiene que devolver lo que guardaste.</li>
+</ol>
+<h3 id="55-deployar--ahora-en-sepolia-real">5.5 Deployar — ahora en
+Sepolia real</h3>
+<ol type="1">
+<li><strong>Environment</strong>: cambiar a
+<code>Injected Provider - MetaMask</code>.</li>
+<li>Metamask pide autorización. Confirmar.</li>
+<li><strong>Confirmar que la red en Metamask es Sepolia</strong>
+(crítico — si fuera mainnet pagás gas real).</li>
+<li>Click en <strong>Deploy</strong>.</li>
+<li>Metamask abre un popup con el costo de gas. Confirmar.</li>
+<li>Esperar la confirmación on-chain (segundos).</li>
+<li>Copiar la address del contrato (queda abajo en “Deployed
+contracts”).</li>
+<li>Pegarla en <a
+href="https://sepolia.etherscan.io">sepolia.etherscan.io</a> — vas a ver
+tu contrato deployado.</li>
+</ol>
+<h3 id="56-y-si-re-deployás">5.6 ¿Y si re-deployás?</h3>
+<p>Modificar el contrato (aunque sea un comentario) y volver a Deploy →
+<strong>se crea un contrato nuevo</strong> con otra address. El anterior
+sigue ahí, inmutable. La blockchain no edita, solo agrega.</p>
+<p>Los contratos se identifican por su <strong>address</strong>: cada
+deploy es un contrato distinto, aunque el código sea idéntico.</p>
+<hr />
+<h2 id="parte-6--qué-viene-en-clase-2">Parte 6 — ¿Qué viene en clase
+2?</h2>
+<ul>
+<li>Pasar de Remix a <strong>Foundry</strong> (terminal + VS Code).</li>
+<li>Mismo <code>SimpleStorage</code>, pero compilando con
+<code>forge build</code>.</li>
+<li><strong>Tests automatizados</strong> (<code>forge test</code>) — el
+primer paso para escribir contratos serios.</li>
+<li>Control de versiones con Git.</li>
+</ul>
+<hr />
+<h2 id="después-de-clase">Después de clase</h2>
+<p>La tarea de la semana → <a href="clase-1-tarea.html">tarea de clase
+1</a>.</p>
+<h2 id="si-algo-falla">Si algo falla</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metamask no muestra Sepolia</td>
+<td>Settings → Advanced → activar “Show test networks”</td>
+</tr>
+<tr>
+<td>La faucet pide cuenta o no acepta mi address</td>
+<td>Probá otra faucet de la lista. Algunas tienen rate limit por
+IP.</td>
+</tr>
+<tr>
+<td>No me llega el ETH</td>
+<td>Esperá 5-10 min. Si no llega, otra faucet.</td>
+</tr>
+<tr>
+<td>Etherscan dice “no transactions”</td>
+<td>Verificá que estás en <code>sepolia.etherscan.io</code>, no en
+<code>etherscan.io</code> (mainnet).</td>
+</tr>
+<tr>
+<td>Remix no se conecta a Metamask</td>
+<td>Desbloqueá Metamask antes de elegir “Injected Provider -
+MetaMask”.</td>
+</tr>
+<tr>
+<td>Deploy a Sepolia falla por gas</td>
+<td>Pedí más ETH a la faucet (un deploy consume más que una
+transferencia).</td>
+</tr>
+</tbody>
+</table>
+<p>Lo demás, foro del campus.</p>
+
+    <nav class="page-prev-next" aria-label="Navegación entre páginas">
+      <a class="prev-link" href="#" data-slot="prev" hidden>
+        <span class="arrow">←</span>
+        <span class="nav-meta">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title" data-slot="prev-title"></span>
+        </span>
+      </a>
+      <a class="next-link" href="#" data-slot="next" hidden>
+        <span class="nav-meta">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title" data-slot="next-title"></span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <nav class="page-nav-bottom">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+    </nav>
+  </main>
+</div>
+
+<footer class="unq-footer">
+  <div>
+    UNQ · Diplomatura en Blockchain · Desarrollo de Smart Contracts y dApps <strong>2026</strong>
+    · Dr. David Petrocelli &amp; Esp. Ciro Romero
+  </div>
+</footer>
+
+<script>
+// Sidebar show/hide toggle (preference persisted in localStorage)
+(function () {
+  const sidebar = document.getElementById('toc-sidebar');
+  const layout = document.querySelector('.layout');
+  const hideBtn = document.getElementById('sidebar-hide');
+  const showBtn = document.getElementById('sidebar-show');
+  if (!sidebar || !layout || !hideBtn || !showBtn) return;
+
+  const KEY = 'unlu.dcb.sidebar.hidden';
+
+  function apply(hidden) {
+    layout.classList.toggle('sidebar-hidden', hidden);
+    showBtn.classList.toggle('visible', hidden);
+  }
+
+  apply(localStorage.getItem(KEY) === '1');
+
+  hideBtn.addEventListener('click', () => {
+    localStorage.setItem(KEY, '1');
+    apply(true);
+  });
+  showBtn.addEventListener('click', () => {
+    localStorage.removeItem(KEY);
+    apply(false);
+  });
+})();
+
+// Wrap each H2 (and its following content until the next H2) in a <details open>
+// element so users can collapse/expand sections.
+(function () {
+  const main = document.querySelector('main.content');
+  if (!main) return;
+
+  // Collect direct-child H2 headings so we don't touch nested ones (e.g., inside details we'll create)
+  const headings = Array.from(main.children).filter(el => el.tagName === 'H2');
+
+  headings.forEach(h2 => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'section-collapsible';
+
+    const summary = document.createElement('summary');
+    // Move heading content (incl. anchor) into the summary so anchors keep working
+    summary.innerHTML = h2.innerHTML;
+    if (h2.id) summary.id = h2.id;
+    details.appendChild(summary);
+
+    // Move siblings until next H2 into details
+    const parent = h2.parentNode;
+    let next = h2.nextSibling;
+    parent.replaceChild(details, h2);
+    while (next && !(next.nodeType === 1 && next.tagName === 'H2')) {
+      const node = next;
+      next = next.nextSibling;
+      details.appendChild(node);
+    }
+  });
+
+  // If there's a hash in the URL, ensure the target's <details> is open
+  function openDetailsForHash(hash) {
+    if (!hash) return;
+    const target = document.getElementById(hash.replace(/^#/, ''));
+    if (!target) return;
+    let p = target.closest('details');
+    while (p) { p.open = true; p = p.parentElement && p.parentElement.closest('details'); }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  openDetailsForHash(window.location.hash);
+  window.addEventListener('hashchange', () => openDetailsForHash(window.location.hash));
+
+  // Wire up "Expand all" / "Collapse all" controls in the inline TOC
+  document.querySelectorAll('.toc-controls [data-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const open = action === 'expand-all';
+      document.querySelectorAll('details.section-collapsible').forEach(d => { d.open = open; });
+    });
+  });
+})();
+
+// Populate prev/next navigation based on the current page's banner-num
+(function () {
+  const pill = document.querySelector('.banner-pill');
+  const nav = document.querySelector('.page-prev-next');
+  if (!pill || !nav) return;
+
+  const key = (pill.textContent || '').trim().toUpperCase();
+
+  // Map banner-num → { prev, next }
+  // Each entry: { href, title } (or null if not present)
+  const MAP = {
+    // ----- Clase 1 -----
+    'C1 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' }
+    },
+    'C1 · TAREA': {
+      prev: { href: 'clase-1-clase.html', title: 'Material en clase 1' },
+      next: { href: 'clase-2-clase.html', title: 'Clase 2' }
+    },
+    // ----- Clase 2 -----
+    'C2 · CLASE': {
+      prev: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' },
+      next: { href: 'clase-2-tarea.html', title: 'Tarea de clase 2' }
+    },
+    'C2 · TAREA': {
+      prev: { href: 'clase-2-clase.html', title: 'Material en clase 2' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 3 -----
+    'C3 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-3-tarea.html', title: 'Tarea de clase 3' }
+    },
+    'C3 · TAREA': {
+      prev: { href: 'clase-3-clase.html', title: 'Material en clase 3' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 4 -----
+    'C4 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' }
+    },
+    'C4 · TAREA': {
+      prev: { href: 'clase-4-clase.html', title: 'Material en clase 4' },
+      next: { href: 'tp-final.html',      title: 'Trabajo final' }
+    },
+    // ----- TP final -----
+    'TP FINAL': {
+      prev: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Material transversal -----
+    'DIAGRAMAS': {
+      prev: { href: 'index.html',  title: 'Menú principal' },
+      next: { href: 'glosario.html', title: 'Glosario' }
+    },
+    'GLOSARIO': {
+      prev: { href: 'diagramas-arquitectura.html', title: 'Diagramas' },
+      next: { href: 'cheat-sheet.html',            title: 'Cheat sheet' }
+    },
+    'CHEAT-SHEET': {
+      prev: { href: 'glosario.html', title: 'Glosario' },
+      next: { href: 'index.html',    title: 'Menú principal' }
+    }
+  };
+
+  const entry = MAP[key];
+  if (!entry) return;
+
+  const prevLink = nav.querySelector('[data-slot="prev"]');
+  const nextLink = nav.querySelector('[data-slot="next"]');
+  const prevTitle = nav.querySelector('[data-slot="prev-title"]');
+  const nextTitle = nav.querySelector('[data-slot="next-title"]');
+
+  if (entry.prev && prevLink && prevTitle) {
+    prevLink.setAttribute('href', entry.prev.href);
+    prevTitle.textContent = entry.prev.title;
+    prevLink.hidden = false;
+  }
+  if (entry.next && nextLink && nextTitle) {
+    nextLink.setAttribute('href', entry.next.href);
+    nextTitle.textContent = entry.next.title;
+    nextLink.hidden = false;
+  }
+
+  // If neither slot is shown, hide the whole nav
+  if ((!entry.prev) && (!entry.next)) {
+    nav.style.display = 'none';
+  }
+})();
+
+// Click-to-copy on every <pre> code block
+(function () {
+  document.querySelectorAll('pre').forEach(pre => {
+    pre.addEventListener('click', async (e) => {
+      // Don't trigger if user is selecting text
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0 && pre.contains(sel.anchorNode)) return;
+
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        pre.classList.add('copied');
+        setTimeout(() => pre.classList.remove('copied'), 1400);
+      } catch (err) {
+        // Fallback: select all
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel2 = window.getSelection();
+        sel2.removeAllRanges();
+        sel2.addRange(range);
+      }
+    });
+  });
+})();
+
+// Open all external links in a new tab (preserves the current page).
+// Internal anchors (#hash), relative links and same-origin links stay in-tab.
+(function () {
+  const here = window.location.hostname;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // Skip anchors and pure relative links
+    if (href.startsWith('#') || href.startsWith('/') || !/^https?:\/\//i.test(href)) return;
+    try {
+      const url = new URL(href);
+      if (url.hostname && url.hostname !== here) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    } catch (_) {
+      // Malformed URL — ignore
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

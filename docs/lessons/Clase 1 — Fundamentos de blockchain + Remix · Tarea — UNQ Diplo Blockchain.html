@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="generator" content="pandoc + UNLu/DCB template">
+  <title>Clase 1 — Fundamentos de blockchain + Remix · Tarea — UNQ Diplo
+Blockchain</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="unq-header">
+  <a href="index.html" class="brand" title="Volver al menú principal">
+    <img src="assets/unq-logo-white.png" alt="Universidad Nacional de Quilmes" class="logo unq">
+    <div class="brand-text">
+      <div class="institution">Universidad Nacional de Quilmes</div>
+      <div class="department">Diplomatura en Blockchain</div>
+    </div>
+  </a>
+  <div class="course-bar">
+    <span class="course">Desarrollo de Smart Contracts y dApps</span>
+    <span class="year">2026</span>
+    <span class="instructor">Dr. David Petrocelli &amp; Esp. Ciro Romero</span>
+  </div>
+</header>
+
+<button type="button" id="sidebar-show" class="sidebar-toggle-btn sidebar-show" aria-label="Mostrar índice lateral" title="Mostrar índice lateral">☰</button>
+
+<div class="layout">
+  <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">
+      <div class="toc-title">Contenidos</div>
+      <button type="button" id="sidebar-hide" class="sidebar-toggle-btn sidebar-hide" aria-label="Ocultar índice lateral" title="Ocultar índice lateral">×</button>
+    </div>
+    <ul>
+    <li><a
+    href="#clase-1--fundamentos-de-blockchain--tu-primer-contrato-en-remix"
+    id="toc-clase-1--fundamentos-de-blockchain--tu-primer-contrato-en-remix">Clase
+    1 — Fundamentos de blockchain + tu primer contrato en Remix</a>
+    <ul>
+    <li><a href="#tarea" id="toc-tarea">🏠 Tarea para entregar antes de
+    clase 2</a></li>
+    <li><a href="#volver" id="toc-volver">Volver</a></li>
+    <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+    falla</a></li>
+    </ul></li>
+    </ul>
+    <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--light-gray);font-size:12px;">
+      <a href="index.html" style="color:var(--gray);">← Volver al índice</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span class="sep">›</span>
+      <span class="current">C1 · TAREA</span>
+    </nav>
+    <nav class="page-nav-top">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+      <span class="banner-pill">C1 · TAREA</span>
+    </nav>
+
+    <details class="toc-inline" open>
+      <summary>📑 Índice del documento</summary>
+      <ul>
+      <li><a
+      href="#clase-1--fundamentos-de-blockchain--tu-primer-contrato-en-remix"
+      id="toc-clase-1--fundamentos-de-blockchain--tu-primer-contrato-en-remix">Clase
+      1 — Fundamentos de blockchain + tu primer contrato en Remix</a>
+      <ul>
+      <li><a href="#tarea" id="toc-tarea">🏠 Tarea para entregar antes
+      de clase 2</a></li>
+      <li><a href="#volver" id="toc-volver">Volver</a></li>
+      <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+      falla</a></li>
+      </ul></li>
+      </ul>
+      <div class="toc-controls">
+        <button type="button" class="toc-btn" data-action="expand-all">Expandir todo</button>
+        <button type="button" class="toc-btn" data-action="collapse-all">Colapsar todo</button>
+      </div>
+    </details>
+
+<h1
+id="clase-1--fundamentos-de-blockchain--tu-primer-contrato-en-remix">Clase
+1 — Fundamentos de blockchain + tu primer contrato en Remix</h1>
+<h2 id="tarea">🏠 Tarea para entregar antes de clase 2</h2>
+<p><strong>Plazo</strong>: lunes 27/04 18:00 (antes de que arranque
+clase 2).</p>
+<p><strong>Cómo se entrega</strong>: postear en el foro del módulo en el
+campus.</p>
+<p><strong>Qué tienen que hacer</strong>:</p>
+<ol type="1">
+<li><p><strong>Instalar Metamask</strong> como extensión del navegador,
+crear una cuenta nueva y <strong>anotar la frase semilla en
+papel</strong> (no en formato digital, no compartirla con nadie).
+Activar la red de prueba <strong>Sepolia</strong> desde Settings →
+Advanced → “Show test networks”.</p></li>
+<li><p><strong>Pedir ETH de prueba a una faucet de Sepolia</strong> (al
+menos 0.05 ETH). Si una faucet no anda, probá con otra:</p>
+<ul>
+<li><a href="https://sepoliafaucet.com">sepoliafaucet.com</a>
+(Alchemy)</li>
+<li><a
+href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia">cloud.google.com/application/web3/faucet/ethereum/sepolia</a></li>
+<li><a
+href="https://sepolia-faucet.pk910.de">sepolia-faucet.pk910.de</a></li>
+</ul></li>
+<li><p><strong>Verificar la transacción en <a
+href="https://sepolia.etherscan.io">sepolia.etherscan.io</a></strong>:
+pegá tu address y comprobá que ves el balance y la transacción de la
+faucet. Postear en el foro una captura del Etherscan mostrando tu
+address con balance &gt; 0.</p></li>
+<li><p><strong>Experimentar con Remix</strong>: abrir <a
+href="https://remix.ethereum.org">remix.ethereum.org</a>, copiar el
+contrato <code>SimpleStorage</code> que vimos en <a
+href="clase-1-clase.html#parte-5--remix-tu-primer-contrato">clase 1 —
+Parte 5 (Remix)</a>, compilarlo, deployarlo <strong>primero en la Remix
+VM</strong> y después <strong>en Sepolia con Metamask</strong>. Probar
+las funciones (<code>set</code> / <code>get</code>). Postear en el foro
+la address del contrato deployado en Sepolia para poder verlo en
+Etherscan.</p></li>
+<li><p><strong>(Opcional, recomendado)</strong> Si te quedó tiempo,
+instalar <a
+href="https://book.getfoundry.sh/getting-started/installation">Foundry</a>
+siguiendo la documentación oficial — vamos a usarlo desde clase
+2.</p></li>
+</ol>
+<hr />
+<h2 id="volver">Volver</h2>
+<p><a href="index.html">← Volver al menú principal</a> · <a
+href="clase-2-clase.html">→ Clase 2</a></p>
+<h2 id="si-algo-falla">Si algo falla</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metamask no muestra Sepolia</td>
+<td>Settings → Advanced → activar “Show test networks”</td>
+</tr>
+<tr>
+<td>La faucet pide cuenta o no acepta mi address</td>
+<td>Probá con otra faucet (la lista de arriba). Algunas tienen rate
+limit por IP.</td>
+</tr>
+<tr>
+<td>No me llega el ETH</td>
+<td>Esperá 5-10 minutos. Si no llega, probá otra faucet.</td>
+</tr>
+<tr>
+<td>Etherscan dice “no transactions”</td>
+<td>Verificá que estés en <code>sepolia.etherscan.io</code> (no en
+<code>etherscan.io</code>, que es mainnet).</td>
+</tr>
+<tr>
+<td>Remix no se conecta a Metamask</td>
+<td>Desbloqueá Metamask antes de elegir “Injected Provider - MetaMask”
+en Remix.</td>
+</tr>
+<tr>
+<td>Deploy a Sepolia falla por gas</td>
+<td>Pedile más ETH a la faucet (un deploy consume más que una
+transferencia).</td>
+</tr>
+<tr>
+<td>Perdí la frase semilla</td>
+<td>Si nunca te conectaste a mainnet, no es grave: creá una wallet nueva
+y empezá de cero. <strong>Lección aprendida</strong>: la próxima,
+anotala en papel.</td>
+</tr>
+</tbody>
+</table>
+<p>Lo demás, foro del campus.</p>
+
+    <nav class="page-prev-next" aria-label="Navegación entre páginas">
+      <a class="prev-link" href="#" data-slot="prev" hidden>
+        <span class="arrow">←</span>
+        <span class="nav-meta">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title" data-slot="prev-title"></span>
+        </span>
+      </a>
+      <a class="next-link" href="#" data-slot="next" hidden>
+        <span class="nav-meta">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title" data-slot="next-title"></span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <nav class="page-nav-bottom">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+    </nav>
+  </main>
+</div>
+
+<footer class="unq-footer">
+  <div>
+    UNQ · Diplomatura en Blockchain · Desarrollo de Smart Contracts y dApps <strong>2026</strong>
+    · Dr. David Petrocelli &amp; Esp. Ciro Romero
+  </div>
+</footer>
+
+<script>
+// Sidebar show/hide toggle (preference persisted in localStorage)
+(function () {
+  const sidebar = document.getElementById('toc-sidebar');
+  const layout = document.querySelector('.layout');
+  const hideBtn = document.getElementById('sidebar-hide');
+  const showBtn = document.getElementById('sidebar-show');
+  if (!sidebar || !layout || !hideBtn || !showBtn) return;
+
+  const KEY = 'unlu.dcb.sidebar.hidden';
+
+  function apply(hidden) {
+    layout.classList.toggle('sidebar-hidden', hidden);
+    showBtn.classList.toggle('visible', hidden);
+  }
+
+  apply(localStorage.getItem(KEY) === '1');
+
+  hideBtn.addEventListener('click', () => {
+    localStorage.setItem(KEY, '1');
+    apply(true);
+  });
+  showBtn.addEventListener('click', () => {
+    localStorage.removeItem(KEY);
+    apply(false);
+  });
+})();
+
+// Wrap each H2 (and its following content until the next H2) in a <details open>
+// element so users can collapse/expand sections.
+(function () {
+  const main = document.querySelector('main.content');
+  if (!main) return;
+
+  // Collect direct-child H2 headings so we don't touch nested ones (e.g., inside details we'll create)
+  const headings = Array.from(main.children).filter(el => el.tagName === 'H2');
+
+  headings.forEach(h2 => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'section-collapsible';
+
+    const summary = document.createElement('summary');
+    // Move heading content (incl. anchor) into the summary so anchors keep working
+    summary.innerHTML = h2.innerHTML;
+    if (h2.id) summary.id = h2.id;
+    details.appendChild(summary);
+
+    // Move siblings until next H2 into details
+    const parent = h2.parentNode;
+    let next = h2.nextSibling;
+    parent.replaceChild(details, h2);
+    while (next && !(next.nodeType === 1 && next.tagName === 'H2')) {
+      const node = next;
+      next = next.nextSibling;
+      details.appendChild(node);
+    }
+  });
+
+  // If there's a hash in the URL, ensure the target's <details> is open
+  function openDetailsForHash(hash) {
+    if (!hash) return;
+    const target = document.getElementById(hash.replace(/^#/, ''));
+    if (!target) return;
+    let p = target.closest('details');
+    while (p) { p.open = true; p = p.parentElement && p.parentElement.closest('details'); }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  openDetailsForHash(window.location.hash);
+  window.addEventListener('hashchange', () => openDetailsForHash(window.location.hash));
+
+  // Wire up "Expand all" / "Collapse all" controls in the inline TOC
+  document.querySelectorAll('.toc-controls [data-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const open = action === 'expand-all';
+      document.querySelectorAll('details.section-collapsible').forEach(d => { d.open = open; });
+    });
+  });
+})();
+
+// Populate prev/next navigation based on the current page's banner-num
+(function () {
+  const pill = document.querySelector('.banner-pill');
+  const nav = document.querySelector('.page-prev-next');
+  if (!pill || !nav) return;
+
+  const key = (pill.textContent || '').trim().toUpperCase();
+
+  // Map banner-num → { prev, next }
+  // Each entry: { href, title } (or null if not present)
+  const MAP = {
+    // ----- Clase 1 -----
+    'C1 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' }
+    },
+    'C1 · TAREA': {
+      prev: { href: 'clase-1-clase.html', title: 'Material en clase 1' },
+      next: { href: 'clase-2-clase.html', title: 'Clase 2' }
+    },
+    // ----- Clase 2 -----
+    'C2 · CLASE': {
+      prev: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' },
+      next: { href: 'clase-2-tarea.html', title: 'Tarea de clase 2' }
+    },
+    'C2 · TAREA': {
+      prev: { href: 'clase-2-clase.html', title: 'Material en clase 2' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 3 -----
+    'C3 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-3-tarea.html', title: 'Tarea de clase 3' }
+    },
+    'C3 · TAREA': {
+      prev: { href: 'clase-3-clase.html', title: 'Material en clase 3' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 4 -----
+    'C4 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' }
+    },
+    'C4 · TAREA': {
+      prev: { href: 'clase-4-clase.html', title: 'Material en clase 4' },
+      next: { href: 'tp-final.html',      title: 'Trabajo final' }
+    },
+    // ----- TP final -----
+    'TP FINAL': {
+      prev: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Material transversal -----
+    'DIAGRAMAS': {
+      prev: { href: 'index.html',  title: 'Menú principal' },
+      next: { href: 'glosario.html', title: 'Glosario' }
+    },
+    'GLOSARIO': {
+      prev: { href: 'diagramas-arquitectura.html', title: 'Diagramas' },
+      next: { href: 'cheat-sheet.html',            title: 'Cheat sheet' }
+    },
+    'CHEAT-SHEET': {
+      prev: { href: 'glosario.html', title: 'Glosario' },
+      next: { href: 'index.html',    title: 'Menú principal' }
+    }
+  };
+
+  const entry = MAP[key];
+  if (!entry) return;
+
+  const prevLink = nav.querySelector('[data-slot="prev"]');
+  const nextLink = nav.querySelector('[data-slot="next"]');
+  const prevTitle = nav.querySelector('[data-slot="prev-title"]');
+  const nextTitle = nav.querySelector('[data-slot="next-title"]');
+
+  if (entry.prev && prevLink && prevTitle) {
+    prevLink.setAttribute('href', entry.prev.href);
+    prevTitle.textContent = entry.prev.title;
+    prevLink.hidden = false;
+  }
+  if (entry.next && nextLink && nextTitle) {
+    nextLink.setAttribute('href', entry.next.href);
+    nextTitle.textContent = entry.next.title;
+    nextLink.hidden = false;
+  }
+
+  // If neither slot is shown, hide the whole nav
+  if ((!entry.prev) && (!entry.next)) {
+    nav.style.display = 'none';
+  }
+})();
+
+// Click-to-copy on every <pre> code block
+(function () {
+  document.querySelectorAll('pre').forEach(pre => {
+    pre.addEventListener('click', async (e) => {
+      // Don't trigger if user is selecting text
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0 && pre.contains(sel.anchorNode)) return;
+
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        pre.classList.add('copied');
+        setTimeout(() => pre.classList.remove('copied'), 1400);
+      } catch (err) {
+        // Fallback: select all
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel2 = window.getSelection();
+        sel2.removeAllRanges();
+        sel2.addRange(range);
+      }
+    });
+  });
+})();
+
+// Open all external links in a new tab (preserves the current page).
+// Internal anchors (#hash), relative links and same-origin links stay in-tab.
+(function () {
+  const here = window.location.hostname;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // Skip anchors and pure relative links
+    if (href.startsWith('#') || href.startsWith('/') || !/^https?:\/\//i.test(href)) return;
+    try {
+      const url = new URL(href);
+      if (url.hostname && url.hostname !== here) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    } catch (_) {
+      // Malformed URL — ignore
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

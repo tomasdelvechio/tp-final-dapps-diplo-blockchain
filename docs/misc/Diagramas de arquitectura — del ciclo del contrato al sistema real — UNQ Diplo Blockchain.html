@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="generator" content="pandoc + UNLu/DCB template">
+  <title>Diagramas de arquitectura — del ciclo del contrato al sistema
+real — UNQ Diplo Blockchain</title>
+  <link rel="stylesheet" href="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/style.css">
+</head>
+<body>
+
+<header class="unq-header">
+  <a href="https://dpetrocelli.github.io/diplounq2026/index.html" class="brand" title="Volver al menú principal">
+    <img src="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/unq-logo-white.png" alt="Universidad Nacional de Quilmes" class="logo unq">
+    <div class="brand-text">
+      <div class="institution">Universidad Nacional de Quilmes</div>
+      <div class="department">Diplomatura en Blockchain</div>
+    </div>
+  </a>
+  <div class="course-bar">
+    <span class="course">Desarrollo de Smart Contracts y dApps</span>
+    <span class="year">2026</span>
+    <span class="instructor">Dr. David Petrocelli &amp; Esp. Ciro Romero</span>
+  </div>
+</header>
+
+<button type="button" id="sidebar-show" class="sidebar-toggle-btn sidebar-show visible" aria-label="Mostrar índice lateral" title="Mostrar índice lateral">☰</button>
+
+<div class="layout sidebar-hidden">
+  <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">
+      <div class="toc-title">Contenidos</div>
+      <button type="button" id="sidebar-hide" class="sidebar-toggle-btn sidebar-hide" aria-label="Ocultar índice lateral" title="Ocultar índice lateral">×</button>
+    </div>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#diagramas-de-arquitectura--del-ciclo-del-contrato-al-sistema-de-credenciales" id="toc-diagramas-de-arquitectura--del-ciclo-del-contrato-al-sistema-de-credenciales">Diagramas
+    de arquitectura — del ciclo del contrato al sistema de
+    credenciales</a>
+    <ul>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#1--el-ciclo-de-un-smart-contract" id="toc-1--el-ciclo-de-un-smart-contract">1 · El ciclo de un smart
+    contract</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#2--las-3-capas--mapa-global-del-sistema" id="toc-2--las-3-capas--mapa-global-del-sistema">2 · Las 3 capas —
+    mapa global del sistema</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#3--arquitectura-real-del-sistema-de-credenciales" id="toc-3--arquitectura-real-del-sistema-de-credenciales">3 ·
+    Arquitectura real del sistema de credenciales</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#4--read-vs-write--la-distinci%C3%B3n-cr%C3%ADtica" id="toc-4--read-vs-write--la-distinción-crítica">4 · Read vs Write —
+    la distinción crítica</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#5--qu%C3%A9-vive-d%C3%B3nde--p%C3%BAblico-vs-privado" id="toc-5--qué-vive-dónde--público-vs-privado">5 · Qué vive dónde —
+    público vs privado</a></li>
+    <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#material-relacionado" id="toc-material-relacionado">Material relacionado</a></li>
+    </ul></li>
+    </ul>
+    <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--light-gray);font-size:12px;">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html" style="color:var(--gray);">← Volver al índice</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html">Inicio</a>
+      <span class="sep">›</span>
+      <span class="current">DIAGRAMAS</span>
+    </nav>
+    <nav class="page-nav-top">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html" class="back-to-menu">← Volver al menú principal</a>
+      <span class="banner-pill">DIAGRAMAS</span>
+    </nav>
+
+    <details class="toc-inline" open="">
+      <summary>📑 Índice del documento</summary>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#diagramas-de-arquitectura--del-ciclo-del-contrato-al-sistema-de-credenciales" id="toc-diagramas-de-arquitectura--del-ciclo-del-contrato-al-sistema-de-credenciales">Diagramas
+      de arquitectura — del ciclo del contrato al sistema de
+      credenciales</a>
+      <ul>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#1--el-ciclo-de-un-smart-contract" id="toc-1--el-ciclo-de-un-smart-contract">1 · El ciclo de un smart
+      contract</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#2--las-3-capas--mapa-global-del-sistema" id="toc-2--las-3-capas--mapa-global-del-sistema">2 · Las 3 capas —
+      mapa global del sistema</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#3--arquitectura-real-del-sistema-de-credenciales" id="toc-3--arquitectura-real-del-sistema-de-credenciales">3 ·
+      Arquitectura real del sistema de credenciales</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#4--read-vs-write--la-distinci%C3%B3n-cr%C3%ADtica" id="toc-4--read-vs-write--la-distinción-crítica">4 · Read vs Write
+      — la distinción crítica</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#5--qu%C3%A9-vive-d%C3%B3nde--p%C3%BAblico-vs-privado" id="toc-5--qué-vive-dónde--público-vs-privado">5 · Qué vive dónde
+      — público vs privado</a></li>
+      <li><a href="https://dpetrocelli.github.io/diplounq2026/diagramas-arquitectura.html#material-relacionado" id="toc-material-relacionado">Material relacionado</a></li>
+      </ul></li>
+      </ul>
+      <div class="toc-controls">
+        <button type="button" class="toc-btn" data-action="expand-all">Expandir todo</button>
+        <button type="button" class="toc-btn" data-action="collapse-all">Colapsar todo</button>
+      </div>
+    </details>
+
+<h1 id="diagramas-de-arquitectura--del-ciclo-del-contrato-al-sistema-de-credenciales">Diagramas
+de arquitectura — del ciclo del contrato al sistema de credenciales</h1>
+<blockquote>
+<p><strong>Para qué sirve esta página</strong>: tener visualizaciones
+polidas que cubren todo el camino conceptual de la diplomatura — desde
+“qué es un smart contract” hasta “cómo se construye el sistema de
+credenciales académicas UNQ”.</p>
+</blockquote>
+<blockquote>
+<p><strong>Cómo leer esta página</strong>: arrancamos en lo más simple
+(el ciclo de un contrato), subimos al <strong>mapa global de 3
+capas</strong> para tener el modelo mental, bajamos al <strong>sistema
+real completo</strong> con todas sus piezas, y cerramos con dos
+referencias tácticas para el día a día — cómo leer/escribir y qué es
+secreto vs público.</p>
+</blockquote>
+<hr>
+<details open="" class="section-collapsible"><summary id="1--el-ciclo-de-un-smart-contract">1 · El ciclo de un smart
+contract</summary>
+<p>Lo más fundamental: del archivo <code>.sol</code> que escribís en tu
+disco, al contrato deployado en la chain, al usuario final que lo usa
+desde el browser. Tres swim-lanes (tu máquina, blockchain, Etherscan)
+muestran qué pieza vive dónde y qué herramienta hace de bisagra entre
+ellas.</p>
+<p><img src="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/01-ciclo-completo.png" alt="Ciclo completo"></p>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="2--las-3-capas--mapa-global-del-sistema">2 · Las 3 capas — mapa
+global del sistema</summary>
+<p>El modelo mental más alto: <strong>edge / cliente</strong> (browser
+del decano/estudiante/verificador + frontend en Vercel + MetaMask) ·
+<strong>web2 infra</strong> (backend, indexer, Postgres, IPFS,
+observabilidad — la app web tradicional) · <strong>on-chain</strong>
+(<code>AcademicCredentials.sol</code> + roles + state inmutable de las
+credenciales en Sepolia).</p>
+<p><img src="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/02-tres-capas.png" alt="Las 3 capas"></p>
+<blockquote>
+<p><strong>Regla práctica</strong>: si lo pueden romper sin pedirle
+permiso a nadie → es suyo (web2). Si necesitan firma + gas → es
+on-chain.</p>
+</blockquote>
+<blockquote>
+<p><strong>Cómo leer este diagrama</strong>: lo de arriba (naranja) es
+lo que ve y toca el usuario. Lo del medio (azul) es la app web “de toda
+la vida” — un Next.js, un FastAPI, un Postgres. Lo de abajo (verde) es
+el contrato — la única pieza que <strong>no controlan</strong> una vez
+deployada.</p>
+</blockquote>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="3--arquitectura-real-del-sistema-de-credenciales">3 ·
+Arquitectura real del sistema de credenciales</summary>
+<p>Ahora bajemos al detalle. <strong>El sistema completo</strong>:
+Frontend (Vercel) + Backend Web2 (k3s) +
+<code>AcademicCredentials.sol</code> (Sepolia → más adelante
+Base/Polygon) + IPFS para PDFs y fotos + indexer The Graph +
+observabilidad (Tenderly + Sentry).</p>
+<blockquote>
+<p><strong>Para el TP final no necesitan TODOS estos
+componentes</strong> — esto es la referencia de cómo se ve un sistema de
+credenciales en producción. Lo mínimo son: frontend + contrato + IPFS
+para el PDF. The Graph, Auth0, Cloudflare CDN, Sentry y Tenderly son
+enchufables después.</p>
+</blockquote>
+<blockquote>
+<p><strong>El contrato es UNA pieza</strong> del sistema, no es todo. Es
+el “servicio de credenciales” en una app tradicional. El resto (UI, API,
+BD, login admin, monitoreo) sigue siendo lo de siempre.</p>
+</blockquote>
+<p><img src="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/03-sistema-real.png" alt="Arquitectura del sistema"></p>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="4--read-vs-write--la-distinción-crítica">4 · Read vs Write — la
+distinción crítica</summary>
+<p>La confusión #1 de todo principiante. <code>cast call</code> y
+<code>cast send</code> se ven idénticos en el código pero hacen cosas
+radicalmente distintas. <strong>Regla mnemotécnica</strong>: si la
+función Solidity dice <code>view</code> o <code>pure</code> →
+<code>cast call</code>. Cualquier otra cosa →
+<code>cast send</code>.</p>
+<p><img src="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/04-read-vs-write.png" alt="Read vs Write"></p>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="5--qué-vive-dónde--público-vs-privado">5 · Qué vive dónde —
+público vs privado</summary>
+<p>Mapa mental para saber qué se puede compartir y qué nunca. Todo lo
+que está del lado rojo (private key, frase BIP-39, <code>.env</code>) es
+secreto. Todo lo del lado verde (address, txs, bytecode, storage, source
+verificado) es <strong>público por diseño</strong> — cualquiera lo
+lee.</p>
+<p><img src="./Diagramas de arquitectura — del ciclo del contrato al sistema real — UNQ Diplo Blockchain_files/05-que-vive-donde.png" alt="Qué vive dónde"></p>
+<hr>
+</details><details open="" class="section-collapsible"><summary id="material-relacionado">Material relacionado</summary>
+<ul>
+<li><a href="https://dpetrocelli.github.io/diplounq2026/clase-3-clase.html">Clase 3 — Cierre de Clase 2 +
+Credenciales académicas</a> — la clase donde se introducen estos
+conceptos</li>
+<li><a href="https://dpetrocelli.github.io/diplounq2026/clase-4-clase.html">Clase 4 — Frontend NFT +
+Seguridad</a></li>
+<li><a href="https://dpetrocelli.github.io/diplounq2026/tp-final.html">Trabajo Final — Verificación de credenciales
+académicas UNQ</a> — el TP de la diplomatura</li>
+</ul>
+
+    <nav class="page-prev-next" aria-label="Navegación entre páginas">
+      <a class="prev-link" href="https://dpetrocelli.github.io/diplounq2026/index.html" data-slot="prev">
+        <span class="arrow">←</span>
+        <span class="nav-meta">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title" data-slot="prev-title">Menú principal</span>
+        </span>
+      </a>
+      <a class="next-link" href="https://dpetrocelli.github.io/diplounq2026/glosario.html" data-slot="next">
+        <span class="nav-meta">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title" data-slot="next-title">Glosario</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <nav class="page-nav-bottom">
+      <a href="https://dpetrocelli.github.io/diplounq2026/index.html" class="back-to-menu">← Volver al menú principal</a>
+    </nav>
+  </details></main>
+</div>
+
+<footer class="unq-footer">
+  <div>
+    UNQ · Diplomatura en Blockchain · Desarrollo de Smart Contracts y dApps <strong>2026</strong>
+    · Dr. David Petrocelli &amp; Esp. Ciro Romero
+  </div>
+</footer>
+
+<script>
+// Sidebar show/hide toggle (preference persisted in localStorage)
+(function () {
+  const sidebar = document.getElementById('toc-sidebar');
+  const layout = document.querySelector('.layout');
+  const hideBtn = document.getElementById('sidebar-hide');
+  const showBtn = document.getElementById('sidebar-show');
+  if (!sidebar || !layout || !hideBtn || !showBtn) return;
+
+  const KEY = 'unlu.dcb.sidebar.hidden';
+
+  function apply(hidden) {
+    layout.classList.toggle('sidebar-hidden', hidden);
+    showBtn.classList.toggle('visible', hidden);
+  }
+
+  apply(localStorage.getItem(KEY) === '1');
+
+  hideBtn.addEventListener('click', () => {
+    localStorage.setItem(KEY, '1');
+    apply(true);
+  });
+  showBtn.addEventListener('click', () => {
+    localStorage.removeItem(KEY);
+    apply(false);
+  });
+})();
+
+// Wrap each H2 (and its following content until the next H2) in a <details open>
+// element so users can collapse/expand sections.
+(function () {
+  const main = document.querySelector('main.content');
+  if (!main) return;
+
+  // Collect direct-child H2 headings so we don't touch nested ones (e.g., inside details we'll create)
+  const headings = Array.from(main.children).filter(el => el.tagName === 'H2');
+
+  headings.forEach(h2 => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'section-collapsible';
+
+    const summary = document.createElement('summary');
+    // Move heading content (incl. anchor) into the summary so anchors keep working
+    summary.innerHTML = h2.innerHTML;
+    if (h2.id) summary.id = h2.id;
+    details.appendChild(summary);
+
+    // Move siblings until next H2 into details
+    const parent = h2.parentNode;
+    let next = h2.nextSibling;
+    parent.replaceChild(details, h2);
+    while (next && !(next.nodeType === 1 && next.tagName === 'H2')) {
+      const node = next;
+      next = next.nextSibling;
+      details.appendChild(node);
+    }
+  });
+
+  // If there's a hash in the URL, ensure the target's <details> is open
+  function openDetailsForHash(hash) {
+    if (!hash) return;
+    const target = document.getElementById(hash.replace(/^#/, ''));
+    if (!target) return;
+    let p = target.closest('details');
+    while (p) { p.open = true; p = p.parentElement && p.parentElement.closest('details'); }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  openDetailsForHash(window.location.hash);
+  window.addEventListener('hashchange', () => openDetailsForHash(window.location.hash));
+
+  // Wire up "Expand all" / "Collapse all" controls in the inline TOC
+  document.querySelectorAll('.toc-controls [data-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const open = action === 'expand-all';
+      document.querySelectorAll('details.section-collapsible').forEach(d => { d.open = open; });
+    });
+  });
+})();
+
+// Populate prev/next navigation based on the current page's banner-num
+(function () {
+  const pill = document.querySelector('.banner-pill');
+  const nav = document.querySelector('.page-prev-next');
+  if (!pill || !nav) return;
+
+  const key = (pill.textContent || '').trim().toUpperCase();
+
+  // Map banner-num → { prev, next }
+  // Each entry: { href, title } (or null if not present)
+  const MAP = {
+    // ----- Clase 1 -----
+    'C1 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' }
+    },
+    'C1 · TAREA': {
+      prev: { href: 'clase-1-clase.html', title: 'Material en clase 1' },
+      next: { href: 'clase-2-clase.html', title: 'Clase 2' }
+    },
+    // ----- Clase 2 -----
+    'C2 · CLASE': {
+      prev: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' },
+      next: { href: 'clase-2-tarea.html', title: 'Tarea de clase 2' }
+    },
+    'C2 · TAREA': {
+      prev: { href: 'clase-2-clase.html', title: 'Material en clase 2' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 3 -----
+    'C3 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-3-tarea.html', title: 'Tarea de clase 3' }
+    },
+    'C3 · TAREA': {
+      prev: { href: 'clase-3-clase.html', title: 'Material en clase 3' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 4 -----
+    'C4 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' }
+    },
+    'C4 · TAREA': {
+      prev: { href: 'clase-4-clase.html', title: 'Material en clase 4' },
+      next: { href: 'tp-final.html',      title: 'Trabajo final' }
+    },
+    // ----- TP final -----
+    'TP FINAL': {
+      prev: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Material transversal -----
+    'DIAGRAMAS': {
+      prev: { href: 'index.html',  title: 'Menú principal' },
+      next: { href: 'glosario.html', title: 'Glosario' }
+    },
+    'GLOSARIO': {
+      prev: { href: 'diagramas-arquitectura.html', title: 'Diagramas' },
+      next: { href: 'cheat-sheet.html',            title: 'Cheat sheet' }
+    },
+    'CHEAT-SHEET': {
+      prev: { href: 'glosario.html', title: 'Glosario' },
+      next: { href: 'index.html',    title: 'Menú principal' }
+    }
+  };
+
+  const entry = MAP[key];
+  if (!entry) return;
+
+  const prevLink = nav.querySelector('[data-slot="prev"]');
+  const nextLink = nav.querySelector('[data-slot="next"]');
+  const prevTitle = nav.querySelector('[data-slot="prev-title"]');
+  const nextTitle = nav.querySelector('[data-slot="next-title"]');
+
+  if (entry.prev && prevLink && prevTitle) {
+    prevLink.setAttribute('href', entry.prev.href);
+    prevTitle.textContent = entry.prev.title;
+    prevLink.hidden = false;
+  }
+  if (entry.next && nextLink && nextTitle) {
+    nextLink.setAttribute('href', entry.next.href);
+    nextTitle.textContent = entry.next.title;
+    nextLink.hidden = false;
+  }
+
+  // If neither slot is shown, hide the whole nav
+  if ((!entry.prev) && (!entry.next)) {
+    nav.style.display = 'none';
+  }
+})();
+
+// Click-to-copy on every <pre> code block
+(function () {
+  document.querySelectorAll('pre').forEach(pre => {
+    pre.addEventListener('click', async (e) => {
+      // Don't trigger if user is selecting text
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0 && pre.contains(sel.anchorNode)) return;
+
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        pre.classList.add('copied');
+        setTimeout(() => pre.classList.remove('copied'), 1400);
+      } catch (err) {
+        // Fallback: select all
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel2 = window.getSelection();
+        sel2.removeAllRanges();
+        sel2.addRange(range);
+      }
+    });
+  });
+})();
+
+// Open all external links in a new tab (preserves the current page).
+// Internal anchors (#hash), relative links and same-origin links stay in-tab.
+(function () {
+  const here = window.location.hostname;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // Skip anchors and pure relative links
+    if (href.startsWith('#') || href.startsWith('/') || !/^https?:\/\//i.test(href)) return;
+    try {
+      const url = new URL(href);
+      if (url.hostname && url.hostname !== here) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    } catch (_) {
+      // Malformed URL — ignore
+    }
+  });
+})();
+</script>
+
+
+
+</body></html>

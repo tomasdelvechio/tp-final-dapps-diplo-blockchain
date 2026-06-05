@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="generator" content="pandoc + UNLu/DCB template">
+  <title>Clase 4 — Frontend NFT + Seguridad · En clase — UNQ Diplo
+Blockchain</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+
+<header class="unq-header">
+  <a href="index.html" class="brand" title="Volver al menú principal">
+    <img src="assets/unq-logo-white.png" alt="Universidad Nacional de Quilmes" class="logo unq">
+    <div class="brand-text">
+      <div class="institution">Universidad Nacional de Quilmes</div>
+      <div class="department">Diplomatura en Blockchain</div>
+    </div>
+  </a>
+  <div class="course-bar">
+    <span class="course">Desarrollo de Smart Contracts y dApps</span>
+    <span class="year">2026</span>
+    <span class="instructor">Dr. David Petrocelli &amp; Esp. Ciro Romero</span>
+  </div>
+</header>
+
+<button type="button" id="sidebar-show" class="sidebar-toggle-btn sidebar-show" aria-label="Mostrar índice lateral" title="Mostrar índice lateral">☰</button>
+
+<div class="layout">
+  <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">
+      <div class="toc-title">Contenidos</div>
+      <button type="button" id="sidebar-hide" class="sidebar-toggle-btn sidebar-hide" aria-label="Ocultar índice lateral" title="Ocultar índice lateral">×</button>
+    </div>
+    <ul>
+    <li><a href="#clase-4--frontend-nft--seguridad"
+    id="toc-clase-4--frontend-nft--seguridad">Clase 4 — Frontend NFT +
+    Seguridad</a>
+    <ul>
+    <li><a href="#qué-vamos-a-hacer" id="toc-qué-vamos-a-hacer">¿Qué
+    vamos a hacer?</a>
+    <ul>
+    <li><a href="#en-clase" id="toc-en-clase">🏫 En clase (en vivo con
+    David + Ciro)</a></li>
+    <li><a href="#house-tarea" id="toc-house-tarea">🏠 Tarea</a></li>
+    </ul></li>
+    <li><a href="#parte-1--qué-es-una-dapp"
+    id="toc-parte-1--qué-es-una-dapp">Parte 1 — ¿Qué es una
+    DApp?</a></li>
+    <li><a href="#parte-2--setup" id="toc-parte-2--setup">Parte 2 —
+    Setup</a>
+    <ul>
+    <li><a href="#21-clonar-el-repo" id="toc-21-clonar-el-repo">2.1
+    Clonar el repo</a></li>
+    <li><a href="#22-instalar-dependencias-del-frontend"
+    id="toc-22-instalar-dependencias-del-frontend">2.2 Instalar
+    dependencias del frontend</a></li>
+    </ul></li>
+    <li><a href="#parte-3--walletconnect-project-id"
+    id="toc-parte-3--walletconnect-project-id">Parte 3 — WalletConnect
+    Project ID</a>
+    <ul>
+    <li><a href="#31-conseguir-el-project-id"
+    id="toc-31-conseguir-el-project-id">3.1 Conseguir el Project
+    ID</a></li>
+    <li><a href="#32-pegarlo-en-wagmits"
+    id="toc-32-pegarlo-en-wagmits">3.2 Pegarlo en
+    <code>wagmi.ts</code></a></li>
+    </ul></li>
+    <li><a href="#parte-4--pegar-la-dirección-del-contrato"
+    id="toc-parte-4--pegar-la-dirección-del-contrato">Parte 4 — Pegar la
+    dirección del contrato</a></li>
+    <li><a href="#parte-5--tour-del-frontend"
+    id="toc-parte-5--tour-del-frontend">Parte 5 — Tour del frontend</a>
+    <ul>
+    <li><a href="#51-appproviderstsx--los-3-providers"
+    id="toc-51-appproviderstsx--los-3-providers">5.1
+    <code>app/providers.tsx</code> — los 3 providers</a></li>
+    <li><a href="#52-wagmits--configuración-de-redes"
+    id="toc-52-wagmits--configuración-de-redes">5.2
+    <code>wagmi.ts</code> — configuración de redes</a></li>
+    <li><a href="#53-appcomponentsmycredentialtsx--leer-del-contrato"
+    id="toc-53-appcomponentsmycredentialtsx--leer-del-contrato">5.3
+    <code>app/components/MyCredential.tsx</code> — leer del
+    contrato</a></li>
+    <li><a
+    href="#54-appcomponentsissuecredentialtsx--escribir-al-contrato"
+    id="toc-54-appcomponentsissuecredentialtsx--escribir-al-contrato">5.4
+    <code>app/components/IssueCredential.tsx</code> — escribir al
+    contrato</a></li>
+    <li><a href="#55-apppagetsx--ui-condicional-según-rol"
+    id="toc-55-apppagetsx--ui-condicional-según-rol">5.5
+    <code>app/page.tsx</code> — UI condicional según rol</a></li>
+    </ul></li>
+    <li><a href="#parte-6--correr-la-dapp"
+    id="toc-parte-6--correr-la-dapp">Parte 6 — Correr la DApp</a>
+    <ul>
+    <li><a href="#probá-emitir-un-título-a-un-compañero"
+    id="toc-probá-emitir-un-título-a-un-compañero">Probá emitir un
+    título a un compañero</a></li>
+    </ul></li>
+    <li><a href="#parte-7--reentrancy-el-bug-más-famoso-de-ethereum"
+    id="toc-parte-7--reentrancy-el-bug-más-famoso-de-ethereum">Parte 7 —
+    Reentrancy: el bug más famoso de Ethereum</a>
+    <ul>
+    <li><a href="#71-setup-del-laboratorio"
+    id="toc-71-setup-del-laboratorio">7.1 Setup del laboratorio</a></li>
+    <li><a href="#72-el-contrato-vulnerable"
+    id="toc-72-el-contrato-vulnerable">7.2 El contrato
+    vulnerable</a></li>
+    <li><a href="#73-el-atacante" id="toc-73-el-atacante">7.3 El
+    atacante</a></li>
+    <li><a href="#74-ver-el-ataque" id="toc-74-ver-el-ataque">7.4 Ver el
+    ataque</a></li>
+    </ul></li>
+    <li><a href="#parte-8--cómo-defenderse"
+    id="toc-parte-8--cómo-defenderse">Parte 8 — Cómo defenderse</a>
+    <ul>
+    <li><a href="#81-defensa-1-checks-effects-interactions-cei"
+    id="toc-81-defensa-1-checks-effects-interactions-cei">8.1 Defensa
+    #1: Checks-Effects-Interactions (CEI)</a></li>
+    <li><a href="#82-defensa-2-reentrancyguard"
+    id="toc-82-defensa-2-reentrancyguard">8.2 Defensa #2:
+    ReentrancyGuard</a></li>
+    <li><a href="#83-cuándo-usar-cuál" id="toc-83-cuándo-usar-cuál">8.3
+    ¿Cuándo usar cuál?</a></li>
+    </ul></li>
+    <li><a href="#parte-9--slither-análisis-estático"
+    id="toc-parte-9--slither-análisis-estático">Parte 9 — Slither:
+    análisis estático</a>
+    <ul>
+    <li><a href="#instalación" id="toc-instalación">Instalación</a></li>
+    <li><a href="#correrlo" id="toc-correrlo">Correrlo</a></li>
+    <li><a href="#otros-detectores-comunes"
+    id="toc-otros-detectores-comunes">Otros detectores comunes</a></li>
+    </ul></li>
+    <li><a href="#parte-10--deploy-a-base-sepolia-l2"
+    id="toc-parte-10--deploy-a-base-sepolia-l2">Parte 10 — Deploy a Base
+    Sepolia (L2)</a>
+    <ul>
+    <li><a href="#por-qué-l2" id="toc-por-qué-l2">¿Por qué L2?</a></li>
+    <li><a href="#lo-único-que-cambia" id="toc-lo-único-que-cambia">Lo
+    único que cambia</a></li>
+    <li><a href="#cómo-se-ve-en-el-código"
+    id="toc-cómo-se-ve-en-el-código">Cómo se ve en el código</a></li>
+    </ul></li>
+    <li><a
+    href="#parte-11--mapa-del-tp-final-qué-ya-vimos-vs-qué-tienen-que-investigar"
+    id="toc-parte-11--mapa-del-tp-final-qué-ya-vimos-vs-qué-tienen-que-investigar">Parte
+    11 — Mapa del TP final: qué ya vimos vs qué tienen que
+    investigar</a></li>
+    <li><a href="#parte-12--trabajo-final"
+    id="toc-parte-12--trabajo-final">Parte 12 — Trabajo final</a></li>
+    <li><a href="#después-de-clase" id="toc-después-de-clase">Después de
+    clase</a></li>
+    <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+    falla</a></li>
+    </ul></li>
+    </ul>
+    <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--light-gray);font-size:12px;">
+      <a href="index.html" style="color:var(--gray);">← Volver al índice</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span class="sep">›</span>
+      <span class="current">C4 · CLASE</span>
+    </nav>
+    <nav class="page-nav-top">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+      <span class="banner-pill">C4 · CLASE</span>
+    </nav>
+
+    <details class="toc-inline" open>
+      <summary>📑 Índice del documento</summary>
+      <ul>
+      <li><a href="#clase-4--frontend-nft--seguridad"
+      id="toc-clase-4--frontend-nft--seguridad">Clase 4 — Frontend NFT +
+      Seguridad</a>
+      <ul>
+      <li><a href="#qué-vamos-a-hacer" id="toc-qué-vamos-a-hacer">¿Qué
+      vamos a hacer?</a>
+      <ul>
+      <li><a href="#en-clase" id="toc-en-clase">🏫 En clase (en vivo con
+      David + Ciro)</a></li>
+      <li><a href="#house-tarea" id="toc-house-tarea">🏠 Tarea</a></li>
+      </ul></li>
+      <li><a href="#parte-1--qué-es-una-dapp"
+      id="toc-parte-1--qué-es-una-dapp">Parte 1 — ¿Qué es una
+      DApp?</a></li>
+      <li><a href="#parte-2--setup" id="toc-parte-2--setup">Parte 2 —
+      Setup</a>
+      <ul>
+      <li><a href="#21-clonar-el-repo" id="toc-21-clonar-el-repo">2.1
+      Clonar el repo</a></li>
+      <li><a href="#22-instalar-dependencias-del-frontend"
+      id="toc-22-instalar-dependencias-del-frontend">2.2 Instalar
+      dependencias del frontend</a></li>
+      </ul></li>
+      <li><a href="#parte-3--walletconnect-project-id"
+      id="toc-parte-3--walletconnect-project-id">Parte 3 — WalletConnect
+      Project ID</a>
+      <ul>
+      <li><a href="#31-conseguir-el-project-id"
+      id="toc-31-conseguir-el-project-id">3.1 Conseguir el Project
+      ID</a></li>
+      <li><a href="#32-pegarlo-en-wagmits"
+      id="toc-32-pegarlo-en-wagmits">3.2 Pegarlo en
+      <code>wagmi.ts</code></a></li>
+      </ul></li>
+      <li><a href="#parte-4--pegar-la-dirección-del-contrato"
+      id="toc-parte-4--pegar-la-dirección-del-contrato">Parte 4 — Pegar
+      la dirección del contrato</a></li>
+      <li><a href="#parte-5--tour-del-frontend"
+      id="toc-parte-5--tour-del-frontend">Parte 5 — Tour del
+      frontend</a>
+      <ul>
+      <li><a href="#51-appproviderstsx--los-3-providers"
+      id="toc-51-appproviderstsx--los-3-providers">5.1
+      <code>app/providers.tsx</code> — los 3 providers</a></li>
+      <li><a href="#52-wagmits--configuración-de-redes"
+      id="toc-52-wagmits--configuración-de-redes">5.2
+      <code>wagmi.ts</code> — configuración de redes</a></li>
+      <li><a href="#53-appcomponentsmycredentialtsx--leer-del-contrato"
+      id="toc-53-appcomponentsmycredentialtsx--leer-del-contrato">5.3
+      <code>app/components/MyCredential.tsx</code> — leer del
+      contrato</a></li>
+      <li><a
+      href="#54-appcomponentsissuecredentialtsx--escribir-al-contrato"
+      id="toc-54-appcomponentsissuecredentialtsx--escribir-al-contrato">5.4
+      <code>app/components/IssueCredential.tsx</code> — escribir al
+      contrato</a></li>
+      <li><a href="#55-apppagetsx--ui-condicional-según-rol"
+      id="toc-55-apppagetsx--ui-condicional-según-rol">5.5
+      <code>app/page.tsx</code> — UI condicional según rol</a></li>
+      </ul></li>
+      <li><a href="#parte-6--correr-la-dapp"
+      id="toc-parte-6--correr-la-dapp">Parte 6 — Correr la DApp</a>
+      <ul>
+      <li><a href="#probá-emitir-un-título-a-un-compañero"
+      id="toc-probá-emitir-un-título-a-un-compañero">Probá emitir un
+      título a un compañero</a></li>
+      </ul></li>
+      <li><a href="#parte-7--reentrancy-el-bug-más-famoso-de-ethereum"
+      id="toc-parte-7--reentrancy-el-bug-más-famoso-de-ethereum">Parte 7
+      — Reentrancy: el bug más famoso de Ethereum</a>
+      <ul>
+      <li><a href="#71-setup-del-laboratorio"
+      id="toc-71-setup-del-laboratorio">7.1 Setup del
+      laboratorio</a></li>
+      <li><a href="#72-el-contrato-vulnerable"
+      id="toc-72-el-contrato-vulnerable">7.2 El contrato
+      vulnerable</a></li>
+      <li><a href="#73-el-atacante" id="toc-73-el-atacante">7.3 El
+      atacante</a></li>
+      <li><a href="#74-ver-el-ataque" id="toc-74-ver-el-ataque">7.4 Ver
+      el ataque</a></li>
+      </ul></li>
+      <li><a href="#parte-8--cómo-defenderse"
+      id="toc-parte-8--cómo-defenderse">Parte 8 — Cómo defenderse</a>
+      <ul>
+      <li><a href="#81-defensa-1-checks-effects-interactions-cei"
+      id="toc-81-defensa-1-checks-effects-interactions-cei">8.1 Defensa
+      #1: Checks-Effects-Interactions (CEI)</a></li>
+      <li><a href="#82-defensa-2-reentrancyguard"
+      id="toc-82-defensa-2-reentrancyguard">8.2 Defensa #2:
+      ReentrancyGuard</a></li>
+      <li><a href="#83-cuándo-usar-cuál"
+      id="toc-83-cuándo-usar-cuál">8.3 ¿Cuándo usar cuál?</a></li>
+      </ul></li>
+      <li><a href="#parte-9--slither-análisis-estático"
+      id="toc-parte-9--slither-análisis-estático">Parte 9 — Slither:
+      análisis estático</a>
+      <ul>
+      <li><a href="#instalación"
+      id="toc-instalación">Instalación</a></li>
+      <li><a href="#correrlo" id="toc-correrlo">Correrlo</a></li>
+      <li><a href="#otros-detectores-comunes"
+      id="toc-otros-detectores-comunes">Otros detectores
+      comunes</a></li>
+      </ul></li>
+      <li><a href="#parte-10--deploy-a-base-sepolia-l2"
+      id="toc-parte-10--deploy-a-base-sepolia-l2">Parte 10 — Deploy a
+      Base Sepolia (L2)</a>
+      <ul>
+      <li><a href="#por-qué-l2" id="toc-por-qué-l2">¿Por qué
+      L2?</a></li>
+      <li><a href="#lo-único-que-cambia" id="toc-lo-único-que-cambia">Lo
+      único que cambia</a></li>
+      <li><a href="#cómo-se-ve-en-el-código"
+      id="toc-cómo-se-ve-en-el-código">Cómo se ve en el código</a></li>
+      </ul></li>
+      <li><a
+      href="#parte-11--mapa-del-tp-final-qué-ya-vimos-vs-qué-tienen-que-investigar"
+      id="toc-parte-11--mapa-del-tp-final-qué-ya-vimos-vs-qué-tienen-que-investigar">Parte
+      11 — Mapa del TP final: qué ya vimos vs qué tienen que
+      investigar</a></li>
+      <li><a href="#parte-12--trabajo-final"
+      id="toc-parte-12--trabajo-final">Parte 12 — Trabajo final</a></li>
+      <li><a href="#después-de-clase" id="toc-después-de-clase">Después
+      de clase</a></li>
+      <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+      falla</a></li>
+      </ul></li>
+      </ul>
+      <div class="toc-controls">
+        <button type="button" class="toc-btn" data-action="expand-all">Expandir todo</button>
+        <button type="button" class="toc-btn" data-action="collapse-all">Colapsar todo</button>
+      </div>
+    </details>
+
+<h1 id="clase-4--frontend-nft--seguridad">Clase 4 — Frontend NFT +
+Seguridad</h1>
+<blockquote>
+<p><strong>Objetivo de hoy</strong>: convertir el contrato
+<code>AcademicCredentials</code> que deployaron en clase 3 en una
+<strong>DApp</strong> — una aplicación web que cualquiera pueda usar
+desde el browser sin conocer Solidity ni <code>cast</code>. Y entender
+el bug más famoso de la historia de Ethereum (reentrancy) y cómo
+prevenirlo.</p>
+</blockquote>
+<h2 id="qué-vamos-a-hacer">¿Qué vamos a hacer?</h2>
+<h3 id="en-clase">🏫 En clase (en vivo con David + Ciro)</h3>
+<ol type="1">
+<li><strong>Construir un frontend</strong> en Next.js que se conecte al
+contrato <code>AcademicCredentials</code>.</li>
+<li><strong>Conectar MetaMask</strong> desde una webapp con RainbowKit +
+wagmi.</li>
+<li><strong>Leer datos del contrato</strong> desde React (balance,
+tokenURI, isValid).</li>
+<li><strong>Escribir transacciones</strong> desde el browser (emitir un
+título).</li>
+<li><strong>Estudiar el bug de reentrancy</strong>: cómo funciona el
+ataque y dos formas de defenderse.</li>
+<li><strong>Correr Slither</strong> — análisis estático automático de
+vulnerabilidades.</li>
+<li><strong>Deploy a Base Sepolia (L2)</strong> — qué cambia respecto de
+Sepolia y por qué importa para el TP.</li>
+</ol>
+<h3 id="house-tarea">🏠 Tarea</h3>
+<p>La tarea va en una página aparte: <a href="clase-4-tarea.html">ver
+tarea de clase 4</a>.</p>
+<hr />
+<h2 id="parte-1--qué-es-una-dapp">Parte 1 — ¿Qué es una DApp?</h2>
+<p><strong>DApp</strong> = Decentralized Application = aplicación
+descentralizada.</p>
+<p>A diferencia de una webapp tradicional (frontend + backend + base de
+datos), una DApp tiene:</p>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Web tradicional</th>
+<th>DApp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend</td>
+<td>React, Vue, Next.js</td>
+<td>Igual (React, Next.js)</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>Node.js / Django / Rails</td>
+<td><strong>Smart contract</strong> en blockchain</td>
+</tr>
+<tr>
+<td>Base de datos</td>
+<td>PostgreSQL / MongoDB</td>
+<td><strong>Estado del contrato</strong> (on-chain)</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>Email + password / OAuth</td>
+<td><strong>Wallet</strong> (MetaMask)</td>
+</tr>
+</tbody>
+</table>
+<p>La pieza nueva que aprendemos hoy es la <strong>conexión entre el
+frontend y el contrato</strong>. Para eso usamos:</p>
+<ul>
+<li><strong>wagmi</strong> — librería de React hooks para Ethereum
+(<code>useReadContract</code>, <code>useWriteContract</code>,
+<code>useAccount</code>).</li>
+<li><strong>viem</strong> — la librería de bajo nivel que usa wagmi por
+debajo (encoding/decoding de calldata, ABIs, etc).</li>
+<li><strong>RainbowKit</strong> — UI lista para “Connect Wallet” (botón
++ modal con todas las wallets soportadas).</li>
+</ul>
+<hr />
+<h2 id="parte-2--setup">Parte 2 — Setup</h2>
+<h3 id="21-clonar-el-repo">2.1 Clonar el repo</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/dpetrocelli/diplo-unq-blockchain-clase4.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> diplo-unq-blockchain-clase4</span></code></pre></div>
+<p>El repo tiene <strong>dos</strong> subdirectorios:</p>
+<pre><code>diplo-unq-blockchain-clase4/
+├── frontend/        # Next.js DApp
+└── security-lab/    # Foundry — laboratorio de reentrancy</code></pre>
+<h3 id="22-instalar-dependencias-del-frontend">2.2 Instalar dependencias
+del frontend</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> frontend</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
+<p>Esto baja:</p>
+<ul>
+<li><code>next</code> — framework de React.</li>
+<li><code>react</code> y <code>react-dom</code></li>
+<li><code>wagmi</code> y <code>viem</code> — conexión blockchain.</li>
+<li><code>@rainbow-me/rainbowkit</code> — UI de Connect Wallet.</li>
+<li><code>@tanstack/react-query</code> — cache y refetching (lo usa
+wagmi internamente).</li>
+</ul>
+<blockquote>
+<p>Si esto falla con un error de Node, verificá que tengas Node.js 18+
+con <code>node --version</code>. Si es más viejo, instalá <a
+href="https://github.com/nvm-sh/nvm">nvm</a> y corré
+<code>nvm install 20</code>.</p>
+</blockquote>
+<hr />
+<h2 id="parte-3--walletconnect-project-id">Parte 3 — WalletConnect
+Project ID</h2>
+<p>WalletConnect es el protocolo que conecta una DApp con la wallet del
+usuario (especialmente con wallets móviles). Necesitás un
+<strong>Project ID</strong> gratis para identificar tu app.</p>
+<h3 id="31-conseguir-el-project-id">3.1 Conseguir el Project ID</h3>
+<ol type="1">
+<li>Ir a <a
+href="https://cloud.walletconnect.com/"><span>https://cloud.walletconnect.com/</span></a>
+(ahora se llama “Reown Cloud”).</li>
+<li>Crear cuenta (con Google o email).</li>
+<li>Click en “Create Project”.</li>
+<li>Nombre: lo que quieras (ej: “UNQ Credentials”).</li>
+<li>Tipo: “AppKit” o “Browser App”.</li>
+<li>Copiar el <strong>Project ID</strong> (un string como
+<code>a1b2c3d4e5f6...</code>).</li>
+</ol>
+<h3 id="32-pegarlo-en-wagmits">3.2 Pegarlo en <code>wagmi.ts</code></h3>
+<p>Abrí <code>frontend/wagmi.ts</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> projectId <span class="op">=</span> <span class="st">&#39;YOUR_WALLETCONNECT_PROJECT_ID&#39;</span><span class="op">;</span></span></code></pre></div>
+<p>Reemplazá ese string por tu Project ID.</p>
+<hr />
+<h2 id="parte-4--pegar-la-dirección-del-contrato">Parte 4 — Pegar la
+dirección del contrato</h2>
+<p>En clase 3 deployaste tu contrato <code>AcademicCredentials</code> en
+Sepolia. Necesitás esa address para que el frontend sepa con qué
+contrato hablar.</p>
+<p>Abrí <code>frontend/contracts/credentials.ts</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> CREDENTIALS_ADDRESS <span class="op">=</span> <span class="st">&#39;0x0000000000000000000000000000000000000000&#39;</span> <span class="im">as</span> <span class="kw">const</span><span class="op">;</span></span></code></pre></div>
+<p>Reemplazá ese cero-address por la address que te devolvió
+<code>forge create</code> en clase 3.</p>
+<blockquote>
+<p>Si no llegaste a deployar en clase 3, podés usar la del docente para
+seguir la práctica. Pero lo ideal es que cada uno deploye el suyo.</p>
+</blockquote>
+<hr />
+<h2 id="parte-5--tour-del-frontend">Parte 5 — Tour del frontend</h2>
+<h3 id="51-appproviderstsx--los-3-providers">5.1
+<code>app/providers.tsx</code> — los 3 providers</h3>
+<pre class="tsx"><code>&lt;WagmiProvider config={config}&gt;
+  &lt;QueryClientProvider client={queryClient}&gt;
+    &lt;RainbowKitProvider&gt;
+      {children}
+    &lt;/RainbowKitProvider&gt;
+  &lt;/QueryClientProvider&gt;
+&lt;/WagmiProvider&gt;</code></pre>
+<p>Tres “providers” envuelven toda la app:</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Para qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WagmiProvider</code></td>
+<td>Configura las redes y la conexión a la blockchain</td>
+</tr>
+<tr>
+<td><code>QueryClientProvider</code></td>
+<td>Cache, refetching, loading states (de TanStack Query)</td>
+</tr>
+<tr>
+<td><code>RainbowKitProvider</code></td>
+<td>Provee el UI de “Connect Wallet”</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-wagmits--configuración-de-redes">5.2 <code>wagmi.ts</code> —
+configuración de redes</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> config <span class="op">=</span> <span class="fu">getDefaultConfig</span>({</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  appName<span class="op">:</span> <span class="st">&#39;UNQ Academic Credentials&#39;</span><span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  projectId<span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  chains<span class="op">:</span> [sepolia]<span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  ssr<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p>Soporta solo Sepolia (chain ID <code>11155111</code>). Si quisieras
+agregar Base Sepolia, importás <code>baseSepolia</code> de
+<code>wagmi/chains</code> y lo agregás al array.</p>
+<h3 id="53-appcomponentsmycredentialtsx--leer-del-contrato">5.3
+<code>app/components/MyCredential.tsx</code> — leer del contrato</h3>
+<pre class="tsx"><code>const { data: balance } = useReadContract({
+  address: CREDENTIALS_ADDRESS,
+  abi: CREDENTIALS_ABI,
+  functionName: &#39;balanceOf&#39;,
+  args: address ? [address] : undefined,
+});</code></pre>
+<p>Eso es <strong>lectura</strong>: lee <code>balanceOf(address)</code>
+del contrato. Wagmi maneja el cache, refetching, loading states. Es como
+un <code>useState</code> pero conectado a la blockchain.</p>
+<p>Otros ejemplos de <code>useReadContract</code> en el archivo:
+<code>tokenURI</code>, <code>isValid</code>. Pattern: address + abi +
+functionName + args.</p>
+<h3 id="54-appcomponentsissuecredentialtsx--escribir-al-contrato">5.4
+<code>app/components/IssueCredential.tsx</code> — escribir al
+contrato</h3>
+<pre class="tsx"><code>const { writeContract, data: hash, isPending } = useWriteContract();
+const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+
+function handleSubmit(e) {
+  e.preventDefault();
+  writeContract({
+    address: CREDENTIALS_ADDRESS,
+    abi: CREDENTIALS_ABI,
+    functionName: &#39;issueCredential&#39;,
+    args: [studentAddress, BigInt(tokenId), metadataURI],
+  });
+}</code></pre>
+<p>Estado de la transacción:</p>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th>Significado</th>
+<th>Qué mostrar al usuario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isPending = true</code></td>
+<td>El usuario tiene que confirmar en MetaMask</td>
+<td>“Confirmá en la wallet…”</td>
+</tr>
+<tr>
+<td><code>isConfirming = true</code></td>
+<td>La transacción se mandó, esperando que se mine</td>
+<td>“Esperando confirmación…”</td>
+</tr>
+<tr>
+<td><code>isSuccess = true</code></td>
+<td>Confirmada en un bloque</td>
+<td>“✅ Listo, link a Etherscan”</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>Falló (revert, sin gas, usuario rechazó)</td>
+<td>Mensaje de error</td>
+</tr>
+</tbody>
+</table>
+<h3 id="55-apppagetsx--ui-condicional-según-rol">5.5
+<code>app/page.tsx</code> — UI condicional según rol</h3>
+<pre class="tsx"><code>const { data: contractOwner } = useReadContract({
+  address: CREDENTIALS_ADDRESS,
+  abi: CREDENTIALS_ABI,
+  functionName: &#39;owner&#39;,
+});
+
+const isIssuer = address?.toLowerCase() === contractOwner?.toLowerCase();
+
+return (
+  &lt;main&gt;
+    &lt;ConnectButton /&gt;
+    {isConnected &amp;&amp; (
+      &lt;&gt;
+        &lt;MyCredential /&gt;
+        {isIssuer &amp;&amp; &lt;IssueCredential /&gt;}
+      &lt;/&gt;
+    )}
+  &lt;/main&gt;
+);</code></pre>
+<p>Si la wallet conectada es el <code>owner</code> del contrato → ve el
+panel de emisión. Si no, solo ve la lectura.</p>
+<blockquote>
+<p>⚠️ Eso es solo un <strong>filtro de UI</strong>. La seguridad real
+está en el contrato (<code>onlyOwner</code>). Si alguien manda la
+transacción directamente sin pasar por el frontend, igual va a revertir
+on-chain.</p>
+</blockquote>
+<hr />
+<h2 id="parte-6--correr-la-dapp">Parte 6 — Correr la DApp</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code></pre></div>
+<p>Abrí <a href="http://localhost:3000">http://localhost:3000</a>:</p>
+<ol type="1">
+<li>Click en “Connect Wallet” → seleccioná MetaMask.</li>
+<li>MetaMask te pide aprobar la conexión.</li>
+<li>Asegurate de estar en <strong>Sepolia</strong>.</li>
+<li>Vas a ver tu balance de credenciales (debería ser <code>1</code> si
+te emitiste un título en clase 3).</li>
+<li>Si tu wallet es la del owner del contrato, vas a ver el formulario
+“Emitir credencial”.</li>
+</ol>
+<h3 id="probá-emitir-un-título-a-un-compañero">Probá emitir un título a
+un compañero</h3>
+<ol type="1">
+<li>Pedile a alguien su address de MetaMask.</li>
+<li>En el formulario:
+<ul>
+<li>Address del estudiante: la del compañero.</li>
+<li>Token ID: <code>2</code> (o cualquier número que no usaste
+antes).</li>
+<li>Metadata URI: <code>ipfs://bafy.../titulo.json</code>
+(placeholder).</li>
+</ul></li>
+<li>Click en “Emitir credencial”.</li>
+<li>Confirmá en MetaMask.</li>
+<li>Esperá ~12 segundos.</li>
+<li>Aparece el ✅ con link a Etherscan.</li>
+</ol>
+<p>El compañero importa el NFT en su MetaMask (Tab NFTs → Import NFT →
+address + tokenId 2) y ve el título emitido.</p>
+<hr />
+<h2 id="parte-7--reentrancy-el-bug-más-famoso-de-ethereum">Parte 7 —
+Reentrancy: el bug más famoso de Ethereum</h2>
+<p>En <strong>2016</strong>, alguien drenó <strong>$60 millones de
+dólares</strong> del proyecto “The DAO” usando un bug llamado
+<strong>reentrancy</strong>. Fue tan grave que Ethereum tuvo que hacer
+un hard fork (que dio origen a Ethereum Classic). Vamos a entender cómo
+funciona y cómo prevenirlo.</p>
+<h3 id="71-setup-del-laboratorio">7.1 Setup del laboratorio</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../security-lab</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> install foundry-rs/forge-std <span class="at">--shallow</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> install OpenZeppelin/openzeppelin-contracts <span class="at">--shallow</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> build</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> test <span class="at">-vvv</span></span></code></pre></div>
+<p>Tienen que ver <code>8 passed; 0 failed</code>.</p>
+<h3 id="72-el-contrato-vulnerable">7.2 El contrato vulnerable</h3>
+<p>Abrí <code>src/VulnerableVault.sol</code>. Es un “vault” simple donde
+la gente deposita ETH y lo retira:</p>
+<pre class="solidity"><code>contract VulnerableVault {
+    mapping(address =&gt; uint256) public balances;
+
+    function deposit() external payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    function withdraw() public {
+        uint256 balance = balances[msg.sender];
+        require(balance &gt; 0, &quot;No balance&quot;);
+
+        // BUG: manda el ETH ANTES de actualizar el balance
+        (bool ok,) = msg.sender.call{value: balance}(&quot;&quot;);
+        require(ok, &quot;Transfer failed&quot;);
+
+        balances[msg.sender] = 0;
+    }
+}</code></pre>
+<p>¿Cuál es el bug?</p>
+<p><strong>El orden</strong>: manda el ETH primero, actualiza el balance
+después.</p>
+<p>Si <code>msg.sender</code> es un <strong>contrato</strong>, su
+función <code>receive()</code> se ejecuta durante el <code>.call</code>.
+Y desde ese <code>receive()</code> puede llamar <code>withdraw()</code>
+<strong>otra vez</strong>. Como <code>balances[msg.sender]</code>
+todavía no fue puesto en <code>0</code>, la segunda llamada también pasa
+el <code>require</code>. Y la tercera. Y la cuarta. Hasta vaciar el
+vault.</p>
+<h3 id="73-el-atacante">7.3 El atacante</h3>
+<p>En el mismo archivo, el contrato <code>Attacker</code>:</p>
+<pre class="solidity"><code>contract Attacker {
+    VulnerableVault public vault;
+    uint256 public attackCount;
+
+    constructor(address _vault) {
+        vault = VulnerableVault(_vault);
+    }
+
+    function attack() external payable {
+        vault.deposit{value: msg.value}();
+        vault.withdraw();
+    }
+
+    receive() external payable {
+        attackCount++;
+        if (address(vault).balance &gt;= 1 ether) {
+            vault.withdraw();  // ← REENTRADA
+        }
+    }
+}</code></pre>
+<p>Cuando el atacante recibe ETH (en <code>receive()</code>), llama
+<code>withdraw()</code> del vault otra vez. Y otra. Y otra. Drena
+todo.</p>
+<h3 id="74-ver-el-ataque">7.4 Ver el ataque</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> test <span class="at">--match-test</span> test_ReentrancyAttack <span class="at">-vvv</span></span></code></pre></div>
+<p>Output esperado:</p>
+<pre><code>=== BEFORE THE ATTACK ===
+Vault balance: 10000000000000000000  (10 ETH de Alice + Bob)
+=== AFTER THE ATTACK ===
+Vault balance: 0
+Stolen balance in attacker: ~10 ETH
+Times receive() was called: 10+
+ETH stolen by Eve: ~10 ETH</code></pre>
+<p>Eve invirtió <strong>1 ETH</strong>, drenó <strong>10 ETH</strong>,
+ganancia <strong>9 ETH</strong>.</p>
+<hr />
+<h2 id="parte-8--cómo-defenderse">Parte 8 — Cómo defenderse</h2>
+<p>Hay dos patrones estándar.</p>
+<h3 id="81-defensa-1-checks-effects-interactions-cei">8.1 Defensa #1:
+Checks-Effects-Interactions (CEI)</h3>
+<p>Abrí <code>src/SecureVault.sol</code>. La versión
+<code>SecureVaultCEI</code>:</p>
+<pre class="solidity"><code>function withdraw() public {
+    uint256 balance = balances[msg.sender];
+    require(balance &gt; 0, &quot;No balance&quot;);          // 1. CHECK
+
+    balances[msg.sender] = 0;                    // 2. EFFECT (¡antes!)
+
+    (bool ok,) = msg.sender.call{value: balance}(&quot;&quot;); // 3. INTERACTION
+    require(ok, &quot;Transfer failed&quot;);
+}</code></pre>
+<p><strong>Misma cantidad de líneas</strong>, solo cambia el orden:</p>
+<ol type="1">
+<li><strong>Checks</strong>: validar (<code>require</code>).</li>
+<li><strong>Effects</strong>: actualizar estado del contrato.</li>
+<li><strong>Interactions</strong>: llamar a contratos externos.</li>
+</ol>
+<p>Cuando el atacante reentra, su balance ya está en <code>0</code> →
+<code>require(balance &gt; 0)</code> falla → revierte.</p>
+<blockquote>
+<p>💡 <strong>Regla mnemotécnica</strong>: “actualizá tu estado
+<strong>antes</strong> de llamar a alguien afuera, porque ese alguien
+puede llamarte a vos otra vez”.</p>
+</blockquote>
+<h3 id="82-defensa-2-reentrancyguard">8.2 Defensa #2:
+ReentrancyGuard</h3>
+<p>OpenZeppelin trae un modifier <code>nonReentrant</code>:</p>
+<pre class="solidity"><code>import &quot;@openzeppelin/contracts/utils/ReentrancyGuard.sol&quot;;
+
+contract SecureVaultGuard is ReentrancyGuard {
+    function withdraw() public nonReentrant {
+        // ... cualquier orden interno
+    }
+}</code></pre>
+<p>Cómo funciona internamente: pone una variable de estado
+<code>_status = ENTERED</code> al entrar, revierte si ya está entrada, y
+la pone en <code>NOT_ENTERED</code> al salir. Es un mutex.</p>
+<h3 id="83-cuándo-usar-cuál">8.3 ¿Cuándo usar cuál?</h3>
+<table>
+<thead>
+<tr>
+<th>Patrón</th>
+<th>Cuándo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CEI</strong></td>
+<td>Funciones simples con un solo external call</td>
+</tr>
+<tr>
+<td><strong>ReentrancyGuard</strong></td>
+<td>Funciones con múltiples external calls o lógica compleja</td>
+</tr>
+<tr>
+<td><strong>Ambos</strong></td>
+<td>Funciones críticas que mueven mucho dinero</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="parte-9--slither-análisis-estático">Parte 9 — Slither: análisis
+estático</h2>
+<p>Slither es una herramienta que <strong>lee tu código sin
+ejecutarlo</strong> y te marca vulnerabilidades automáticamente.</p>
+<h3 id="instalación">Instalación</h3>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install slither-analyzer</span></code></pre></div>
+<p>(Necesitás Python 3.8+)</p>
+<h3 id="correrlo">Correrlo</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> security-lab</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">slither</span> .</span></code></pre></div>
+<p>Output esperado:</p>
+<pre><code>Reentrancy in VulnerableVault.withdraw() (src/VulnerableVault.sol#15-25):
+    External calls:
+    - (success, ) = msg.sender.call{value: balance}() (src/VulnerableVault.sol#19)
+    State variables written after the call(s):
+    - balances[msg.sender] = 0 (src/VulnerableVault.sol#22)
+Severity: HIGH</code></pre>
+<p>Slither <strong>detectó automáticamente</strong> la vulnerabilidad.
+Cuando corrés Slither sobre <code>SecureVaultCEI</code> y
+<code>SecureVaultGuard</code>, no marca nada — porque el orden está
+bien.</p>
+<h3 id="otros-detectores-comunes">Otros detectores comunes</h3>
+<table>
+<thead>
+<tr>
+<th>Detector</th>
+<th>Qué busca</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reentrancy-eth</code></td>
+<td>Reentrancy que drena ETH</td>
+</tr>
+<tr>
+<td><code>arbitrary-send-eth</code></td>
+<td>ETH enviado a address arbitraria</td>
+</tr>
+<tr>
+<td><code>unchecked-lowlevel</code></td>
+<td><code>.call()</code> sin chequear el return value</td>
+</tr>
+<tr>
+<td><code>tx-origin</code></td>
+<td>Uso de <code>tx.origin</code> para auth (vulnerable a phishing)</td>
+</tr>
+<tr>
+<td><code>uninitialized-state</code></td>
+<td>Variables no inicializadas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="parte-10--deploy-a-base-sepolia-l2">Parte 10 — Deploy a Base
+Sepolia (L2)</h2>
+<p>Hasta acá deployamos siempre en <strong>Sepolia</strong> (Ethereum L1
+testnet). El TP final pide deploy en <strong>Base Sepolia</strong> (L2).
+El cambio es chico pero hay que entender qué cambia y qué no.</p>
+<h3 id="por-qué-l2">¿Por qué L2?</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Sepolia (L1)</th>
+<th>Base Sepolia (L2)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Costo de tx</td>
+<td>~ centavos</td>
+<td><strong>~ fracción de centavo</strong></td>
+</tr>
+<tr>
+<td>Tiempo de bloque</td>
+<td>~ 12 s</td>
+<td>~ 2 s</td>
+</tr>
+<tr>
+<td>Compatibilidad EVM</td>
+<td>100%</td>
+<td>100% (es un rollup OP)</td>
+</tr>
+<tr>
+<td>Misma wallet / mismo Solidity</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Para el caso UNQ</strong>: emitir 5.000 títulos por año en L1
+= caro. En L2 = trivial. Misma seguridad eventual (los datos terminan en
+Ethereum).</p>
+<h3 id="lo-único-que-cambia">Lo único que cambia</h3>
+<ol type="1">
+<li><p><strong>El RPC URL</strong>:</p>
+<ul>
+<li>Sepolia:
+<code>https://ethereum-sepolia-rpc.publicnode.com</code></li>
+<li>Base Sepolia: <code>https://sepolia.base.org</code></li>
+</ul></li>
+<li><p><strong>El Chain ID</strong>:</p>
+<ul>
+<li>Sepolia: <code>11155111</code></li>
+<li>Base Sepolia: <code>84532</code></li>
+</ul></li>
+<li><p><strong>El faucet</strong>: <a
+href="https://www.alchemy.com/faucets/base-sepolia">https://www.alchemy.com/faucets/base-sepolia</a>
+(necesitás ETH de Sepolia para puentear, o pedir directo)</p></li>
+<li><p><strong>El explorer</strong>: <a
+href="https://sepolia.basescan.org">https://sepolia.basescan.org</a> (no
+Etherscan)</p></li>
+</ol>
+<h3 id="cómo-se-ve-en-el-código">Cómo se ve en el código</h3>
+<p><strong>Foundry</strong> — solo cambia <code>--rpc-url</code>:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> create src/AcademicCredentials.sol:AcademicCredentials <span class="dt">\</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--rpc-url</span> https://sepolia.base.org <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--account</span> dev-wallet <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--broadcast</span></span></code></pre></div>
+<p><strong>Frontend (wagmi)</strong> — cambia un import y nada más:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode ts"><code class="sourceCode typescript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// wagmi.ts</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { baseSepolia } <span class="im">from</span> <span class="st">&#39;wagmi/chains&#39;</span><span class="op">;</span>   <span class="co">// ← antes: sepolia</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> config <span class="op">=</span> <span class="fu">getDefaultConfig</span>({</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  appName<span class="op">:</span> <span class="st">&#39;UNQ Academic Credentials&#39;</span><span class="op">,</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  projectId<span class="op">:</span> <span class="st">&#39;TU_WALLETCONNECT_ID&#39;</span><span class="op">,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  chains<span class="op">:</span> [baseSepolia]<span class="op">,</span>   <span class="co">// ← lo único que cambia</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  ssr<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p><strong>MetaMask</strong>: la primera vez, la wallet te pide aprobar
+la red nueva. Aceptá.</p>
+<blockquote>
+<p><strong>🎯 TP final</strong>: el deploy en Base Sepolia vale 10
+puntos del TP. No es difícil — son 4 cambios. El que se queda en Sepolia
+pierde esos 10.</p>
+</blockquote>
+<hr />
+<h2
+id="parte-11--mapa-del-tp-final-qué-ya-vimos-vs-qué-tienen-que-investigar">Parte
+11 — Mapa del TP final: qué ya vimos vs qué tienen que investigar</h2>
+<p>Antes de tirarles el spec, despejamos el “no nos enseñaron”. Esto es
+lo que el TP final pide y dónde están las herramientas para cada
+cosa:</p>
+<table>
+<thead>
+<tr>
+<th>Lo que pide el TP</th>
+<th>¿Dónde lo vimos?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ERC-721 base (<code>AcademicCredentials</code>)</td>
+<td>✅ <strong>Clase 3</strong> — hands-on con el contrato
+<code>Ownable</code></td>
+</tr>
+<tr>
+<td>Tests con Foundry (<code>forge test</code> +
+<code>forge coverage</code> + fuzz)</td>
+<td>✅ <strong>Clase 2</strong> (test básico) + <strong>Clase 3</strong>
+(14 tests + coverage + fuzz)</td>
+</tr>
+<tr>
+<td>Verificación del contrato en Etherscan/Basescan
+(<code>forge verify-contract</code>)</td>
+<td>✅ <strong>Clase 3</strong> Parte 7</td>
+</tr>
+<tr>
+<td>Frontend con wagmi + RainbowKit (modo lectura + escritura)</td>
+<td>✅ <strong>Clase 4</strong> (hoy)</td>
+</tr>
+<tr>
+<td>Slither + análisis estático</td>
+<td>✅ <strong>Clase 4</strong> (hoy)</td>
+</tr>
+<tr>
+<td>Deploy a <strong>Base Sepolia (L2)</strong></td>
+<td>✅ <strong>Clase 4</strong> Parte 10 (hoy)</td>
+</tr>
+<tr>
+<td><code>AccessControl</code> con ISSUER_ROLE + DEFAULT_ADMIN_ROLE</td>
+<td>🔍 <strong>OpenZeppelin docs</strong> — 1 página</td>
+</tr>
+<tr>
+<td>Soulbound (override <code>_update</code>)</td>
+<td>🔍 <strong>OpenZeppelin docs</strong> — 5 líneas de código</td>
+</tr>
+<tr>
+<td>Struct <code>Credential</code> con 5 campos + mapping</td>
+<td>🔍 Solidity básico — chequear sintaxis de structs</td>
+</tr>
+<tr>
+<td>Frontend con 2 modos según rol</td>
+<td>🔍 Extender lo de clase 4 + chequear <code>hasRole</code></td>
+</tr>
+<tr>
+<td><code>SECURITY.md</code> con análisis propio</td>
+<td>🔍 Pensar amenazas, no solo correr Slither</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Lo de clase no alcanza, lo de docs sí</strong>. Lo que
+tienen que investigar son lecturas cortas de OpenZeppelin. Si después de
+leer 30 min algo no cierra, <strong>al foro</strong> — no se traben
+solos.</p>
+</blockquote>
+<p><strong>Starter repo del frontend</strong>: les vamos a publicar un
+repo de partida ya cableado con wagmi + RainbowKit. Forkean, cambian la
+<code>CREDENTIALS_ADDRESS</code> y el ABI del contrato que generaron, y
+arrancan. <strong>No tienen que armar el frontend desde
+cero</strong>.</p>
+<hr />
+<h2 id="parte-12--trabajo-final">Parte 12 — Trabajo final</h2>
+<p>El <strong>spec completo del TP final</strong> está publicado: <a
+href="tp-final.html">tp-final.html</a>. Resumen:</p>
+<ol type="1">
+<li><strong>Hook UNQ + modelado de datos</strong> (20%) — diagramas +
+justificar qué va on-chain vs off-chain.</li>
+<li><strong>Smart contract</strong> con <code>AccessControl</code>
+(ISSUER + ADMIN), soulbound, struct <code>Credential</code>, 4 eventos
+(35%).</li>
+<li><strong>Testing</strong> — coverage ≥ 80% + soulbound + fuzz
+(10%).</li>
+<li><strong>Seguridad</strong> — Slither + <code>SECURITY.md</code> con
+análisis propio (10%).</li>
+<li><strong>Frontend</strong> (verifier + issuer obligatorio) +
+<strong>deploy a Base Sepolia</strong> (20%).</li>
+<li><strong>Video demo + README</strong> (5%).</li>
+</ol>
+<p><strong>Plazo</strong>: lunes <strong>08/06/2026 · 18:00</strong>.
+Pareja máximo 2 personas.</p>
+<hr />
+<hr />
+<h2 id="después-de-clase">Después de clase</h2>
+<p>La tarea de la semana → <a href="clase-4-tarea.html">tarea de clase
+4</a>.</p>
+<h2 id="si-algo-falla">Si algo falla</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm install</code> lento</td>
+<td>Esperá. La primera vez tarda.</td>
+</tr>
+<tr>
+<td><code>npm install</code> falla</td>
+<td>Verificá <code>node --version &gt;= 18</code>, si no
+<code>nvm install 20</code></td>
+</tr>
+<tr>
+<td>El frontend no conecta</td>
+<td>Verificá que MetaMask esté en Sepolia (chain ID
+<code>11155111</code>)</td>
+</tr>
+<tr>
+<td><code>WalletConnect Project ID is not valid</code></td>
+<td>Confirmá que copiaste el Project ID correcto en
+<code>wagmi.ts</code></td>
+</tr>
+<tr>
+<td>MetaMask no muestra el NFT</td>
+<td>“Import NFT” manualmente con address + tokenId</td>
+</tr>
+<tr>
+<td>Slither no compila el proyecto</td>
+<td>Necesitás <code>solc</code> instalado:
+<code>pip install solc-select &amp;&amp; solc-select install 0.8.28 &amp;&amp; solc-select use 0.8.28</code></td>
+</tr>
+</tbody>
+</table>
+<p>Lo demás, foro del campus.</p>
+
+    <nav class="page-prev-next" aria-label="Navegación entre páginas">
+      <a class="prev-link" href="#" data-slot="prev" hidden>
+        <span class="arrow">←</span>
+        <span class="nav-meta">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title" data-slot="prev-title"></span>
+        </span>
+      </a>
+      <a class="next-link" href="#" data-slot="next" hidden>
+        <span class="nav-meta">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title" data-slot="next-title"></span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <nav class="page-nav-bottom">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+    </nav>
+  </main>
+</div>
+
+<footer class="unq-footer">
+  <div>
+    UNQ · Diplomatura en Blockchain · Desarrollo de Smart Contracts y dApps <strong>2026</strong>
+    · Dr. David Petrocelli &amp; Esp. Ciro Romero
+  </div>
+</footer>
+
+<script>
+// Sidebar show/hide toggle (preference persisted in localStorage)
+(function () {
+  const sidebar = document.getElementById('toc-sidebar');
+  const layout = document.querySelector('.layout');
+  const hideBtn = document.getElementById('sidebar-hide');
+  const showBtn = document.getElementById('sidebar-show');
+  if (!sidebar || !layout || !hideBtn || !showBtn) return;
+
+  const KEY = 'unlu.dcb.sidebar.hidden';
+
+  function apply(hidden) {
+    layout.classList.toggle('sidebar-hidden', hidden);
+    showBtn.classList.toggle('visible', hidden);
+  }
+
+  apply(localStorage.getItem(KEY) === '1');
+
+  hideBtn.addEventListener('click', () => {
+    localStorage.setItem(KEY, '1');
+    apply(true);
+  });
+  showBtn.addEventListener('click', () => {
+    localStorage.removeItem(KEY);
+    apply(false);
+  });
+})();
+
+// Wrap each H2 (and its following content until the next H2) in a <details open>
+// element so users can collapse/expand sections.
+(function () {
+  const main = document.querySelector('main.content');
+  if (!main) return;
+
+  // Collect direct-child H2 headings so we don't touch nested ones (e.g., inside details we'll create)
+  const headings = Array.from(main.children).filter(el => el.tagName === 'H2');
+
+  headings.forEach(h2 => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'section-collapsible';
+
+    const summary = document.createElement('summary');
+    // Move heading content (incl. anchor) into the summary so anchors keep working
+    summary.innerHTML = h2.innerHTML;
+    if (h2.id) summary.id = h2.id;
+    details.appendChild(summary);
+
+    // Move siblings until next H2 into details
+    const parent = h2.parentNode;
+    let next = h2.nextSibling;
+    parent.replaceChild(details, h2);
+    while (next && !(next.nodeType === 1 && next.tagName === 'H2')) {
+      const node = next;
+      next = next.nextSibling;
+      details.appendChild(node);
+    }
+  });
+
+  // If there's a hash in the URL, ensure the target's <details> is open
+  function openDetailsForHash(hash) {
+    if (!hash) return;
+    const target = document.getElementById(hash.replace(/^#/, ''));
+    if (!target) return;
+    let p = target.closest('details');
+    while (p) { p.open = true; p = p.parentElement && p.parentElement.closest('details'); }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  openDetailsForHash(window.location.hash);
+  window.addEventListener('hashchange', () => openDetailsForHash(window.location.hash));
+
+  // Wire up "Expand all" / "Collapse all" controls in the inline TOC
+  document.querySelectorAll('.toc-controls [data-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const open = action === 'expand-all';
+      document.querySelectorAll('details.section-collapsible').forEach(d => { d.open = open; });
+    });
+  });
+})();
+
+// Populate prev/next navigation based on the current page's banner-num
+(function () {
+  const pill = document.querySelector('.banner-pill');
+  const nav = document.querySelector('.page-prev-next');
+  if (!pill || !nav) return;
+
+  const key = (pill.textContent || '').trim().toUpperCase();
+
+  // Map banner-num → { prev, next }
+  // Each entry: { href, title } (or null if not present)
+  const MAP = {
+    // ----- Clase 1 -----
+    'C1 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' }
+    },
+    'C1 · TAREA': {
+      prev: { href: 'clase-1-clase.html', title: 'Material en clase 1' },
+      next: { href: 'clase-2-clase.html', title: 'Clase 2' }
+    },
+    // ----- Clase 2 -----
+    'C2 · CLASE': {
+      prev: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' },
+      next: { href: 'clase-2-tarea.html', title: 'Tarea de clase 2' }
+    },
+    'C2 · TAREA': {
+      prev: { href: 'clase-2-clase.html', title: 'Material en clase 2' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 3 -----
+    'C3 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-3-tarea.html', title: 'Tarea de clase 3' }
+    },
+    'C3 · TAREA': {
+      prev: { href: 'clase-3-clase.html', title: 'Material en clase 3' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 4 -----
+    'C4 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' }
+    },
+    'C4 · TAREA': {
+      prev: { href: 'clase-4-clase.html', title: 'Material en clase 4' },
+      next: { href: 'tp-final.html',      title: 'Trabajo final' }
+    },
+    // ----- TP final -----
+    'TP FINAL': {
+      prev: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Material transversal -----
+    'DIAGRAMAS': {
+      prev: { href: 'index.html',  title: 'Menú principal' },
+      next: { href: 'glosario.html', title: 'Glosario' }
+    },
+    'GLOSARIO': {
+      prev: { href: 'diagramas-arquitectura.html', title: 'Diagramas' },
+      next: { href: 'cheat-sheet.html',            title: 'Cheat sheet' }
+    },
+    'CHEAT-SHEET': {
+      prev: { href: 'glosario.html', title: 'Glosario' },
+      next: { href: 'index.html',    title: 'Menú principal' }
+    }
+  };
+
+  const entry = MAP[key];
+  if (!entry) return;
+
+  const prevLink = nav.querySelector('[data-slot="prev"]');
+  const nextLink = nav.querySelector('[data-slot="next"]');
+  const prevTitle = nav.querySelector('[data-slot="prev-title"]');
+  const nextTitle = nav.querySelector('[data-slot="next-title"]');
+
+  if (entry.prev && prevLink && prevTitle) {
+    prevLink.setAttribute('href', entry.prev.href);
+    prevTitle.textContent = entry.prev.title;
+    prevLink.hidden = false;
+  }
+  if (entry.next && nextLink && nextTitle) {
+    nextLink.setAttribute('href', entry.next.href);
+    nextTitle.textContent = entry.next.title;
+    nextLink.hidden = false;
+  }
+
+  // If neither slot is shown, hide the whole nav
+  if ((!entry.prev) && (!entry.next)) {
+    nav.style.display = 'none';
+  }
+})();
+
+// Click-to-copy on every <pre> code block
+(function () {
+  document.querySelectorAll('pre').forEach(pre => {
+    pre.addEventListener('click', async (e) => {
+      // Don't trigger if user is selecting text
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0 && pre.contains(sel.anchorNode)) return;
+
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        pre.classList.add('copied');
+        setTimeout(() => pre.classList.remove('copied'), 1400);
+      } catch (err) {
+        // Fallback: select all
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel2 = window.getSelection();
+        sel2.removeAllRanges();
+        sel2.addRange(range);
+      }
+    });
+  });
+})();
+
+// Open all external links in a new tab (preserves the current page).
+// Internal anchors (#hash), relative links and same-origin links stay in-tab.
+(function () {
+  const here = window.location.hostname;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // Skip anchors and pure relative links
+    if (href.startsWith('#') || href.startsWith('/') || !/^https?:\/\//i.test(href)) return;
+    try {
+      const url = new URL(href);
+      if (url.hostname && url.hostname !== here) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    } catch (_) {
+      // Malformed URL — ignore
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

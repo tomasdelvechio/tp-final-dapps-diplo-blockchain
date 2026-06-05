@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="generator" content="pandoc + UNLu/DCB template">
+  <title>Clase 2 — Foundry + SimpleStorage · En clase — UNQ Diplo
+Blockchain</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+
+<header class="unq-header">
+  <a href="index.html" class="brand" title="Volver al menú principal">
+    <img src="assets/unq-logo-white.png" alt="Universidad Nacional de Quilmes" class="logo unq">
+    <div class="brand-text">
+      <div class="institution">Universidad Nacional de Quilmes</div>
+      <div class="department">Diplomatura en Blockchain</div>
+    </div>
+  </a>
+  <div class="course-bar">
+    <span class="course">Desarrollo de Smart Contracts y dApps</span>
+    <span class="year">2026</span>
+    <span class="instructor">Dr. David Petrocelli &amp; Esp. Ciro Romero</span>
+  </div>
+</header>
+
+<button type="button" id="sidebar-show" class="sidebar-toggle-btn sidebar-show" aria-label="Mostrar índice lateral" title="Mostrar índice lateral">☰</button>
+
+<div class="layout">
+  <aside class="toc-sidebar" id="toc-sidebar">
+    <div class="toc-header">
+      <div class="toc-title">Contenidos</div>
+      <button type="button" id="sidebar-hide" class="sidebar-toggle-btn sidebar-hide" aria-label="Ocultar índice lateral" title="Ocultar índice lateral">×</button>
+    </div>
+    <ul>
+    <li><a href="#clase-2--foundry--tu-primer-smart-contract"
+    id="toc-clase-2--foundry--tu-primer-smart-contract">Clase 2 —
+    Foundry + tu primer smart contract</a>
+    <ul>
+    <li><a href="#qué-vamos-a-hacer" id="toc-qué-vamos-a-hacer">¿Qué
+    vamos a hacer?</a>
+    <ul>
+    <li><a href="#en-clase" id="toc-en-clase">🏫 En clase (en vivo con
+    David + Ciro)</a></li>
+    <li><a href="#house-tarea" id="toc-house-tarea">🏠 Tarea</a></li>
+    </ul></li>
+    <li><a href="#parte-1--qué-es-foundry"
+    id="toc-parte-1--qué-es-foundry">Parte 1 — ¿Qué es Foundry?</a>
+    <ul>
+    <li><a href="#por-qué-foundry-y-no-remix"
+    id="toc-por-qué-foundry-y-no-remix">¿Por qué Foundry y no
+    Remix?</a></li>
+    </ul></li>
+    <li><a href="#parte-2--instalación-de-foundry"
+    id="toc-parte-2--instalación-de-foundry">Parte 2 — Instalación de
+    Foundry</a>
+    <ul>
+    <li><a href="#21-bajar-el-instalador"
+    id="toc-21-bajar-el-instalador">2.1 Bajar el instalador</a></li>
+    <li><a href="#22-recargar-el-shell"
+    id="toc-22-recargar-el-shell">2.2 Recargar el shell</a></li>
+    <li><a href="#23-bajar-los-binarios-reales"
+    id="toc-23-bajar-los-binarios-reales">2.3 Bajar los binarios
+    reales</a></li>
+    <li><a href="#24-verificar-que-funciona"
+    id="toc-24-verificar-que-funciona">2.4 Verificar que
+    funciona</a></li>
+    </ul></li>
+    <li><a href="#parte-3--extensión-de-solidity-en-vs-code"
+    id="toc-parte-3--extensión-de-solidity-en-vs-code">Parte 3 —
+    Extensión de Solidity en VS Code</a></li>
+    <li><a href="#parte-4--clonar-el-repo-y-compilar"
+    id="toc-parte-4--clonar-el-repo-y-compilar">Parte 4 — Clonar el repo
+    y compilar</a>
+    <ul>
+    <li><a href="#41-clonar" id="toc-41-clonar">4.1 Clonar</a></li>
+    <li><a href="#42-bajar-forge-std" id="toc-42-bajar-forge-std">4.2
+    Bajar <code>forge-std</code></a></li>
+    <li><a href="#43-compilar" id="toc-43-compilar">4.3
+    Compilar</a></li>
+    </ul></li>
+    <li><a href="#parte-5--tour-del-contrato-simplestorage"
+    id="toc-parte-5--tour-del-contrato-simplestorage">Parte 5 — Tour del
+    contrato <code>SimpleStorage</code></a>
+    <ul>
+    <li><a href="#51-licencia--pragma" id="toc-51-licencia--pragma">5.1
+    Licencia + pragma</a></li>
+    <li><a href="#52-declaración-del-contrato"
+    id="toc-52-declaración-del-contrato">5.2 Declaración del
+    contrato</a></li>
+    <li><a href="#53-variable-de-estado"
+    id="toc-53-variable-de-estado">5.3 Variable de estado</a></li>
+    <li><a href="#54-evento" id="toc-54-evento">5.4 Evento</a></li>
+    <li><a href="#55-función-que-escribe-estado"
+    id="toc-55-función-que-escribe-estado">5.5 Función que escribe
+    estado</a></li>
+    <li><a href="#56-función-view" id="toc-56-función-view">5.6 Función
+    <code>view</code></a></li>
+    <li><a href="#57-función-que-incrementa"
+    id="toc-57-función-que-incrementa">5.7 Función que
+    incrementa</a></li>
+    </ul></li>
+    <li><a href="#parte-6--tests-con-foundry"
+    id="toc-parte-6--tests-con-foundry">Parte 6 — Tests con Foundry</a>
+    <ul>
+    <li><a href="#61-correr-todos-los-tests"
+    id="toc-61-correr-todos-los-tests">6.1 Correr todos los
+    tests</a></li>
+    <li><a href="#62-qué-hay-adentro-de-los-tests"
+    id="toc-62-qué-hay-adentro-de-los-tests">6.2 ¿Qué hay adentro de los
+    tests?</a></li>
+    <li><a href="#63-más-detalle" id="toc-63-más-detalle">6.3 Más
+    detalle</a></li>
+    </ul></li>
+    <li><a href="#parte-7--qué-viene-en-clase-3"
+    id="toc-parte-7--qué-viene-en-clase-3">Parte 7 — ¿Qué viene en clase
+    3?</a></li>
+    <li><a href="#después-de-clase" id="toc-después-de-clase">Después de
+    clase</a></li>
+    <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+    falla</a></li>
+    </ul></li>
+    </ul>
+    <div style="margin-top:24px;padding-top:14px;border-top:1px solid var(--light-gray);font-size:12px;">
+      <a href="index.html" style="color:var(--gray);">← Volver al índice</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span class="sep">›</span>
+      <span class="current">C2 · CLASE</span>
+    </nav>
+    <nav class="page-nav-top">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+      <span class="banner-pill">C2 · CLASE</span>
+    </nav>
+
+    <details class="toc-inline" open>
+      <summary>📑 Índice del documento</summary>
+      <ul>
+      <li><a href="#clase-2--foundry--tu-primer-smart-contract"
+      id="toc-clase-2--foundry--tu-primer-smart-contract">Clase 2 —
+      Foundry + tu primer smart contract</a>
+      <ul>
+      <li><a href="#qué-vamos-a-hacer" id="toc-qué-vamos-a-hacer">¿Qué
+      vamos a hacer?</a>
+      <ul>
+      <li><a href="#en-clase" id="toc-en-clase">🏫 En clase (en vivo con
+      David + Ciro)</a></li>
+      <li><a href="#house-tarea" id="toc-house-tarea">🏠 Tarea</a></li>
+      </ul></li>
+      <li><a href="#parte-1--qué-es-foundry"
+      id="toc-parte-1--qué-es-foundry">Parte 1 — ¿Qué es Foundry?</a>
+      <ul>
+      <li><a href="#por-qué-foundry-y-no-remix"
+      id="toc-por-qué-foundry-y-no-remix">¿Por qué Foundry y no
+      Remix?</a></li>
+      </ul></li>
+      <li><a href="#parte-2--instalación-de-foundry"
+      id="toc-parte-2--instalación-de-foundry">Parte 2 — Instalación de
+      Foundry</a>
+      <ul>
+      <li><a href="#21-bajar-el-instalador"
+      id="toc-21-bajar-el-instalador">2.1 Bajar el instalador</a></li>
+      <li><a href="#22-recargar-el-shell"
+      id="toc-22-recargar-el-shell">2.2 Recargar el shell</a></li>
+      <li><a href="#23-bajar-los-binarios-reales"
+      id="toc-23-bajar-los-binarios-reales">2.3 Bajar los binarios
+      reales</a></li>
+      <li><a href="#24-verificar-que-funciona"
+      id="toc-24-verificar-que-funciona">2.4 Verificar que
+      funciona</a></li>
+      </ul></li>
+      <li><a href="#parte-3--extensión-de-solidity-en-vs-code"
+      id="toc-parte-3--extensión-de-solidity-en-vs-code">Parte 3 —
+      Extensión de Solidity en VS Code</a></li>
+      <li><a href="#parte-4--clonar-el-repo-y-compilar"
+      id="toc-parte-4--clonar-el-repo-y-compilar">Parte 4 — Clonar el
+      repo y compilar</a>
+      <ul>
+      <li><a href="#41-clonar" id="toc-41-clonar">4.1 Clonar</a></li>
+      <li><a href="#42-bajar-forge-std" id="toc-42-bajar-forge-std">4.2
+      Bajar <code>forge-std</code></a></li>
+      <li><a href="#43-compilar" id="toc-43-compilar">4.3
+      Compilar</a></li>
+      </ul></li>
+      <li><a href="#parte-5--tour-del-contrato-simplestorage"
+      id="toc-parte-5--tour-del-contrato-simplestorage">Parte 5 — Tour
+      del contrato <code>SimpleStorage</code></a>
+      <ul>
+      <li><a href="#51-licencia--pragma"
+      id="toc-51-licencia--pragma">5.1 Licencia + pragma</a></li>
+      <li><a href="#52-declaración-del-contrato"
+      id="toc-52-declaración-del-contrato">5.2 Declaración del
+      contrato</a></li>
+      <li><a href="#53-variable-de-estado"
+      id="toc-53-variable-de-estado">5.3 Variable de estado</a></li>
+      <li><a href="#54-evento" id="toc-54-evento">5.4 Evento</a></li>
+      <li><a href="#55-función-que-escribe-estado"
+      id="toc-55-función-que-escribe-estado">5.5 Función que escribe
+      estado</a></li>
+      <li><a href="#56-función-view" id="toc-56-función-view">5.6
+      Función <code>view</code></a></li>
+      <li><a href="#57-función-que-incrementa"
+      id="toc-57-función-que-incrementa">5.7 Función que
+      incrementa</a></li>
+      </ul></li>
+      <li><a href="#parte-6--tests-con-foundry"
+      id="toc-parte-6--tests-con-foundry">Parte 6 — Tests con
+      Foundry</a>
+      <ul>
+      <li><a href="#61-correr-todos-los-tests"
+      id="toc-61-correr-todos-los-tests">6.1 Correr todos los
+      tests</a></li>
+      <li><a href="#62-qué-hay-adentro-de-los-tests"
+      id="toc-62-qué-hay-adentro-de-los-tests">6.2 ¿Qué hay adentro de
+      los tests?</a></li>
+      <li><a href="#63-más-detalle" id="toc-63-más-detalle">6.3 Más
+      detalle</a></li>
+      </ul></li>
+      <li><a href="#parte-7--qué-viene-en-clase-3"
+      id="toc-parte-7--qué-viene-en-clase-3">Parte 7 — ¿Qué viene en
+      clase 3?</a></li>
+      <li><a href="#después-de-clase" id="toc-después-de-clase">Después
+      de clase</a></li>
+      <li><a href="#si-algo-falla" id="toc-si-algo-falla">Si algo
+      falla</a></li>
+      </ul></li>
+      </ul>
+      <div class="toc-controls">
+        <button type="button" class="toc-btn" data-action="expand-all">Expandir todo</button>
+        <button type="button" class="toc-btn" data-action="collapse-all">Colapsar todo</button>
+      </div>
+    </details>
+
+<h1 id="clase-2--foundry--tu-primer-smart-contract">Clase 2 — Foundry +
+tu primer smart contract</h1>
+<blockquote>
+<p><strong>Objetivo de hoy</strong>: pasar de “instalé Remix en clase 1
+y deployé un contrato con la GUI” a “tengo el toolkit profesional
+instalado, escribo y testeo contratos desde la terminal, y entiendo el
+flujo de desarrollo que se usa en la industria”.</p>
+</blockquote>
+<h2 id="qué-vamos-a-hacer">¿Qué vamos a hacer?</h2>
+<h3 id="en-clase">🏫 En clase (en vivo con David + Ciro)</h3>
+<ol type="1">
+<li><strong>Instalar Foundry</strong> (<code>forge</code>,
+<code>cast</code>, <code>anvil</code>) — el toolkit estándar para
+desarrollo de smart contracts.</li>
+<li><strong>Instalar la extensión de Solidity</strong> en VS Code para
+tener resaltado de sintaxis y autocompletado.</li>
+<li><strong>Clonar el repo del ejercicio</strong> con un proyecto
+Foundry listo (contrato <code>SimpleStorage</code>).</li>
+<li><strong>Compilar el contrato</strong> con <code>forge build</code> y
+entender qué genera Foundry.</li>
+<li><strong>Caminar por el contrato <code>SimpleStorage</code></strong>
+línea por línea para entender la sintaxis básica de Solidity.</li>
+<li><strong>Correr los 10 tests</strong> con <code>forge test</code> y
+entender cómo funcionan los tests en Foundry.</li>
+</ol>
+<h3 id="house-tarea">🏠 Tarea</h3>
+<p>La tarea va en una página aparte: <a href="clase-2-tarea.html">ver
+tarea de clase 2</a>.</p>
+<hr />
+<h2 id="parte-1--qué-es-foundry">Parte 1 — ¿Qué es Foundry?</h2>
+<p><strong>Foundry</strong> es un toolkit para desarrollar smart
+contracts en Solidity. Es lo que usan empresas como Uniswap, OpenSea y
+Paradigm en producción. Está escrito en Rust, lo que lo hace
+<strong>muy</strong> rápido — los tests corren en milisegundos, no
+segundos.</p>
+<p>Foundry trae tres herramientas principales:</p>
+<table>
+<thead>
+<tr>
+<th>Herramienta</th>
+<th>Para qué sirve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>forge</code></td>
+<td>Compilar contratos, correr tests, deployar</td>
+</tr>
+<tr>
+<td><code>cast</code></td>
+<td>Hablar con la blockchain desde la terminal (leer estado, mandar
+transacciones)</td>
+</tr>
+<tr>
+<td><code>anvil</code></td>
+<td>Levantar una blockchain local para desarrollo (lo vamos a usar en
+clase 3)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="por-qué-foundry-y-no-remix">¿Por qué Foundry y no Remix?</h3>
+<p>Remix (lo que vieron en clase 1) es excelente para empezar — todo en
+el browser, cero instalación. Pero para proyectos reales hace falta
+más:</p>
+<table>
+<thead>
+<tr>
+<th>Capacidad</th>
+<th>Remix</th>
+<th>Foundry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Editor con autocompletado</td>
+<td>Limitado</td>
+<td>VS Code con extensión</td>
+</tr>
+<tr>
+<td>Tests automatizados</td>
+<td>No</td>
+<td>Sí, con fuzzing incluido</td>
+</tr>
+<tr>
+<td>Control de versiones (Git)</td>
+<td>No</td>
+<td>Sí, todo en archivos</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>No</td>
+<td>Sí, integra con GitHub Actions</td>
+</tr>
+<tr>
+<td>Velocidad de compilación</td>
+<td>Lenta</td>
+<td>10–100x más rápida</td>
+</tr>
+</tbody>
+</table>
+<p>Por eso el resto del módulo lo hacemos con Foundry.</p>
+<hr />
+<h2 id="parte-2--instalación-de-foundry">Parte 2 — Instalación de
+Foundry</h2>
+<h3 id="21-bajar-el-instalador">2.1 Bajar el instalador</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://foundry.paradigm.xyz <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div>
+<p>Esto baja el “manager” de Foundry (que se llama
+<code>foundryup</code>) y lo agrega a tu <code>PATH</code>. Te va a
+decir algo como:</p>
+<pre><code>Detected your preferred shell is zsh and added foundryup to PATH.
+Run &#39;source /home/usuario/.zshenv&#39; or start a new terminal session to use foundryup.</code></pre>
+<h3 id="22-recargar-el-shell">2.2 Recargar el shell</h3>
+<p>Reabrí la terminal <strong>o</strong> corré (según tu shell):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc      <span class="co"># si usás bash</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.zshenv      <span class="co"># si usás zsh</span></span></code></pre></div>
+<h3 id="23-bajar-los-binarios-reales">2.3 Bajar los binarios reales</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">foundryup</span></span></code></pre></div>
+<p>Esto baja <code>forge</code>, <code>cast</code>, <code>anvil</code> y
+<code>chisel</code> (otra herramienta para sesiones interactivas de
+Solidity). Tarda menos de un minuto.</p>
+<h3 id="24-verificar-que-funciona">2.4 Verificar que funciona</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> <span class="at">--version</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> <span class="at">--version</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">anvil</span> <span class="at">--version</span></span></code></pre></div>
+<p>Tienen que devolver algo como:</p>
+<pre><code>forge Version: 1.5.1-stable
+cast Version: 1.5.1-stable
+anvil Version: 1.5.1-stable</code></pre>
+<blockquote>
+<p>⚠️ <strong>Si estás en Windows sin WSL</strong>, esto va a fallar. La
+solución es instalar <a
+href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL2</a> y
+correr todo desde adentro de WSL. Si tenés problemas, postealo en el
+foro y lo resolvemos.</p>
+</blockquote>
+<hr />
+<h2 id="parte-3--extensión-de-solidity-en-vs-code">Parte 3 — Extensión
+de Solidity en VS Code</h2>
+<p>La extensión te da resaltado de sintaxis, autocompletado y errores
+inline:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--install-extension</span> juanblanco.solidity</span></code></pre></div>
+<blockquote>
+<p>Si <code>code</code> no es un comando reconocido, abrí VS Code,
+ejecutá <code>Ctrl+Shift+P</code> (Cmd+Shift+P en Mac), escribí “Shell
+Command: Install ‘code’ command in PATH”, reabrí la terminal y volvé a
+probar.</p>
+</blockquote>
+<hr />
+<h2 id="parte-4--clonar-el-repo-y-compilar">Parte 4 — Clonar el repo y
+compilar</h2>
+<h3 id="41-clonar">4.1 Clonar</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/dpetrocelli/diplo-unq-blockchain-clase2.git</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> diplo-unq-blockchain-clase2</span></code></pre></div>
+<p>Vas a ver esta estructura:</p>
+<pre><code>.
+├── foundry.toml          # configuración del proyecto
+├── src/
+│   └── SimpleStorage.sol # el contrato
+├── test/
+│   └── SimpleStorage.t.sol # los tests
+└── script/
+    └── Deploy.s.sol      # script para deployar (lo usamos en clase 3)</code></pre>
+<table>
+<thead>
+<tr>
+<th>Carpeta</th>
+<th>Para qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/</code></td>
+<td>Los contratos que escribís. Es la “fuente” del proyecto.</td>
+</tr>
+<tr>
+<td><code>test/</code></td>
+<td>Los tests. Foundry te los corre con <code>forge test</code>.</td>
+</tr>
+<tr>
+<td><code>script/</code></td>
+<td>Scripts en Solidity para deployar o automatizar.</td>
+</tr>
+<tr>
+<td><code>foundry.toml</code></td>
+<td>Configuración: versión de Solidity, optimizador, etc.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-bajar-forge-std">4.2 Bajar <code>forge-std</code></h3>
+<p><code>forge-std</code> es una librería estándar que necesitan los
+tests de Foundry (te da <code>Test</code>, <code>vm</code>,
+<code>console.log</code>, etc):</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> install foundry-rs/forge-std <span class="at">--shallow</span></span></code></pre></div>
+<p>El flag <code>--shallow</code> solo baja el último commit (más
+rápido).</p>
+<h3 id="43-compilar">4.3 Compilar</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> build</span></code></pre></div>
+<p>Output esperado:</p>
+<pre><code>Compiling 23 files with Solc 0.8.28
+Solc 0.8.28 finished in ~900ms
+Compiler run successful!</code></pre>
+<p>Foundry crea una carpeta <code>out/</code> con el resultado de la
+compilación. Adentro vas a encontrar
+<code>out/SimpleStorage.sol/SimpleStorage.json</code>, que tiene el
+<strong>bytecode</strong> (lo que se sube a la blockchain) y el
+<strong>ABI</strong> (la “interfaz” para interactuar con el
+contrato).</p>
+<blockquote>
+<p>💡 El bytecode es público y leíble. NO está encriptado — solo está
+compilado a una representación que entiende la EVM (Ethereum Virtual
+Machine).</p>
+</blockquote>
+<hr />
+<h2 id="parte-5--tour-del-contrato-simplestorage">Parte 5 — Tour del
+contrato <code>SimpleStorage</code></h2>
+<p>Abrí <code>src/SimpleStorage.sol</code> en VS Code. Lo
+desglosamos:</p>
+<h3 id="51-licencia--pragma">5.1 Licencia + pragma</h3>
+<pre class="solidity"><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;</code></pre>
+<ul>
+<li><strong><code>SPDX-License-Identifier</code></strong>: el compilador
+pide que declares bajo qué licencia liberás el código. <code>MIT</code>
+es la más permisiva.</li>
+<li><strong><code>pragma solidity ^0.8.19</code></strong>: la versión
+mínima del compilador. El <code>^</code> significa “0.8.19 o cualquier
+0.8.x posterior, pero NO 0.9.x”.</li>
+</ul>
+<h3 id="52-declaración-del-contrato">5.2 Declaración del contrato</h3>
+<pre class="solidity"><code>contract SimpleStorage {
+    // ...
+}</code></pre>
+<p>Un contrato en Solidity es como una clase en lenguajes orientados a
+objetos: agrupa estado y funciones.</p>
+<h3 id="53-variable-de-estado">5.3 Variable de estado</h3>
+<pre class="solidity"><code>uint256 public favoriteNumber;</code></pre>
+<ul>
+<li><strong><code>uint256</code></strong>: entero sin signo de 256 bits.
+Es el tipo “default” en Solidity.</li>
+<li><strong><code>public</code></strong>: cualquiera puede leer este
+valor desde afuera. Solidity te genera <strong>automáticamente</strong>
+una función <code>favoriteNumber()</code> que la devuelve.</li>
+<li>El estado vive <strong>on-chain</strong> y persiste entre
+transacciones.</li>
+</ul>
+<h3 id="54-evento">5.4 Evento</h3>
+<pre class="solidity"><code>event NumberUpdated(
+    uint256 oldNumber,
+    uint256 newNumber,
+    address indexed updatedBy
+);</code></pre>
+<p>Los eventos son “logs” que el contrato emite y que quedan registrados
+en la blockchain. La palabra <code>indexed</code> permite filtrar
+después: en Etherscan vas a poder buscar todos los
+<code>NumberUpdated</code> emitidos por una address específica.</p>
+<h3 id="55-función-que-escribe-estado">5.5 Función que escribe
+estado</h3>
+<pre class="solidity"><code>function store(uint256 _number) public {
+    uint256 oldNumber = favoriteNumber;
+    favoriteNumber = _number;
+    emit NumberUpdated(oldNumber, _number, msg.sender);
+}</code></pre>
+<ul>
+<li><strong><code>public</code></strong>: cualquiera puede
+llamarla.</li>
+<li><strong><code>msg.sender</code></strong>: variable global de
+Solidity que contiene la address que llamó a la función ahora.</li>
+<li><strong><code>emit</code></strong>: dispara el evento.</li>
+<li>Como modifica estado, esta función <strong>cuesta gas</strong>.</li>
+</ul>
+<h3 id="56-función-view">5.6 Función <code>view</code></h3>
+<pre class="solidity"><code>function retrieve() public view returns (uint256) {
+    return favoriteNumber;
+}</code></pre>
+<ul>
+<li><strong><code>view</code></strong>: declara que la función solo lee,
+no modifica estado. Si la llamás desde afuera (sin transacción),
+<strong>no cuesta gas</strong>.</li>
+</ul>
+<h3 id="57-función-que-incrementa">5.7 Función que incrementa</h3>
+<pre class="solidity"><code>function increment() public {
+    uint256 oldNumber = favoriteNumber;
+    favoriteNumber += 1;
+    emit NumberUpdated(oldNumber, favoriteNumber, msg.sender);
+}</code></pre>
+<p>Igual que <code>store</code>, pero suma 1 en vez de aceptar un
+parámetro.</p>
+<hr />
+<h2 id="parte-6--tests-con-foundry">Parte 6 — Tests con Foundry</h2>
+<h3 id="61-correr-todos-los-tests">6.1 Correr todos los tests</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> test</span></code></pre></div>
+<p>Output esperado:</p>
+<pre><code>Ran 10 tests for test/SimpleStorage.t.sol:SimpleStorageTest
+[PASS] testFuzz_IncrementNoOverflow(uint256) (runs: 256, ...)
+[PASS] testFuzz_Store(uint256) (runs: 256, ...)
+[PASS] test_AnyoneCanStore() ...
+[PASS] test_EventRecordsCorrectCaller() ...
+[PASS] test_Increment() ...
+[PASS] test_IncrementEmitsEvent() ...
+[PASS] test_InitialValueIsZero() ...
+[PASS] test_RetrieveMatchesFavoriteNumber() ...
+[PASS] test_StoreEmitsEvent() ...
+[PASS] test_StoreNumber() ...
+Suite result: ok. 10 passed; 0 failed; 0 skipped</code></pre>
+<h3 id="62-qué-hay-adentro-de-los-tests">6.2 ¿Qué hay adentro de los
+tests?</h3>
+<p>Abrí <code>test/SimpleStorage.t.sol</code>. Las cosas clave:</p>
+<ul>
+<li><strong><code>setUp()</code></strong>: se ejecuta antes de
+<strong>cada</strong> test. Acá se crea un contrato fresco para que cada
+test arranque limpio.</li>
+<li><strong><code>assertEq(a, b)</code></strong>: la aserción más usada.
+Si <code>a != b</code>, el test falla.</li>
+<li><strong><code>vm.prank(alice)</code></strong>: cheatcode mágico de
+Foundry. La próxima llamada se hace <strong>como si</strong> la hiciera
+la address <code>alice</code>. Sirve para testear que solo el owner
+puede llamar ciertas funciones.</li>
+<li><strong><code>vm.expectEmit(...)</code></strong>: la próxima
+transacción tiene que emitir el evento exacto que se especifica
+después.</li>
+<li><strong><code>testFuzz_*</code></strong>: tests con fuzzing. Foundry
+genera 256 valores random para los argumentos y corre el test 256 veces.
+Encuentra edge cases que no se te ocurrieron.</li>
+</ul>
+<h3 id="63-más-detalle">6.3 Más detalle</h3>
+<p>Para ver el call trace completo de un test específico:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">forge</span> test <span class="at">--match-test</span> test_StoreNumber <span class="at">-vvvv</span></span></code></pre></div>
+<p>Vas a ver paso a paso qué llamó a qué, qué eventos se emitieron,
+cuánto gas se gastó.</p>
+<hr />
+<h2 id="parte-7--qué-viene-en-clase-3">Parte 7 — ¿Qué viene en clase
+3?</h2>
+<p>En clase 3 vamos a usar todo lo de hoy más:</p>
+<ul>
+<li><strong>Anvil</strong>: levantar una blockchain local en tu máquina
+para deployar y testear sin gastar gas real.</li>
+<li><strong><code>cast</code></strong>: leer y escribir al contrato
+desde la terminal (<code>cast call</code> y
+<code>cast send</code>).</li>
+<li><strong>Deploy a Sepolia</strong>: subir el contrato a una
+blockchain real (testnet) y verlo en <a
+href="https://sepolia.etherscan.io/">Etherscan</a>.</li>
+<li><strong>NFTs (ERC-721)</strong>: empezar a construir el contrato de
+<strong>credenciales académicas</strong> que es la base del trabajo
+final.</li>
+</ul>
+<hr />
+<hr />
+<h2 id="después-de-clase">Después de clase</h2>
+<p>La tarea de la semana → <a href="clase-2-tarea.html">tarea de clase
+2</a>.</p>
+<h2 id="si-algo-falla">Si algo falla</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>foundryup</code> falla en Windows</td>
+<td>Instalar <a
+href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL2</a> y
+correr todo desde adentro</td>
+</tr>
+<tr>
+<td><code>forge install</code> falla por proxy o red</td>
+<td>Probar con VPN o desde otra red. Si seguís sin poder, postealo en el
+foro</td>
+</tr>
+<tr>
+<td><code>forge build</code> da error de versión de Solidity</td>
+<td>Confirmá que <code>foundry.toml</code> tiene
+<code>solc = "0.8.28"</code> (no 0.8.19)</td>
+</tr>
+<tr>
+<td><code>code</code> no es comando reconocido</td>
+<td>Abrí VS Code → <code>Ctrl+Shift+P</code> → “Shell Command: Install
+‘code’ command in PATH”</td>
+</tr>
+<tr>
+<td>Algún test falla</td>
+<td>Postealo en el foro con el output completo de
+<code>forge test -vvv</code></td>
+</tr>
+</tbody>
+</table>
+<p>Lo demás, foro del campus.</p>
+
+    <nav class="page-prev-next" aria-label="Navegación entre páginas">
+      <a class="prev-link" href="#" data-slot="prev" hidden>
+        <span class="arrow">←</span>
+        <span class="nav-meta">
+          <span class="nav-label">Anterior</span>
+          <span class="nav-title" data-slot="prev-title"></span>
+        </span>
+      </a>
+      <a class="next-link" href="#" data-slot="next" hidden>
+        <span class="nav-meta">
+          <span class="nav-label">Siguiente</span>
+          <span class="nav-title" data-slot="next-title"></span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <nav class="page-nav-bottom">
+      <a href="index.html" class="back-to-menu">← Volver al menú principal</a>
+    </nav>
+  </main>
+</div>
+
+<footer class="unq-footer">
+  <div>
+    UNQ · Diplomatura en Blockchain · Desarrollo de Smart Contracts y dApps <strong>2026</strong>
+    · Dr. David Petrocelli &amp; Esp. Ciro Romero
+  </div>
+</footer>
+
+<script>
+// Sidebar show/hide toggle (preference persisted in localStorage)
+(function () {
+  const sidebar = document.getElementById('toc-sidebar');
+  const layout = document.querySelector('.layout');
+  const hideBtn = document.getElementById('sidebar-hide');
+  const showBtn = document.getElementById('sidebar-show');
+  if (!sidebar || !layout || !hideBtn || !showBtn) return;
+
+  const KEY = 'unlu.dcb.sidebar.hidden';
+
+  function apply(hidden) {
+    layout.classList.toggle('sidebar-hidden', hidden);
+    showBtn.classList.toggle('visible', hidden);
+  }
+
+  apply(localStorage.getItem(KEY) === '1');
+
+  hideBtn.addEventListener('click', () => {
+    localStorage.setItem(KEY, '1');
+    apply(true);
+  });
+  showBtn.addEventListener('click', () => {
+    localStorage.removeItem(KEY);
+    apply(false);
+  });
+})();
+
+// Wrap each H2 (and its following content until the next H2) in a <details open>
+// element so users can collapse/expand sections.
+(function () {
+  const main = document.querySelector('main.content');
+  if (!main) return;
+
+  // Collect direct-child H2 headings so we don't touch nested ones (e.g., inside details we'll create)
+  const headings = Array.from(main.children).filter(el => el.tagName === 'H2');
+
+  headings.forEach(h2 => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'section-collapsible';
+
+    const summary = document.createElement('summary');
+    // Move heading content (incl. anchor) into the summary so anchors keep working
+    summary.innerHTML = h2.innerHTML;
+    if (h2.id) summary.id = h2.id;
+    details.appendChild(summary);
+
+    // Move siblings until next H2 into details
+    const parent = h2.parentNode;
+    let next = h2.nextSibling;
+    parent.replaceChild(details, h2);
+    while (next && !(next.nodeType === 1 && next.tagName === 'H2')) {
+      const node = next;
+      next = next.nextSibling;
+      details.appendChild(node);
+    }
+  });
+
+  // If there's a hash in the URL, ensure the target's <details> is open
+  function openDetailsForHash(hash) {
+    if (!hash) return;
+    const target = document.getElementById(hash.replace(/^#/, ''));
+    if (!target) return;
+    let p = target.closest('details');
+    while (p) { p.open = true; p = p.parentElement && p.parentElement.closest('details'); }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  openDetailsForHash(window.location.hash);
+  window.addEventListener('hashchange', () => openDetailsForHash(window.location.hash));
+
+  // Wire up "Expand all" / "Collapse all" controls in the inline TOC
+  document.querySelectorAll('.toc-controls [data-action]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const open = action === 'expand-all';
+      document.querySelectorAll('details.section-collapsible').forEach(d => { d.open = open; });
+    });
+  });
+})();
+
+// Populate prev/next navigation based on the current page's banner-num
+(function () {
+  const pill = document.querySelector('.banner-pill');
+  const nav = document.querySelector('.page-prev-next');
+  if (!pill || !nav) return;
+
+  const key = (pill.textContent || '').trim().toUpperCase();
+
+  // Map banner-num → { prev, next }
+  // Each entry: { href, title } (or null if not present)
+  const MAP = {
+    // ----- Clase 1 -----
+    'C1 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' }
+    },
+    'C1 · TAREA': {
+      prev: { href: 'clase-1-clase.html', title: 'Material en clase 1' },
+      next: { href: 'clase-2-clase.html', title: 'Clase 2' }
+    },
+    // ----- Clase 2 -----
+    'C2 · CLASE': {
+      prev: { href: 'clase-1-tarea.html', title: 'Tarea de clase 1' },
+      next: { href: 'clase-2-tarea.html', title: 'Tarea de clase 2' }
+    },
+    'C2 · TAREA': {
+      prev: { href: 'clase-2-clase.html', title: 'Material en clase 2' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 3 -----
+    'C3 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-3-tarea.html', title: 'Tarea de clase 3' }
+    },
+    'C3 · TAREA': {
+      prev: { href: 'clase-3-clase.html', title: 'Material en clase 3' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Clase 4 -----
+    'C4 · CLASE': {
+      prev: { href: 'index.html',         title: 'Menú principal' },
+      next: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' }
+    },
+    'C4 · TAREA': {
+      prev: { href: 'clase-4-clase.html', title: 'Material en clase 4' },
+      next: { href: 'tp-final.html',      title: 'Trabajo final' }
+    },
+    // ----- TP final -----
+    'TP FINAL': {
+      prev: { href: 'clase-4-tarea.html', title: 'Tarea de clase 4' },
+      next: { href: 'index.html',         title: 'Menú principal' }
+    },
+    // ----- Material transversal -----
+    'DIAGRAMAS': {
+      prev: { href: 'index.html',  title: 'Menú principal' },
+      next: { href: 'glosario.html', title: 'Glosario' }
+    },
+    'GLOSARIO': {
+      prev: { href: 'diagramas-arquitectura.html', title: 'Diagramas' },
+      next: { href: 'cheat-sheet.html',            title: 'Cheat sheet' }
+    },
+    'CHEAT-SHEET': {
+      prev: { href: 'glosario.html', title: 'Glosario' },
+      next: { href: 'index.html',    title: 'Menú principal' }
+    }
+  };
+
+  const entry = MAP[key];
+  if (!entry) return;
+
+  const prevLink = nav.querySelector('[data-slot="prev"]');
+  const nextLink = nav.querySelector('[data-slot="next"]');
+  const prevTitle = nav.querySelector('[data-slot="prev-title"]');
+  const nextTitle = nav.querySelector('[data-slot="next-title"]');
+
+  if (entry.prev && prevLink && prevTitle) {
+    prevLink.setAttribute('href', entry.prev.href);
+    prevTitle.textContent = entry.prev.title;
+    prevLink.hidden = false;
+  }
+  if (entry.next && nextLink && nextTitle) {
+    nextLink.setAttribute('href', entry.next.href);
+    nextTitle.textContent = entry.next.title;
+    nextLink.hidden = false;
+  }
+
+  // If neither slot is shown, hide the whole nav
+  if ((!entry.prev) && (!entry.next)) {
+    nav.style.display = 'none';
+  }
+})();
+
+// Click-to-copy on every <pre> code block
+(function () {
+  document.querySelectorAll('pre').forEach(pre => {
+    pre.addEventListener('click', async (e) => {
+      // Don't trigger if user is selecting text
+      const sel = window.getSelection();
+      if (sel && sel.toString().length > 0 && pre.contains(sel.anchorNode)) return;
+
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        pre.classList.add('copied');
+        setTimeout(() => pre.classList.remove('copied'), 1400);
+      } catch (err) {
+        // Fallback: select all
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel2 = window.getSelection();
+        sel2.removeAllRanges();
+        sel2.addRange(range);
+      }
+    });
+  });
+})();
+
+// Open all external links in a new tab (preserves the current page).
+// Internal anchors (#hash), relative links and same-origin links stay in-tab.
+(function () {
+  const here = window.location.hostname;
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    // Skip anchors and pure relative links
+    if (href.startsWith('#') || href.startsWith('/') || !/^https?:\/\//i.test(href)) return;
+    try {
+      const url = new URL(href);
+      if (url.hostname && url.hostname !== here) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    } catch (_) {
+      // Malformed URL — ignore
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
