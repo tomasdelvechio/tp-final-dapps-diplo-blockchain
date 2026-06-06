@@ -12,7 +12,11 @@ contract AcademicCredentialsTest is Test {
     address public admin = address(this);
     address public alice = makeAddr("alice");
     address public bob = makeAddr("bob");
+    address public issuer = makeAddr("issuer");
 
+    string public constant DEGREE_NAME = "Licenciatura en Sistemas de Informacion";
+    bytes32 public constant STUDENT_NAME_HASH = keccak256("Alice Smith DNI 12345678");
+    bytes32 public constant DOCUMENT_HASH = keccak256("PDF content signature");
     string public constant METADATA_URI = "ipfs://bafy.../credential-1.json";
 
     function setUp() public {
@@ -34,99 +38,221 @@ contract AcademicCredentialsTest is Test {
     }
 
     // ==========================================================================
-    // ISSUE
+    // 1. Asignacion de Issuer (Camino Feliz)
     // ==========================================================================
+    function test_AdminCanGrantAndRevokeIssuer() public {
+        // Initially, 'issuer' doesn't have the role
+        assertFalse(credentials.hasRole(credentials.ISSUER_ROLE(), issuer));
 
+        // Grant role
+        credentials.grantIssuer(issuer);
+        assertTrue(credentials.hasRole(credentials.ISSUER_ROLE(), issuer));
+
+        // Revoke role
+        credentials.revokeIssuer(issuer);
+        assertFalse(credentials.hasRole(credentials.ISSUER_ROLE(), issuer));
+    }
+
+    // ==========================================================================
+    // 2. Emision de Credencial (Camino Feliz)
+    // ==========================================================================
     function test_IssuerCanIssue() public {
-        credentials.issueCredential(alice, 1, "Alice Smith", "12345678", "Ingenieria", 9, METADATA_URI);
+        credentials.grantIssuer(issuer);
+        
+        vm.prank(issuer);
+        credentials.issueCredential(
+            alice,
+            1,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
 
         assertEq(credentials.ownerOf(1), alice);
         assertEq(credentials.balanceOf(alice), 1);
         assertEq(credentials.tokenURI(1), METADATA_URI);
         assertTrue(credentials.isValid(1));
 
-        (string memory nombre, string memory dni, string memory carrera, uint256 fecha, uint256 promedio) = credentials.credentials(1);
-        assertEq(nombre, "Alice Smith");
-        assertEq(dni, "12345678");
-        assertEq(carrera, "Ingenieria");
-        assertEq(promedio, 9);
-        assertEq(fecha, block.timestamp);
+        (
+            string memory degreeName,
+            bytes32 studentNameHash,
+            uint256 issueDate,
+            bytes32 documentHash,
+            bool active
+        ) = credentials.credentials(1);
+
+        assertEq(degreeName, DEGREE_NAME);
+        assertEq(studentNameHash, STUDENT_NAME_HASH);
+        assertEq(documentHash, DOCUMENT_HASH);
+        assertEq(issueDate, block.timestamp);
+        assertTrue(active);
     }
 
+    // ==========================================================================
+    // 3. Verificacion de Credencial (Camino Feliz)
+    // ==========================================================================
+    function test_VerifyReturnsCorrectData() public {
+        credentials.grantIssuer(issuer);
+        
+        vm.prank(issuer);
+        credentials.issueCredential(
+            alice,
+            1,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
+
+        (AcademicCredentials.Credential memory cred, bool isValid) = credentials.verify(1);
+        assertEq(cred.degreeName, DEGREE_NAME);
+        assertEq(cred.studentNameHash, STUDENT_NAME_HASH);
+        assertEq(cred.documentHash, DOCUMENT_HASH);
+        assertEq(cred.issueDate, block.timestamp);
+        assertTrue(cred.active);
+        assertTrue(isValid);
+    }
+
+    // ==========================================================================
+    // 4. Revocacion de Credencial (Camino Feliz)
+    // ==========================================================================
+    function test_IssuerCanRevoke() public {
+        credentials.grantIssuer(issuer);
+        
+        vm.startPrank(issuer);
+        credentials.issueCredential(
+            alice,
+            1,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
+        assertTrue(credentials.isValid(1));
+
+        credentials.revoke(1, "Error in name input");
+        vm.stopPrank();
+
+        assertFalse(credentials.isValid(1));
+        
+        // After burn, ownerOf(1) should revert
+        vm.expectRevert();
+        credentials.ownerOf(1);
+
+        (AcademicCredentials.Credential memory cred, bool isValid) = credentials.verify(1);
+        assertFalse(cred.active);
+        assertFalse(isValid);
+    }
+
+    // ==========================================================================
+    // 5. Emision no autorizada (Casos de Error)
+    // ==========================================================================
     function test_NonIssuerCannotIssue() public {
         vm.prank(alice);
         vm.expectRevert();
-        credentials.issueCredential(bob, 2, "Bob", "87654321", "Sistemas", 8, METADATA_URI);
-    }
-
-    function test_CannotIssueDuplicateTokenId() public {
-        credentials.issueCredential(alice, 1, "Alice", "1", "A", 10, METADATA_URI);
-
-        vm.expectRevert();
-        credentials.issueCredential(bob, 1, "Bob", "2", "B", 10, METADATA_URI);
-    }
-
-    // ==========================================================================
-    // REVOKE
-    // ==========================================================================
-
-    function test_IssuerCanRevoke() public {
-        credentials.issueCredential(alice, 1, "A", "1", "C", 10, METADATA_URI);
-        assertTrue(credentials.isValid(1));
-
-        credentials.revoke(1);
-
-        assertFalse(credentials.isValid(1));
-        assertEq(credentials.balanceOf(alice), 0);
-    }
-
-    function test_NonIssuerCannotRevoke() public {
-        credentials.issueCredential(alice, 1, "A", "1", "C", 10, METADATA_URI);
-
-        vm.prank(alice);
-        vm.expectRevert();
-        credentials.revoke(1);
-    }
-
-    function test_CannotRevokeNonExistent() public {
-        vm.expectRevert();
-        credentials.revoke(999);
+        credentials.issueCredential(
+            bob,
+            2,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
     }
 
     // ==========================================================================
-    // SOULBOUND
+    // 6. Soulbound (Intransferibilidad / Casos de Error)
     // ==========================================================================
-
     function test_CannotTransfer() public {
-        credentials.issueCredential(alice, 1, "A", "1", "C", 10, METADATA_URI);
+        credentials.grantIssuer(issuer);
         
+        vm.prank(issuer);
+        credentials.issueCredential(
+            alice,
+            1,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
+
         vm.prank(alice);
         vm.expectRevert("Soulbound: non-transferable");
         credentials.transferFrom(alice, bob, 1);
     }
 
     // ==========================================================================
-    // VERIFICATION
+    // 7. TokenID duplicado (Casos de Error)
     // ==========================================================================
+    function test_CannotIssueDuplicateTokenId() public {
+        credentials.grantIssuer(issuer);
+        
+        vm.startPrank(issuer);
+        credentials.issueCredential(
+            alice,
+            1,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
 
-    function test_IsValidReturnsFalseForNonExistent() public view {
-        assertFalse(credentials.isValid(123));
+        vm.expectRevert();
+        credentials.issueCredential(
+            bob,
+            1,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
+        vm.stopPrank();
     }
 
-    function test_TokenURIReturnsMetadataURI() public {
-        credentials.issueCredential(alice, 5, "A", "1", "C", 10, "ipfs://bafy.../degree-systems-2025.json");
+    // ==========================================================================
+    // 8. Revocacion inexistente (Casos de Error)
+    // ==========================================================================
+    function test_CannotRevokeNonExistent() public {
+        credentials.grantIssuer(issuer);
 
-        assertEq(credentials.tokenURI(5), "ipfs://bafy.../degree-systems-2025.json");
+        vm.prank(issuer);
+        vm.expectRevert("AcademicCredentials: token does not exist");
+        credentials.revoke(999, "No reason");
     }
 
     // ==========================================================================
-    // FUZZ
+    // 9. Administracion no autorizada (Casos de Error)
     // ==========================================================================
+    function test_NonAdminCannotManageIssuers() public {
+        vm.startPrank(alice);
+        
+        vm.expectRevert();
+        credentials.grantIssuer(bob);
 
+        vm.expectRevert();
+        credentials.revokeIssuer(issuer);
+
+        vm.stopPrank();
+    }
+
+    // ==========================================================================
+    // 10. Fuzz de Emision (Fuzz)
+    // ==========================================================================
     function testFuzz_IssueToAnyAddress(address student, uint256 tokenId) public {
         vm.assume(student != address(0));
 
-        credentials.issueCredential(student, tokenId, "Student", "ID", "Major", 10, METADATA_URI);
+        credentials.grantIssuer(issuer);
+
+        vm.prank(issuer);
+        credentials.issueCredential(
+            student,
+            tokenId,
+            DEGREE_NAME,
+            STUDENT_NAME_HASH,
+            DOCUMENT_HASH,
+            METADATA_URI
+        );
 
         assertEq(credentials.ownerOf(tokenId), student);
         assertTrue(credentials.isValid(tokenId));

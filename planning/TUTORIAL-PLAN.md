@@ -85,15 +85,26 @@ forge install openzeppelin/openzeppelin-contracts --no-commit
 Creá o modificá el archivo `blockchain/src/AcademicCredentials.sol`. Aquí está la guía de implementación:
 
 1. **Importaciones**: Necesitás heredar de `AccessControl` (para manejar roles) y de `ERC721URIStorage` (para manejar el NFT y su metadata).
-2. **Estructura de Datos**: Definí un `struct Credential` que contenga: `nombreEstudiante`, `dni`, `carrera`, `fechaEmision` y `promedio`.
+2. **Estructura de Datos**: Definí un `struct Credential` que contenga:
+   - `degreeName` (string): Nombre del título (ej. "Licenciatura en Sistemas").
+   - `studentNameHash` (bytes32): `keccak256` del nombre completo + DNI para privacidad.
+   - `issueDate` (uint256): Timestamp de emisión.
+   - `documentHash` (bytes32): `keccak256` del archivo PDF original del título.
+   - `active` (bool): `true` por defecto, `false` si la credencial fue revocada.
 3. **Almacenamiento**: Creá un `mapping(uint256 => Credential) public credentials;` para guardar la data on-chain.
 4. **Soulbound (Intransferible)**: Sobrescribí la función `_update` de ERC721. Si el emisor (`from`) no es la dirección cero (es decir, no es un minteo) y el receptor (`to`) tampoco, debe hacer `revert("Soulbound: non-transferable");`.
-5. **Roles**: Definí un `ISSUER_ROLE`. Asegurate de que la función `issueCredential` tenga el modificador `onlyRole(ISSUER_ROLE)`. El despliegue inicial debe otorgar el `DEFAULT_ADMIN_ROLE` a tu cuenta para poder gestionar a los emisores.
+5. **Roles**: Definí un `ISSUER_ROLE` y usá `DEFAULT_ADMIN_ROLE` para el rector de la universidad.
+6. **Funciones Obligatorias**:
+   - `grantIssuer(address account)`: Administrador otorga el rol de emisor a una cuenta. Debe emitir el evento `IssuerGranted(account, msg.sender)`.
+   - `revokeIssuer(address account)`: Administrador revoca el rol de emisor de una cuenta. Debe emitir el evento `IssuerRevoked(account, msg.sender)`.
+   - `issueCredential(address student, uint256 tokenId, string degreeName, bytes32 studentNameHash, bytes32 documentHash, string metadataURI)`: Emisor emite la credencial, guarda los datos en el mapping y emite `CredentialIssued(student, tokenId, degreeName, studentNameHash)`.
+   - `revoke(uint256 tokenId, string reason)`: Emisor marca la credencial como inactiva (`active = false`), quema el token con `_burn(tokenId)` y emite `CredentialRevoked(tokenId, msg.sender, reason)`.
+   - `verify(uint256 tokenId) public view returns (Credential memory, bool isValid)`: Cualquiera puede verificar un tokenId, retornando la estructura de la credencial y si es actualmente válida (existe y está activa).
 
 ### Paso 2.3: Documentación Inicial
 Regresá a la raíz del proyecto y creá un `README.md`.
 - Redactá una introducción sobre qué hace el proyecto.
-- Agregá un diagrama usando Mermaid ( \`\`\`mermaid \`\`\` ) que muestre cómo un emisor carga los datos, el contrato los guarda y el estudiante los verifica.
+- Agregá un diagrama usando Mermaid ( ```mermaid ``` ) que muestre cómo un emisor carga los datos (con hashes correspondientes para privacidad), el contrato los guarda y un verificador consulta a través de `verify()`.
 
 ---
 
@@ -102,12 +113,23 @@ Regresá a la raíz del proyecto y creá un `README.md`.
 No desplegamos sin probar. Seguimos en la carpeta `blockchain`.
 
 ### Paso 3.1: Pruebas Unitarias (Tests)
-Abrí `blockchain/test/AcademicCredentials.t.sol` y estructurá tus pruebas:
+Abrí `blockchain/test/AcademicCredentials.t.sol` y estructurá tus pruebas para cubrir los siguientes 10 escenarios obligatorios:
 
-1. **`setUp()`**: Desplegá el contrato, asigná roles usando `vm.startPrank` a cuentas de prueba.
-2. **Camino Feliz**: Escribí `test_EmitirCredencial()`. Llamá a `issueCredential`, luego buscá la credencial en el `mapping` y usá `assertEq` para validar que los datos guardados son correctos.
-3. **Comportamiento Soulbound**: Escribí `test_RevertIf_TransferAttempt()`. Emití un token e intentá usar `transferFrom`. Envolvé esa llamada con `vm.expectRevert("Soulbound: non-transferable");` para asegurar que falle.
-4. **Fuzzing**: Escribí `testFuzz_Emision(address estudiante)`. Asegurá que funcione para cualquier dirección válida.
+**Camino Feliz:**
+1. **Asignación de Issuer**: Admin agrega un emisor con `grantIssuer(address)` y se verifica usando `hasRole(ISSUER_ROLE, addr)`.
+2. **Emisión de Credencial**: Issuer emite una credencial y valida que todos los campos del struct `Credential` se guarden correctamente.
+3. **Verificación de Credencial**: `verify()` devuelve los datos correctos del struct y `isValid = true`.
+4. **Revocación de Credencial**: Issuer revoca una credencial con `revoke(tokenId, reason)` y `verify()` devuelve `isValid = false`.
+
+**Casos de Error:**
+5. **Emisión no autorizada**: Una dirección sin `ISSUER_ROLE` intenta emitir y la transacción revierte.
+6. **Soulbound (Intransferibilidad)**: Intentar transferir una credencial entre dos direcciones revierte.
+7. **TokenID duplicado**: Intentar emitir una credencial con un `tokenId` que ya fue emitido revierte.
+8. **Revocación inexistente**: Intentar revocar un `tokenId` inexistente revierte.
+9. **Administración no autorizada**: Una dirección sin `DEFAULT_ADMIN_ROLE` intenta agregar emisores y la transacción revierte.
+
+**Fuzzing:**
+10. **Fuzz de Emisión**: `testFuzz_Emision(address estudiante, uint256 tokenId)` para verificar que `ownerOf(tokenId) == estudiante` para cualquier `estudiante != address(0)`.
 
 Para correr las pruebas y ver la cobertura:
 ```bash
@@ -173,12 +195,16 @@ En el archivo `wagmi.ts`, asegurate de que la cadena importada y utilizada sea `
 
 ### Paso 5.4: Interfaz Pública (Verificación)
 Modificá el componente de lectura. Usá el hook `useReadContract` de Wagmi.
-Pasale la dirección, el ABI, el nombre de la función (ej. `credentials`) y el `args` (el ID a buscar).
-Mostrá en pantalla los datos devueltos. Si el token existe, mostrá un ✅.
+Pasale la dirección, el ABI, el nombre de la función (`verify`) y el `args` (el ID a buscar).
+Mostrá en pantalla los datos devueltos (Nombre del título, fecha de emisión, dirección del estudiante y `documentHash`). Si la credencial existe y está activa (`isValid == true`), mostrá un ✅. Si no existe o fue revocada, mostrá ❌.
 
 ### Paso 5.5: Interfaz del Emisor (Escritura)
-En el panel del administrador, vinculá el formulario.
-Antes de enviar a la blockchain, usá la utilidad `keccak256` y `stringToBytes` de Viem para hashear el Nombre + DNI si es necesario según tu lógica de privacidad, o simplemente enviá los campos al hook `useWriteContract`.
+En el panel de emisor, vinculá el formulario.
+Antes de enviar la transacción a la blockchain, asegurate de hashear los datos de privacidad en el frontend usando utilidades de Viem como `keccak256` y `encodePacked` (o `stringToBytes` / `StringToBytes` + `keccak256`):
+- Generá `studentNameHash` haciendo `keccak256(encodePacked(nombreCompleto, DNI))`.
+- Generá `documentHash` haciendo `keccak256` sobre el contenido o representación del documento/analítico.
+Enviá estos hashes junto con el `degreeName`, `student` address, `tokenId` y el `metadataURI` a la función `issueCredential` usando `useWriteContract`.
+También vinculá el formulario de revocación para llamar a `revoke(tokenId, reason)`.
 
 ---
 
