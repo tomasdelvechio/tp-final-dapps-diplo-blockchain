@@ -5,9 +5,9 @@ import {Script, console} from "forge-std/Script.sol";
 import {AcademicCredentials} from "../src/AcademicCredentials.sol";
 
 /// @title DeployAcademicCredentials
-/// @notice Deploys the AcademicCredentials registry. The deployer becomes the issuer.
-/// @dev    Run with:
-///         forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast --account dev-wallet
+/// @notice Deploys the AcademicCredentials registry. The deployer becomes the owner/issuer.
+/// @dev    To deploy, first set up your .env file and run:
+///         source .env && forge script script/Deploy.s.sol --rpc-url $BASE_SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY
 contract DeployAcademicCredentials is Script {
     function run() external returns (AcademicCredentials) {
         vm.startBroadcast();
@@ -17,7 +17,7 @@ contract DeployAcademicCredentials is Script {
         vm.stopBroadcast();
 
         console.log("AcademicCredentials deployed at:", address(credentials));
-        console.log("Issuer:", msg.sender);
+        console.log("Admin/Issuer address:", msg.sender);
 
         return credentials;
     }
