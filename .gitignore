@@ -9,3 +9,6 @@ blockchain/broadcast/
 
 # Entorno y variables sensibles
 .env
+
+# misc
+.antigravitycli/
