@@ -1,6 +1,11 @@
 # UNLu Academic Credentials Verification (Trabajo Final DApps)
 
-Este repositorio es un monorepo que contiene la solución para el Trabajo Final de la Diplomatura en Blockchain, consistente en una aplicación descentralizada (dApp) para la emisión y verificación de credenciales académicas oficiales de la **Universidad Nacional de Luján (UNLu)** utilizando tokens "Soulbound" (NFTs ERC-721 no transferibles).
+Este repositorio es un monorepo que contiene la solución para el Trabajo Final de la asignatura dApps de la Diplomatura en Blockchain de UNQ, consistente en una aplicación descentralizada (dApp) para la emisión y verificación de credenciales académicas de la **Universidad Nacional de Luján (UNLu)** utilizando tokens "Soulbound" (NFTs ERC-721 no transferibles).
+
+> [!WARNING]
+> El presente proyecto representa un ejercicio académico para el final de una asignatura de dApps y Blockchain.
+> No se basa en relevamiento real de necesidades de la Institución, no tiene ningun estado oficial y no hay soporte
+> reglamentario que permita su implementación productiva.
 
 ---
 
@@ -39,21 +44,25 @@ Contiene el contrato `AcademicCredentials.sol` que implementa el estándar ERC-7
    ```bash
    forge install openzeppelin/openzeppelin-contracts --no-commit
    ```
+
 2. **Compilar contratos**:
    
    ```bash
    forge build
    ```
+
 3. **Ejecutar batería de pruebas**:
    
    ```bash
    forge test
    ```
+
 4. **Ver reporte de cobertura de código (+80% coverage)**:
    
    ```bash
    forge coverage
    ```
+
 5. **Desplegar contrato en la testnet**:
    Crea un archivo `.env` configurando tu clave privada, RPC url y API key de Etherscan, luego ejecuta:
    
@@ -77,12 +86,14 @@ Interfaz web interactiva y responsiva con estilo premium oscuro adaptado a los c
    ```bash
    npm install
    ```
+
 2. **Configurar variables de entorno**:
    Crea un archivo `.env.local` y añade tu ID de proyecto de WalletConnect:
    
    ```env
    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=tu_project_id_de_reown_cloud
    ```
+
 3. **Correr dApp en modo desarrollo**:
    
    ```bash
@@ -90,11 +101,13 @@ Interfaz web interactiva y responsiva con estilo premium oscuro adaptado a los c
    ```
    
    *Abre [http://localhost:3000](http://localhost:3000) en tu navegador.*
+
 4. **Compilar para producción (Build)**:
    
    ```bash
    npm run build
    ```
+
 5. **Iniciar servidor en producción local**:
    
    ```bash
