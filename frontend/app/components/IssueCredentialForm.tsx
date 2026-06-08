@@ -1,18 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { keccak256, toHex } from 'viem';
-import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { keccak256, encodePacked } from 'viem';
+import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import { CREDENTIALS_ADDRESS, CREDENTIALS_ABI } from '../../contracts/credentials';
 
-/**
- * Issuer-only form to mint a new credential.
- *
- * The frontend hashes the student's full name + DNI on the client so the
- * cleartext never hits the chain. Same for the PDF: the issuer pastes the
- * IPFS CID of the file, and we hash a known representation off-chain.
- */
 export function IssueCredentialForm() {
+  const { chain } = useAccount();
+  const [activeTab, setActiveTab] = useState<'issue' | 'revoke'>('issue');
+
+  // Issue fields
   const [studentAddress, setStudentAddress] = useState('');
   const [tokenId, setTokenId] = useState('');
   const [degreeName, setDegreeName] = useState('Licenciatura en Sistemas de Información');
@@ -21,14 +18,73 @@ export function IssueCredentialForm() {
   const [pdfHashInput, setPdfHashInput] = useState('');
   const [metadataURI, setMetadataURI] = useState('');
 
-  const { writeContract, data: hash, isPending, error } = useWriteContract();
+  // Revoke fields
+  const [revokeTokenId, setRevokeTokenId] = useState('');
+  const [revokeReason, setRevokeReason] = useState('');
+
+  // Real-time privacy hashing previews
+  const [previewNameHash, setPreviewNameHash] = useState('0x...');
+  const [previewDocHash, setPreviewDocHash] = useState('0x...');
+
+  const { writeContract, data: hash, isPending, error, reset } = useWriteContract();
   const { isLoading: confirming, isSuccess } = useWaitForTransactionReceipt({ hash });
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  const explorerUrl = chain?.blockExplorers?.default.url || 'https://sepolia.etherscan.io';
 
-    const studentNameHash = keccak256(toHex(`${studentName}|${studentDni}`));
-    const documentHash = keccak256(toHex(pdfHashInput || metadataURI));
+  // Update real-time previews
+  useEffect(() => {
+    if (studentName.trim() && studentDni.trim()) {
+      try {
+        const hashed = keccak256(encodePacked(['string', 'string'], [studentName.trim(), studentDni.trim()]));
+        setPreviewNameHash(hashed);
+      } catch (err) {
+        setPreviewNameHash('Error al hashear');
+      }
+    } else {
+      setPreviewNameHash('Completa Nombre y DNI');
+    }
+  }, [studentName, studentDni]);
+
+  useEffect(() => {
+    if (pdfHashInput.trim()) {
+      try {
+        const hashed = keccak256(encodePacked(['string'], [pdfHashInput.trim()]));
+        setPreviewDocHash(hashed);
+      } catch (err) {
+        setPreviewDocHash('Error al hashear');
+      }
+    } else {
+      setPreviewDocHash('Completa el identificador del PDF');
+    }
+  }, [pdfHashInput]);
+
+  function handleIssueSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!studentAddress.startsWith('0x') || studentAddress.length !== 42) {
+      alert('Ingresá una dirección de estudiante válida (0x...)');
+      return;
+    }
+    if (!tokenId) {
+      alert('Ingresá un Token ID válido');
+      return;
+    }
+    if (!studentName.trim() || !studentDni.trim()) {
+      alert('Completá el nombre y el DNI para generar el hash de privacidad');
+      return;
+    }
+    if (!pdfHashInput.trim()) {
+      alert('Completá el identificador del PDF');
+      return;
+    }
+    if (!metadataURI.trim()) {
+      alert('Completá la Metadata URI (IPFS)');
+      return;
+    }
+
+    reset();
+
+    const nameHash = keccak256(encodePacked(['string', 'string'], [studentName.trim(), studentDni.trim()]));
+    const docHash = keccak256(encodePacked(['string'], [pdfHashInput.trim()]));
 
     writeContract({
       address: CREDENTIALS_ADDRESS,
@@ -37,135 +93,234 @@ export function IssueCredentialForm() {
       args: [
         studentAddress as `0x${string}`,
         BigInt(tokenId),
-        degreeName,
-        studentNameHash,
-        documentHash,
-        metadataURI,
+        degreeName.trim(),
+        nameHash,
+        docHash,
+        metadataURI.trim(),
       ],
-    });
+    } as any);
+  }
+
+  function handleRevokeSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!revokeTokenId) {
+      alert('Ingresá un Token ID válido');
+      return;
+    }
+    if (!revokeReason.trim()) {
+      alert('Ingresá un motivo de revocación');
+      return;
+    }
+
+    reset();
+
+    writeContract({
+      address: CREDENTIALS_ADDRESS,
+      abi: CREDENTIALS_ABI,
+      functionName: 'revoke',
+      args: [
+        BigInt(revokeTokenId),
+        revokeReason.trim(),
+      ],
+    } as any);
   }
 
   return (
-    <section
-      style={{
-        background: '#fff',
-        border: '1px solid #E5E7EB',
-        borderLeft: '5px solid #54533F',
-        borderRadius: 8,
-        padding: '1.5rem',
-        marginBottom: '1.5rem',
-      }}
-    >
-      <h2 style={{ marginTop: 0, color: '#54533F' }}>Emitir credencial (issuer)</h2>
+    <section className="card fade-in" style={{ marginBottom: '1.5rem' }}>
+      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#fff', marginBottom: '0.5rem' }}>
+        <span>🎓</span> Panel de Emisión de la Universidad (Issuer)
+      </h2>
+      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+        Emitir o revocar credenciales académicas oficiales con privacidad asegurada por criptografía off-chain.
+      </p>
 
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 12 }}>
-        <Field
-          label="Address del estudiante"
-          value={studentAddress}
-          onChange={setStudentAddress}
-          placeholder="0x…"
-        />
-        <Field
-          label="Token ID"
-          type="number"
-          value={tokenId}
-          onChange={setTokenId}
-          placeholder="1"
-        />
-        <Field
-          label="Título"
-          value={degreeName}
-          onChange={setDegreeName}
-        />
-        <Field
-          label="Nombre completo del estudiante (se hashea en el browser)"
-          value={studentName}
-          onChange={setStudentName}
-          placeholder="Juan Pérez"
-        />
-        <Field
-          label="DNI (se hashea en el browser)"
-          value={studentDni}
-          onChange={setStudentDni}
-          placeholder="12345678"
-        />
-        <Field
-          label="Identificador del PDF (CID o filename)"
-          value={pdfHashInput}
-          onChange={setPdfHashInput}
-          placeholder="bafy…/titulo.pdf"
-        />
-        <Field
-          label="Metadata URI (IPFS)"
-          value={metadataURI}
-          onChange={setMetadataURI}
-          placeholder="ipfs://bafy…/credential.json"
-        />
-
+      <div className="tab-container">
         <button
-          type="submit"
-          disabled={isPending || confirming}
-          style={{
-            padding: '0.75rem',
-            background: '#54533F',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 4,
-            cursor: isPending || confirming ? 'wait' : 'pointer',
-            fontWeight: 600,
-            fontSize: 15,
-          }}
+          type="button"
+          className={`tab-btn ${activeTab === 'issue' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('issue'); reset(); }}
         >
-          {isPending
-            ? 'Confirmá en la wallet…'
-            : confirming
-              ? 'Esperando confirmación…'
-              : 'Emitir credencial'}
+          Emitir Nueva Credencial
         </button>
-      </form>
+        <button
+          type="button"
+          className={`tab-btn ${activeTab === 'revoke' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('revoke'); reset(); }}
+        >
+          Revocar Credencial Existente
+        </button>
+      </div>
 
-      {isSuccess && (
-        <p style={{ color: 'green', marginTop: 12 }}>
-          ✅ Credencial emitida. Tx{' '}
+      {activeTab === 'issue' ? (
+        <form onSubmit={handleIssueSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div className="grid-2">
+            <div className="form-group">
+              <label className="form-label">Dirección (Wallet Address) del Estudiante</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="0x..."
+                value={studentAddress}
+                onChange={(e) => setStudentAddress(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Token ID (Único e Incremental)</label>
+              <input
+                type="number"
+                className="form-input"
+                placeholder="Ej: 1"
+                value={tokenId}
+                onChange={(e) => setTokenId(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Nombre del Título / Carrera</label>
+            <input
+              type="text"
+              className="form-input"
+              value={degreeName}
+              onChange={(e) => setDegreeName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="grid-2" style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '1rem', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
+            <div className="form-group">
+              <label className="form-label">Nombre Completo (Firma Digital)</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="Juan Pérez"
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">DNI / ID de Identificación</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="12345678"
+                value={studentDni}
+                onChange={(e) => setStudentDni(e.target.value)}
+                required
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1', fontSize: '0.8rem', color: 'var(--color-unlu-gold)' }}>
+              🔒 <strong>Hash de Identidad Resultante (On-Chain):</strong> <code className="mono-text" style={{ fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>{previewNameHash}</code>
+            </div>
+          </div>
+
+          <div className="grid-2" style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '1rem', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
+            <div className="form-group">
+              <label className="form-label">Identificador del PDF (CID de IPFS o nombre de archivo)</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="Ej: QmXyZ... o titulo_juan_perez.pdf"
+                value={pdfHashInput}
+                onChange={(e) => setPdfHashInput(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Metadata URI (JSON en IPFS)</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="ipfs://bafybeih..."
+                value={metadataURI}
+                onChange={(e) => setMetadataURI(e.target.value)}
+                required
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1', fontSize: '0.8rem', color: 'var(--color-unlu-gold)' }}>
+              🔒 <strong>Hash del Documento Resultante (On-Chain):</strong> <code className="mono-text" style={{ fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>{previewDocHash}</code>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isPending || confirming}
+            className="btn-primary"
+          >
+            {isPending
+              ? 'Confirmá en tu wallet...'
+              : confirming
+                ? 'Emitiendo credencial en blockchain...'
+                : 'Emitir Credencial Oficial (Mint)'}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleRevokeSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div className="form-group">
+            <label className="form-label">Token ID de la Credencial a Revocar</label>
+            <input
+              type="number"
+              className="form-input"
+              placeholder="Ej: 1"
+              value={revokeTokenId}
+              onChange={(e) => setRevokeTokenId(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Motivo de la Revocación (Público)</label>
+            <textarea
+              className="form-input"
+              rows={3}
+              placeholder="Ej: Título emitido con errores tipográficos en el acta / Reemplazado por nueva resolución"
+              value={revokeReason}
+              onChange={(e) => setRevokeReason(e.target.value)}
+              style={{ resize: 'vertical' }}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isPending || confirming}
+            className="btn-danger"
+          >
+            {isPending
+              ? 'Confirmá en tu wallet...'
+              : confirming
+                ? 'Revocando credencial en blockchain...'
+                : 'Revocar Credencial Permanentemente'}
+          </button>
+        </form>
+      )}
+
+      {isSuccess && hash && (
+        <div className="fade-in" style={{ marginTop: '1.25rem', padding: '1rem', background: 'var(--success-bg)', border: '1px solid var(--success-border)', borderRadius: '10px' }}>
+          <p style={{ color: 'var(--success-text)', margin: 0, fontWeight: 500 }}>
+            🎉 Transacción enviada con éxito.
+          </p>
           <a
-            href={`https://sepolia.basescan.org/tx/${hash}`}
+            href={`${explorerUrl}/tx/${hash}`}
             target="_blank"
             rel="noopener noreferrer"
+            style={{ fontSize: '0.85rem', textDecoration: 'underline', marginTop: '0.25rem', display: 'inline-block' }}
           >
-            {hash?.slice(0, 14)}…
+            Ver transacción en el Explorador ({hash.slice(0, 10)}...{hash.slice(-8)})
           </a>
-        </p>
+        </div>
       )}
+
       {error && (
-        <p style={{ color: 'crimson', marginTop: 12 }}>Error: {error.message}</p>
+        <div className="fade-in" style={{ marginTop: '1.25rem', padding: '1rem', background: 'var(--error-bg)', border: '1px solid var(--error-border)', borderRadius: '10px' }}>
+          <p style={{ color: 'var(--error-text)', margin: 0, fontSize: '0.9rem' }}>
+            <strong>Error en la transacción:</strong> {(error as any).shortMessage || error.message}
+          </p>
+        </div>
       )}
     </section>
-  );
-}
-
-function Field({
-  label,
-  value,
-  onChange,
-  type = 'text',
-  placeholder,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  type?: string;
-  placeholder?: string;
-}) {
-  return (
-    <label style={{ display: 'block', fontSize: 14, color: '#374151' }}>
-      <span style={{ display: 'block', marginBottom: 4, fontWeight: 600 }}>{label}</span>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        style={{ width: '100%', padding: '0.5rem', border: '1px solid #ccc', borderRadius: 4 }}
-      />
-    </label>
   );
 }
