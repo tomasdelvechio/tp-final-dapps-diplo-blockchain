@@ -12,7 +12,7 @@ import {
 } from '../contracts/credentials';
 import { Verifier } from './components/Verifier';
 import { IssueCredentialForm } from './components/IssueCredentialForm';
-import { AdminPanel } from './components/AdminPanel';
+import { AdminPanel } from '././components/AdminPanel';
 
 function HomeContent() {
   const { address, isConnected } = useAccount();
@@ -52,27 +52,15 @@ function HomeContent() {
       {/* HEADER SECTION */}
       <header style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {/* Elegant SVG Logo representation of UNLu Phoenix/Academic Shield */}
-            <div style={{ 
-              background: 'linear-gradient(135deg, var(--color-unlu-navy) 0%, #153e70 100%)', 
-              padding: '0.75rem', 
-              borderRadius: '12px', 
-              boxShadow: '0 4px 15px rgba(12, 50, 96, 0.4)',
-              border: '1px solid rgba(229, 193, 88, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L1 7L12 12L21 7.82V13.5C21 13.5 19 14.5 17 14.5C15 14.5 13 13.5 13 13.5V11L12 11.5L2 7L12 2Z" fill="var(--color-unlu-gold)"/>
-                <path d="M12 12.5V22C12 22 7.5 20 6.5 16.5C5.5 13 5.5 13 5.5 13L12 12.5Z" fill="#fff" opacity="0.9"/>
-                <path d="M12 12.5V22C12 22 16.5 20 17.5 16.5C18.5 13 18.5 13 18.5 13L12 12.5Z" fill="var(--color-unlu-red)" opacity="0.9"/>
-              </svg>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <img 
+              src="/logo.png" 
+              alt="Logo UNLu" 
+              style={{ width: '64px', height: '64px', objectFit: 'contain' }} 
+            />
             <div>
-              <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: 0, lineHeight: 1.2 }}>
-                UNIVERSIDAD NACIONAL <span style={{ color: 'var(--color-unlu-gold)' }}>DE LUJÁN</span>
+              <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: 0, lineHeight: 1.2, color: 'var(--color-unlu-green)' }}>
+                UNIVERSIDAD NACIONAL <span style={{ color: 'var(--color-unlu-blue)' }}>DE LUJÁN</span>
               </h1>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.25rem 0 0 0' }}>
                 Registro y Verificación Descentralizada de Credenciales Académicas
@@ -87,7 +75,7 @@ function HomeContent() {
         {/* Status indicator for active roles */}
         {isConnected && (
           <div style={{ 
-            background: 'rgba(255, 255, 255, 0.03)', 
+            background: '#ffffff', 
             border: '1px solid var(--border-color)', 
             borderRadius: '10px', 
             padding: '0.75rem 1rem', 
@@ -95,41 +83,27 @@ function HomeContent() {
             flexWrap: 'wrap', 
             alignItems: 'center', 
             gap: '1rem',
-            fontSize: '0.85rem' 
+            fontSize: '0.85rem',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
           }}>
-            <span style={{ color: 'var(--text-secondary)' }}>Wallet Conectada: <code className="mono-text" style={{ fontSize: '0.8rem' }}>{address}</code></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Wallet Conectada: <code className="mono-text">{address}</code></span>
             <div style={{ display: 'flex', gap: '0.5rem', marginLeft: 'auto' }}>
-              {isAdmin && <span className="badge-valid" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}>🛡️ Administrador Rector</span>}
-              {isIssuer && <span className="badge-valid" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'rgba(229, 193, 88, 0.1)', borderColor: 'rgba(229, 193, 88, 0.3)', color: 'var(--color-unlu-gold)' }}>🎓 Emisor Oficial</span>}
-              {!isAdmin && !isIssuer && <span style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--border-color)', padding: '0.25rem 0.5rem', borderRadius: '6px', color: 'var(--text-secondary)' }}>👤 Consultor Público</span>}
+              {isAdmin && <span className="badge-valid">🛡️ Administrador Rector</span>}
+              {isIssuer && <span className="badge-valid" style={{ background: 'var(--warning-bg)', borderColor: 'var(--warning-border)', color: 'var(--warning-text)' }}>🎓 Emisor Oficial</span>}
+              {!isAdmin && !isIssuer && <span style={{ background: '#f1f5f9', border: '1px solid var(--border-color)', padding: '0.25rem 0.5rem', borderRadius: '6px', color: 'var(--text-secondary)', fontWeight: 600 }}>👤 Consultor Público</span>}
             </div>
           </div>
         )}
       </header>
 
       {/* DASHBOARD NAVIGATION TABS */}
-      <div style={{ 
-        display: 'flex', 
-        gap: '0.5rem', 
-        marginBottom: '2rem', 
-        background: 'rgba(17, 25, 46, 0.5)', 
-        padding: '0.5rem', 
-        borderRadius: '12px',
-        border: '1px solid var(--border-color)'
-      }}>
+      <div className="tab-container" style={{ marginBottom: '2rem', padding: '0.35rem' }}>
         <button
           type="button"
+          className={`tab-btn ${activeTab === 'verify' ? 'active' : ''}`}
           onClick={() => setActiveTab('verify')}
           style={{
-            flex: 1,
-            padding: '1rem',
-            background: activeTab === 'verify' ? 'linear-gradient(135deg, var(--color-unlu-navy), #153e70)' : 'transparent',
-            border: activeTab === 'verify' ? '1px solid rgba(229, 193, 88, 0.3)' : 'none',
-            color: activeTab === 'verify' ? '#fff' : 'var(--text-secondary)',
-            fontWeight: 600,
-            borderRadius: '8px',
-            cursor: 'pointer',
-            transition: 'var(--transition-smooth)',
+            padding: '0.85rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -142,17 +116,10 @@ function HomeContent() {
         {isConnected && isIssuer && (
           <button
             type="button"
+            className={`tab-btn ${activeTab === 'issue' ? 'active' : ''}`}
             onClick={() => setActiveTab('issue')}
             style={{
-              flex: 1,
-              padding: '1rem',
-              background: activeTab === 'issue' ? 'linear-gradient(135deg, var(--color-unlu-navy), #153e70)' : 'transparent',
-              border: activeTab === 'issue' ? '1px solid rgba(229, 193, 88, 0.3)' : 'none',
-              color: activeTab === 'issue' ? '#fff' : 'var(--text-secondary)',
-              fontWeight: 600,
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'var(--transition-smooth)',
+              padding: '0.85rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -166,17 +133,10 @@ function HomeContent() {
         {isConnected && isAdmin && (
           <button
             type="button"
+            className={`tab-btn ${activeTab === 'admin' ? 'active' : ''}`}
             onClick={() => setActiveTab('admin')}
             style={{
-              flex: 1,
-              padding: '1rem',
-              background: activeTab === 'admin' ? 'linear-gradient(135deg, var(--color-unlu-navy), #153e70)' : 'transparent',
-              border: activeTab === 'admin' ? '1px solid rgba(229, 193, 88, 0.3)' : 'none',
-              color: activeTab === 'admin' ? '#fff' : 'var(--text-secondary)',
-              fontWeight: 600,
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'var(--transition-smooth)',
+              padding: '0.85rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -217,7 +177,7 @@ function HomeContent() {
       }}>
         <p>© {new Date().getFullYear()} Universidad Nacional de Luján · Secretaría Académica</p>
         <p style={{ marginTop: '0.25rem', fontSize: '0.75rem' }}>
-          Desarrollado sobre Base & Ethereum Sepolia Testnet · dApp de Credenciales Académicas Soulbound · Trabajo Final de Diplomatura
+          Desarrollado sobre Base & Ethereum Sepolia Testnet · dApp de Credenciales Académicas Soulbound · Trabajo Final de dApps · Diplomatura Blockchain UNLu 2026
         </p>
       </footer>
     </main>
@@ -227,7 +187,7 @@ function HomeContent() {
 export default function Home() {
   return (
     <Suspense fallback={
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', color: '#fff', backgroundColor: '#080d1a' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', color: 'var(--text-primary)', backgroundColor: 'var(--background-color)' }}>
         <p style={{ fontSize: '1.2rem', fontWeight: 500 }}>Cargando aplicación UNLu...</p>
       </div>
     }>

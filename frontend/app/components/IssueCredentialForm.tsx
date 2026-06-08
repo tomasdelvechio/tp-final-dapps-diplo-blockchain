@@ -127,7 +127,7 @@ export function IssueCredentialForm() {
 
   return (
     <section className="card fade-in" style={{ marginBottom: '1.5rem' }}>
-      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#fff', marginBottom: '0.5rem' }}>
+      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
         <span>🎓</span> Panel de Emisión de la Universidad (Issuer)
       </h2>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
@@ -189,7 +189,7 @@ export function IssueCredentialForm() {
             />
           </div>
 
-          <div className="grid-2" style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '1rem', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
+          <div className="grid-2 hash-preview-box">
             <div className="form-group">
               <label className="form-label">Nombre Completo (Firma Digital)</label>
               <input
@@ -212,12 +212,12 @@ export function IssueCredentialForm() {
                 required
               />
             </div>
-            <div style={{ gridColumn: '1 / -1', fontSize: '0.8rem', color: 'var(--color-unlu-gold)' }}>
+            <div style={{ gridColumn: '1 / -1', fontSize: '0.8rem', color: 'var(--color-unlu-blue)', fontWeight: 600 }}>
               🔒 <strong>Hash de Identidad Resultante (On-Chain):</strong> <code className="mono-text" style={{ fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>{previewNameHash}</code>
             </div>
           </div>
 
-          <div className="grid-2" style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '1rem', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
+          <div className="grid-2 hash-preview-box">
             <div className="form-group">
               <label className="form-label">Identificador del PDF (CID de IPFS o nombre de archivo)</label>
               <input
@@ -240,7 +240,7 @@ export function IssueCredentialForm() {
                 required
               />
             </div>
-            <div style={{ gridColumn: '1 / -1', fontSize: '0.8rem', color: 'var(--color-unlu-gold)' }}>
+            <div style={{ gridColumn: '1 / -1', fontSize: '0.8rem', color: 'var(--color-unlu-blue)', fontWeight: 600 }}>
               🔒 <strong>Hash del Documento Resultante (On-Chain):</strong> <code className="mono-text" style={{ fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>{previewDocHash}</code>
             </div>
           </div>
@@ -299,8 +299,8 @@ export function IssueCredentialForm() {
       )}
 
       {isSuccess && hash && (
-        <div className="fade-in" style={{ marginTop: '1.25rem', padding: '1rem', background: 'var(--success-bg)', border: '1px solid var(--success-border)', borderRadius: '10px' }}>
-          <p style={{ color: 'var(--success-text)', margin: 0, fontWeight: 500 }}>
+        <div className="alert-success fade-in">
+          <p style={{ margin: 0, fontWeight: 600 }}>
             🎉 Transacción enviada con éxito.
           </p>
           <a
@@ -315,8 +315,8 @@ export function IssueCredentialForm() {
       )}
 
       {error && (
-        <div className="fade-in" style={{ marginTop: '1.25rem', padding: '1rem', background: 'var(--error-bg)', border: '1px solid var(--error-border)', borderRadius: '10px' }}>
-          <p style={{ color: 'var(--error-text)', margin: 0, fontSize: '0.9rem' }}>
+        <div className="alert-error fade-in">
+          <p style={{ margin: 0, fontSize: '0.9rem' }}>
             <strong>Error en la transacción:</strong> {(error as any).shortMessage || error.message}
           </p>
         </div>

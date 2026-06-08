@@ -42,7 +42,7 @@ export function AdminPanel() {
 
   return (
     <section className="card fade-in" style={{ marginBottom: '1.5rem' }}>
-      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#fff', marginBottom: '0.5rem' }}>
+      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
         <span>🛡️</span> Panel de Administración (Super-Admin)
       </h2>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
@@ -95,8 +95,8 @@ export function AdminPanel() {
       </form>
 
       {isSuccess && hash && (
-        <div className="fade-in" style={{ marginTop: '1rem', padding: '1rem', background: 'var(--success-bg)', border: '1px solid var(--success-border)', borderRadius: '10px' }}>
-          <p style={{ color: 'var(--success-text)', margin: 0, fontWeight: 500 }}>
+        <div className="alert-success fade-in">
+          <p style={{ margin: 0, fontWeight: 600 }}>
             🎉 Operación completada con éxito.
           </p>
           <a
@@ -111,8 +111,8 @@ export function AdminPanel() {
       )}
 
       {error && (
-        <div className="fade-in" style={{ marginTop: '1rem', padding: '1rem', background: 'var(--error-bg)', border: '1px solid var(--error-border)', borderRadius: '10px' }}>
-          <p style={{ color: 'var(--error-text)', margin: 0, fontSize: '0.9rem' }}>
+        <div className="alert-error fade-in">
+          <p style={{ margin: 0, fontSize: '0.9rem' }}>
             <strong>Error:</strong> {(error as any).shortMessage || error.message}
           </p>
         </div>

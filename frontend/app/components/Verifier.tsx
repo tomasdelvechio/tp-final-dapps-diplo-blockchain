@@ -86,7 +86,7 @@ export function Verifier({ initialTokenId }: VerifierProps) {
 
   return (
     <section className="card fade-in" style={{ marginBottom: '1.5rem' }}>
-      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#fff', marginBottom: '0.5rem' }}>
+      <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
         <span>🔍</span> Verificador Público de Títulos
       </h2>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
@@ -116,14 +116,14 @@ export function Verifier({ initialTokenId }: VerifierProps) {
       </form>
 
       {isLoading && (
-        <div style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--color-unlu-gold)' }}>
+        <div style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--color-unlu-blue)' }}>
           <div className="spinner" style={{ display: 'inline-block', marginBottom: '0.5rem' }}>⏳</div>
           <p>Consultando base de datos descentralizada en la blockchain...</p>
         </div>
       )}
 
       {verifyError && (
-        <div className="fade-in" style={{ padding: '1rem', background: 'var(--error-bg)', border: '1px solid var(--error-border)', borderRadius: '10px', color: 'var(--error-text)' }}>
+        <div className="alert-error fade-in">
           <strong>Error de consulta:</strong> El Token ID ingresado no existe o no pudo ser procesado.
         </div>
       )}
@@ -131,24 +131,17 @@ export function Verifier({ initialTokenId }: VerifierProps) {
       {!isLoading && verifyData && (
         <div className="fade-in" style={{ marginTop: '1rem' }}>
           {isValid ? (
-            <div
-              style={{
-                background: 'var(--success-bg)',
-                border: '1px solid var(--success-border)',
-                borderRadius: '12px',
-                padding: '1.5rem',
-              }}
-            >
+            <div className="alert-success fade-in" style={{ padding: '1.5rem' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
                 <div style={{ flex: '1 1 350px' }}>
-                  <span className="badge-valid" style={{ marginBottom: '1rem' }}>
-                    ✅ CRENDENCIAL ACADÉMICA VÁLIDA
+                  <span className="badge-valid" style={{ marginBottom: '1rem', display: 'inline-block' }}>
+                    ✅ CREDENCIAL ACADÉMICA VÁLIDA
                   </span>
                   
                   <dl style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     <div>
                       <dt style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 600 }}>Carrera / Título</dt>
-                      <dd style={{ fontSize: '1.2rem', fontWeight: 700, color: '#fff' }}>{record.degreeName}</dd>
+                      <dd style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-unlu-green)' }}>{record.degreeName}</dd>
                     </div>
                     
                     <div>
@@ -190,8 +183,8 @@ export function Verifier({ initialTokenId }: VerifierProps) {
                 </div>
 
                 {originUrl && queryId !== null && (
-                  <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', textAlign: 'center' }}>
-                    <div style={{ background: '#white', padding: '8px', borderRadius: '8px', display: 'inline-block' }}>
+                  <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#ffffff', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)', textAlign: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                    <div style={{ background: '#ffffff', padding: '8px', borderRadius: '8px', display: 'inline-block', border: '1px solid var(--border-color)' }}>
                       <QRCode
                         value={`${originUrl}/?tokenId=${queryId}`}
                         size={120}
@@ -206,24 +199,17 @@ export function Verifier({ initialTokenId }: VerifierProps) {
               </div>
             </div>
           ) : (
-            <div
-              style={{
-                background: 'var(--error-bg)',
-                border: '1px solid var(--error-border)',
-                borderRadius: '12px',
-                padding: '1.5rem',
-              }}
-            >
-              <span className="badge-invalid" style={{ marginBottom: '1rem' }}>
+            <div className="alert-error fade-in" style={{ padding: '1.5rem' }}>
+              <span className="badge-invalid" style={{ marginBottom: '1rem', display: 'inline-block' }}>
                 ❌ CREDENCIAL INVÁLIDA O REVOCADA
               </span>
-              <p style={{ color: 'var(--text-primary)', margin: 0, fontWeight: 500 }}>
+              <p style={{ color: 'var(--error-text)', margin: 0, fontWeight: 600, fontSize: '1rem' }}>
                 El Token ID <code className="mono-text">#{queryId?.toString()}</code> no corresponde a una credencial actualmente activa en la Universidad Nacional de Luján.
               </p>
               {record && !record.active && (
                 <div style={{ marginTop: '1rem', borderTop: '1px solid var(--error-border)', paddingTop: '0.75rem', fontSize: '0.9rem' }}>
                   <p style={{ color: 'var(--text-secondary)', margin: 0 }}>
-                    <strong>Motivo de baja:</strong> Esta credencial fue revocada formalmente por la entidad emisora.
+                    <strong>Motivo de baja:</strong> {record.reason || 'Esta credencial fue revocada formalmente por la entidad emisora.'}
                   </p>
                   <p style={{ color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>
                     <strong>Fecha de emisión original:</strong> {new Date(Number(record.issueDate) * 1000).toLocaleDateString('es-AR')}
