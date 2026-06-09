@@ -1,11 +1,18 @@
-# UNLu Academic Credentials Verification (Trabajo Final DApps)
+# UNLu Academic Credentials (Trabajo Final DApps)
 
 Este repositorio es un monorepo que contiene la solución para el Trabajo Final de la asignatura dApps de la Diplomatura en Blockchain de UNQ, consistente en una aplicación descentralizada (dApp) para la emisión y verificación de credenciales académicas de la **Universidad Nacional de Luján (UNLu)** utilizando tokens "Soulbound" (NFTs ERC-721 no transferibles).
 
 > [!WARNING]
 > El presente proyecto representa un ejercicio académico para el final de una asignatura de dApps y Blockchain.
-> No se basa en relevamiento real de necesidades de la Institución, no tiene ningun estado oficial y no hay soporte
-> reglamentario que permita su implementación productiva.
+> No se basa en relevamiento real de necesidades de la Institución, no tiene ningun estado oficial y no hay soporte reglamentario que permita su implementación productiva.
+
+---
+
+Indice principal
+
+- [README Académico](README.acad.md) (Respuestas al TP Final)
+
+- El resto de este README es **Técnico**.
 
 ---
 
