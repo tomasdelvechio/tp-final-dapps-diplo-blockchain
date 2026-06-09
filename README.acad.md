@@ -169,9 +169,11 @@ classDiagram
 
 Se sigue el esquema sugerido en el enunciado, donde la credencial presenta solo con hash el nombre + dni del estudiante y el documento, mientras que el título, la fecha de emisión y si el mismo está activo es información *on-chain*.
 
-## Flujos de emisión
+## Flujos de emisión y verificación
 
+Los dos procesos implementados implican la emisión de la credencial y su verificación. En el primer caso, se observa el diagrama presenta los 3 actores principales y los componentes de software relevantes.
 
+En el flujo de Autorización de Emisor, el Rector asigna el rol de Emisor (Issuer) a un Decano, paso previo a cualquier tipo de operación de emisión. Se puede observar esto en los pasos 1 a 4 del diagrama.
 
 ```mermaid
 sequenceDiagram
@@ -203,6 +205,74 @@ sequenceDiagram
     SC-->>FE: Transacción confirmada & Evento CredentialIssued
     SC-->>Egresado: Recibe NFT intransferible (SBT)
 ```
+
+En los pasos 5 a 14, por su parte, es el Decano quien recibe la información del egresado (proceso tradicional) y procede a emitir el título en la *dApp*. El proceso finaliza al momento que el estudiante está en condiciones de recibir el NFT en su *wallet*.
+
+Por su parte, el diagrama de flujo de verificación toma como unico actor al tercero interesado. El mismo describe los pasos necesarios para confirmar la títulación de una persona, o incluso para verificar si la credencial es valida o ha sido revocada por la institución emisora.
+
+Ademas, el diagrama muestra el flujo para verificación de integridad de documento título.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Verificador as Verificador (Empleador / Público)
+    participant FE as Frontend (Next.js)
+    participant SC as Smart Contract
+    participant IPFS as IPFS (Pinata)
+
+    Verificador->>FE: Ingresar tokenId a consultar
+    FE->>SC: verify(tokenId) / isValid(tokenId)
+    SC-->>FE: Retorna struct Credential & bool isValid
+
+    alt Si la credencial existe y está activa
+        FE->>IPFS: Consultar metadataURI (JSON) si es necesario
+        IPFS-->>FE: Retorna JSON (Datos en claro para visualización)
+        FE-->>Verificador: Muestra datos del título, fecha, hash del PDF y estado (VÁLIDO ✅)
+        Note over Verificador, FE: Cotejo manual opcional del PDF físico/digital:
+        Verificador->>FE: Subir/arrastrar PDF del título recibido
+        FE->>FE: Calcular hash keccak256 del PDF subido
+        FE->>FE: Comparar hash calculado con documentHash obtenido del contrato
+        alt Coinciden los hashes
+            FE-->>Verificador: PDF íntegro y auténtico (Verificado)
+        else No coinciden
+            FE-->>Verificador: El archivo PDF ha sido alterado (Inválido ❌)
+        end
+    else Si no existe o fue revocada
+        FE-->>Verificador: Muestra credencial no válida o inexistente (INVÁLIDO ❌)
+    end
+```
+
+# Parte 1: Contrato
+
+* Implementación de roles
+  
+  * [ISSUER_ROLE](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/src/AcademicCredentials.sol#L18)
+  
+  * [DEFAULT_ADMIN_ROLE](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/src/AcademicCredentials.sol#L64)
+
+* [No Transferible](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/src/AcademicCredentials.sol#L149)
+
+* [Estructura extendida de `Credential`](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/src/AcademicCredentials.sol#L20)
+
+* [Los 4 Eventos implementados](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/src/AcademicCredentials.sol#L32)
+
+# Parte 2: Testing
+
+
+
+# Parte 3: Seguridad
+
+
+
+# Parte 4: Frontend
+
+
+
+# Parte 5: Entregables
+
+
+
+
 
 
 
