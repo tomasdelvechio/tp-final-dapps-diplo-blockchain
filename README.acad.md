@@ -258,23 +258,43 @@ sequenceDiagram
 
 # Parte 2: Testing
 
+#### Camino feliz
 
+1. Admin agrega un issuer y se verifica con `hasRole(ISSUER_ROLE, addr)`. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L43)
+2. Issuer emite una credencial y todos los campos se guardan. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L59)
+3. `verify()` devuelve los datos correctos. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L95)
+4. Issuer revoca y `verify()` devuelve `isValid = false`. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L120)
+
+#### Casos de error
+
+5. Una address sin `ISSUER_ROLE` no puede emitir (revierte). [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L151)
+6. Transferir una credencial entre dos addresses revierte (soulbound). [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L167)
+7. Emitir con `tokenId` duplicado revierte. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L188)
+8. Revocar un `tokenId` inexistente revierte. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L216)
+9. Una address sin `DEFAULT_ADMIN_ROLE` no puede agregar issuers. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L227)
+
+#### Fuzz
+
+10. `fuzz_issueCredential(address student, uint256 tokenId)` — verificar que `ownerOf(tokenId) == student` para cualquier `student != address(0)`. [source](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/test/AcademicCredentials.t.sol#L242)
+
+## Reporte de cobertura
+
+Se generó el reporte de cobertura y se creo un informe en html, siguiendo los pasos
+
+```bash
+forge coverage --report lcov
+genhtml lcov.info --rc derive_function_end_line=0 --ignore-errors inconsistent -o coverage/
+```
+
+El mismo se puede [consultar aquí](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/tree/main/unlu-cert-token/coverage), ademas se deja una captura:
+
+![](./unlu-cert-token/coverage/lcov.png)
 
 # Parte 3: Seguridad
 
-
-
 # Parte 4: Frontend
 
-
-
 # Parte 5: Entregables
-
-
-
-
-
-
 
 # Referencias bibliográficas
 
