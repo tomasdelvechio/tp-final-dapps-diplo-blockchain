@@ -1,0 +1,77 @@
+# Comandos
+
+```bash
+cp .env.sepolia .env
+set -a
+source .env
+set +a
+forge script script/Deploy.s.sol --rpc-url $BASE_SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY
+```
+
+# Salida del comando
+
+```
+[⠊] Compiling...
+No files changed, compilation skipped
+Script ran successfully.
+
+== Return ==
+0: contract AcademicCredentials 0x31A44d04CdBfFf0FdF32FFc48D4F87fF3186C63B
+
+== Logs ==
+  AcademicCredentials deployed at: 0x31A44d04CdBfFf0FdF32FFc48D4F87fF3186C63B
+  Admin/Issuer address: 0xE53F40A30424B01402CdfF8b83618E36f4f95c4F
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 11155111
+
+Estimated gas price: 13.242468552 gwei
+
+Estimated total gas used for script: 4483427
+
+Estimated amount required: 0.059371641052687704 ETH
+
+==========================
+
+##### sepolia
+✅  [Success] Hash: 0xc3b3f7ea5bd4af47e6921372f6c0176f701f794400ba030a88f9c364e7623910
+Contract Address: 0x31A44d04CdBfFf0FdF32FFc48D4F87fF3186C63B
+Block: 11012899
+Paid: 0.02330704435191081 ETH (3448790 gas * 6.758035239 gwei)
+
+✅ Sequence #1 on sepolia | Total Paid: 0.02330704435191081 ETH (3448790 gas * avg 6.758035239 gwei)
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+##
+Start verification for (1) contracts
+Start verifying contract `0x31A44d04CdBfFf0FdF32FFc48D4F87fF3186C63B` deployed on sepolia
+EVM version: prague
+Compiler version: 0.8.28
+
+Submitting verification for [src/AcademicCredentials.sol:AcademicCredentials] 0x31A44d04CdBfFf0FdF32FFc48D4F87fF3186C63B.
+Warning: Could not detect deployment: Unable to locate ContractCode at 0x31a44d04cdbfff0fdf32ffc48d4f87ff3186c63b; waiting 5 seconds before trying again (4 tries remaining)
+
+Submitting verification for [src/AcademicCredentials.sol:AcademicCredentials] 0x31A44d04CdBfFf0FdF32FFc48D4F87fF3186C63B.
+Submitted contract for verification:
+        Response: `OK`
+        GUID: `bvrnuvr8cvthvucvprw88aewgiuynaank2v8semypthjcmzbx6`
+        URL: https://sepolia.etherscan.io/address/0x31a44d04cdbfff0fdf32ffc48d4f87ff3186c63b
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (7 tries remaining)
+Contract verification status:
+Response: `OK`
+Details: `Pass - Verified`
+Contract successfully verified
+All (1) contracts were verified!
+
+Transactions saved to: /home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/unlu-cert-token/broadcast/Deploy.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/unlu-cert-token/cache/Deploy.s.sol/11155111/run-latest.json
+```

@@ -12,7 +12,7 @@ export function AdminPanel() {
   const { writeContract, data: hash, isPending, error, reset } = useWriteContract();
   const { isLoading: confirming, isSuccess } = useWaitForTransactionReceipt({ hash });
 
-  const explorerUrl = chain?.blockExplorers?.default.url || 'https://sepolia.etherscan.io';
+  const explorerUrl = chain?.blockExplorers?.default.url || 'https://sepolia.basescan.org';
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

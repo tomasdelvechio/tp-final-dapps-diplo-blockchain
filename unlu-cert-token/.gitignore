@@ -9,3 +9,5 @@ out/
 
 # Dotenv file
 .env
+.env.sepolia
+.env.base-sepolia

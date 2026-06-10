@@ -7,6 +7,6 @@ const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_WALL
 export const config = getDefaultConfig({
   appName: 'UNLu Academic Credentials',
   projectId,
-  chains: [sepolia, baseSepolia],
+  chains: [baseSepolia, sepolia],
   ssr: true,
 });

@@ -1,0 +1,98 @@
+# Comandos:
+
+```
+cp .env.base-sepolia .env
+set -a
+source .env
+set +a
+forge script script/Deploy.s.sol --rpc-url $BASE_SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $BASESCAN_API_KEY
+```
+
+# Salida del comando
+
+```
+[⠒] Compiling...
+No files changed, compilation skipped
+Script ran successfully.
+
+== Return ==
+0: contract AcademicCredentials 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2
+
+== Logs ==
+  AcademicCredentials deployed at: 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2
+  Admin/Issuer address: 0xE53F40A30424B01402CdfF8b83618E36f4f95c4F
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 84532
+
+Estimated gas price: 0.011 gwei
+
+Estimated total gas used for script: 4483427
+
+Estimated amount required: 0.000049317697 ETH
+
+==========================
+
+##### base-sepolia
+✅  [Success] Hash: 0xe3a96922bf4479712b58ecf784ebcbc1aa7f7da700f3fd0876b74c2b9af928cd
+Contract Address: 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2
+Block: 42679527
+Paid: 0.00002069274 ETH (3448790 gas * 0.006 gwei)
+
+✅ Sequence #1 on base-sepolia | Total Paid: 0.00002069274 ETH (3448790 gas * avg 0.006 gwei)
+                                                                                                                                                                   
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+##
+Start verification for (1) contracts
+Start verifying contract `0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2` deployed on base-sepolia
+EVM version: prague
+Compiler version: 0.8.28
+
+Submitting verification for [src/AcademicCredentials.sol:AcademicCredentials] 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2.
+Warning: Could not detect deployment: Unable to locate ContractCode at 0x9e32a1c171adda640c02ae92398c16f31a865ca2; waiting 5 seconds before trying again (4 tries remaining)
+
+Submitting verification for [src/AcademicCredentials.sol:AcademicCredentials] 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2.
+Submitted contract for verification:
+        Response: `OK`
+        GUID: `3abhkhs5tjkz4tvcub7atlinejb8cvpgy9vfwqrsvvy3uhiwbr`
+        URL: https://sepolia.basescan.org/address/0x9e32a1c171adda640c02ae92398c16f31a865ca2
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (7 tries remaining)
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (6 tries remaining)
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (5 tries remaining)
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (4 tries remaining)
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (3 tries remaining)
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Warning: Verification is still pending...; waiting 15 seconds before trying again (2 tries remaining)
+Contract verification status:
+Response: `OK`
+Details: `Pass - Verified`
+Contract successfully verified
+All (1) contracts were verified!
+
+Transactions saved to: /home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/unlu-cert-token/broadcast/Deploy.s.sol/84532/run-latest.json
+
+Sensitive values saved to: /home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/unlu-cert-token/cache/Deploy.s.sol/84532/run-latest.json
+```
