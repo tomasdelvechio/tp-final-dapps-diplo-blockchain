@@ -1,0 +1,1 @@
+genhtml lcov.info --rc derive_function_end_line=0 --ignore-errors inconsistent -o coverage/
