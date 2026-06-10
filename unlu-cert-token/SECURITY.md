@@ -1,83 +1,98 @@
-# Auditoría de Seguridad y Reporte de Slither (TP Final)
+# Reporte de Seguridad y Auditoría (SECURITY.md)
 
-Este documento resume los resultados del análisis estático realizado con la herramienta **Slither** sobre los contratos inteligentes del proyecto de Credenciales Académicas de la Universidad Nacional de Luján (UNLu), ubicado en el directorio `unlu-cert-token`.
+## Tabla de Hallazgos de Slither
 
-## 📊 Resumen Ejecutivo del Análisis
+Le siguiente tabla detalla los hallazgos reportados por Slither correspondientes al contrato [AcademicCredentials.sol](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/src/AcademicCredentials.sol), ignorando las librerías y dependencias externas de OpenZeppelin, que daban muchisimos falsos positivos. Sin embargo, la salida completa de slither [puede ser consultada](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/docs/slither-output.txt) en el repositorio.
 
-- **Contratos Analizados:** 22 contratos (incluyendo dependencias de OpenZeppelin).
-- **Detectores Ejecutados:** 101 detectores de vulnerabilidades.
-- **Hallazgos Totales:** 47 resultados.
-- **Nivel de Riesgo General:** **Bajo**. No se encontraron vulnerabilidades críticas, de severidad alta ni media en el contrato principal `AcademicCredentials.sol`. La gran mayoría de los reportes corresponden a falsos positivos en bibliotecas externas de OpenZeppelin o advertencias informativas/de optimización.
-
----
-
-## 🔍 Detalle de Hallazgos, Mitigaciones y Justificaciones
-
-A continuación se detallan los hallazgos más relevantes reportados por Slither en `unlu-cert-token/docs/slither-output.txt`, ordenados por tipo de detector:
-
-### 1. Uso de Timestamp (`timestamp`)
-*   **Ubicación:** `AcademicCredentials.verify(uint256)` (en [AcademicCredentials.sol:L175-179](file:///home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/unlu-cert-token/src/AcademicCredentials.sol#L175-L179)).
-*   **Reporte de Slither:** Advierte sobre el uso y manipulación de variables relacionadas con marcas de tiempo (timestamp) en comparaciones peligrosas:
-    ```solidity
-    valid = _ownerOf(tokenId) != address(0) && cred.active
-    ```
-*   **Justificación / Falso Positivo:**
-    *   **Falso Positivo de Slither:** La función `verify` no realiza ninguna comparación directa del timestamp de la block.timestamp. Slither genera esta advertencia porque la estructura `Credential` leída de almacenamiento contiene un campo `issueDate` que fue inicializado con `block.timestamp` durante la acuñación del token.
-    *   **Uso del Timestamp:** El único uso de `block.timestamp` en el contrato es al emitir la credencial (`issueCredential`), donde se registra de forma informativa e histórica la fecha y hora de emisión (`issueDate = block.timestamp`).
-    *   **Seguridad:** El contrato no utiliza marcas de tiempo para tomar decisiones críticas de lógica del negocio (como bloquear fondos, sorteos aleatorios o condiciones de tiempo de custodia). Por lo tanto, no existe riesgo de manipulación de marcas de tiempo por parte de los mineros/validadores (vulnerabilidad conocida como *Block Timestamp Manipulation*).
-
-### 2. Exponenciación Incorrecta (`incorrect-exp`)
-*   **Ubicación:** `Math.mulDiv(uint256,uint256,uint256)` (en la dependencia `lib/openzeppelin-contracts/contracts/utils/math/Math.sol`).
-*   **Reporte de Slither:** Indica que se utiliza el operador XOR a nivel de bits (`^`) en lugar del operador de exponenciación (`**`):
-    ```solidity
-    inverse = (3 * denominator) ^ 2
-    ```
-*   **Justificación:**
-    *   Este hallazgo es un **falso positivo conocido** de Slither al analizar la biblioteca matemática de OpenZeppelin.
-    *   El operador `^` es totalmente intencional y correcto en este contexto. Se trata de un algoritmo de optimización de cálculo de inversas modulares utilizando Hensel's lemma y aproximaciones de Newton-Raphson, donde la operación XOR se emplea como parte del paso de inicialización de la iteración. No representa un error tipográfico de exponenciación.
-
-### 3. División antes de Multiplicación (`divide-before-multiply`)
-*   **Ubicación:** Funciones `Math.mulDiv` y `Math.invMod` (en la dependencia `lib/openzeppelin-contracts/contracts/utils/math/Math.sol`).
-*   **Reporte de Slither:** Advierte sobre operaciones de multiplicación realizadas sobre resultados de divisiones previas, lo que podría ocasionar pérdida de precisión en aritmética entera.
-*   **Justificación:**
-    *   Este hallazgo se encuentra encapsulado dentro de la librería matemática de OpenZeppelin, la cual cuenta con múltiples auditorías formales y pruebas exhaustivas.
-    *   El orden de las operaciones en estas funciones específicas está diseñado minuciosamente para implementar algoritmos numéricos avanzados (como el algoritmo de Euclides extendido y divisiones de precisión de 512 bits) sin desbordar los límites de almacenamiento de la EVM de manera segura. No hay riesgo de pérdida de precisión no controlada en nuestro flujo de negocio.
-
-### 4. Uso de Assembly Inline (`assembly`)
-*   **Ubicación:** Varias librerías de OpenZeppelin, incluyendo `ERC721Utils.sol`, `Bytes.sol`, `Panic.sol`, `Strings.sol` y `Math.sol`.
-*   **Reporte de Slither:** Identifica el uso de bloques `assembly` dentro del código, advirtiendo sobre posibles riesgos de bypass de seguridad, legibilidad o errores de memoria.
-*   **Justificación / Mitigación:**
-    *   El uso de assembly está estrictamente contenido en el código de librerías oficiales de OpenZeppelin para lograr optimizaciones de gas críticas en la manipulación de strings, bytes y verificación de llamadas a interfaces.
-    *   En nuestro contrato `AcademicCredentials.sol` **no se utiliza assembly personalizado**, asegurando que toda la lógica de negocio esté escrita en Solidity estructurado de alto nivel y protegida por las salvaguardas estándar del compilador.
-
-### 5. Advertencias del Compilador y Pragma (`solc-version` y `pragma`)
-*   **Ubicación:** Declaraciones `pragma solidity` a lo largo de todos los contratos.
-*   **Reporte de Slither:** 
-    1.  Se detectaron 6 versiones de Solidity diferentes en el árbol de dependencias (`^0.8.20`, `^0.8.24`, `>=0.8.4`, etc.).
-    2.  El constraint `^0.8.20` utilizado por `AcademicCredentials.sol` tiene vulnerabilidades asociadas conocidas en el compilador de Solidity (por ejemplo, optimizaciones del inliner y re-codificaciones ABI).
-*   **Mitigación:**
-    *   **Mismatch de Pragma:** La divergencia en los constraints de pragma es normal cuando se importan paquetes externos de OpenZeppelin, ya que estas librerías definen compatibilidades amplias (p. ej., `>=0.8.0`).
-    *   **Versión de Solc de Despliegue:** Para mitigar problemas en las versiones del compilador:
-        1.  En la configuración de Foundry, se compilará y desplegará utilizando una versión fija, estable y reciente de Solidity (por ejemplo, `0.8.24` o posterior), la cual corrige los problemas detectados en las versiones `0.8.20` iniciales.
-        2.  Dado que el despliegue es en **Base Sepolia** (un Layer 2 compatible con EVM), configuraremos el target de EVM adecuado (`paris` o `shanghai` en lugar de `cancun` si se despliega en redes L2 que aún no soportan completamente los últimos opcodes como `PUSH0`), garantizando la compatibilidad del bytecode generado.
-
-### 6. Exceso de Dígitos en Literales (`too-many-digits`)
-*   **Ubicación:** Funciones de manipulación de bytes y bits en `Bytes.sol` y `Math.sol` de OpenZeppelin.
-*   **Reporte de Slither:** Advierte del uso de constantes hexadecimales con un número elevado de dígitos sin separadores visuales (p. ej., `0x0000000000000000ffffffffffffffff0000000000000000ffffffffffffffff`).
-*   **Justificación:**
-    *   Son máscaras de bits necesarias para la manipulación y alineación a bajo nivel de strings y bytes. Dado que pertenecen a librerías auditadas y su valor constante es correcto para la representación binaria deseada, no representa ningún riesgo de seguridad.
+| Finding                                                                                                         | Severidad   | ¿Real? | Como lo arreglé / por qué es false positive                                                                                                                                                                                                                                                                                                                                                                                                   |
+|:--------------------------------------------------------------------------------------------------------------- |:----------- |:------ |:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Uso de Timestamp (`timestamp`)**<br>En la función `verify(uint256)` al comprobar `cred.active`.               | Baja / Info | ❌ No   | **Falso Positivo.** Slither detecta que la función lee la estructura `Credential`, la cual incluye el campo `issueDate` (inicializado con `block.timestamp` en `issueCredential`). Sin embargo, en `verify` no se realiza ninguna comparación lógica de marcas de tiempo ni se afecta el flujo de control del contrato basándose en la hora actual del bloque. Es puramente informativo y libre de riesgos de *Block Timestamp Manipulation*. |
+| **Versión del Compilador y Pragma (`solc-version` / `pragma`)**<br>Uso del constraint `^0.8.20` en la cabecera. | Baja / Info | Sí     | **Mitigado.** El pragma `^0.8.20` permite el uso de compiladores con bugs conocidos. Para evitar estos problemas, en la configuración de compilación de Foundry ([foundry.toml](file:///home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/unlu-cert-token/foundry.toml)) se fija de forma estricta y segura la versión del compilador a `0.8.28`, la cual solventa todas las vulnerabilidades de la versión inicial `0.8.20`.        |
 
 ---
 
-## 🛡️ Medidas de Seguridad Adicionales Implementadas
+## 📋 Checklist Obligatorio de Seguridad
 
-Adicionalmente a la resolución/justificación de los hallazgos de Slither, el contrato `AcademicCredentials.sol` ha implementado las siguientes defensas robustas:
+- [x] **Solidity 0.8.20+ (overflow protection nativa):** El contrato utiliza `pragma solidity ^0.8.20;`. El uso de Solidity `0.8` o superior garantiza la comprobación nativa contra desbordamientos (overflow y underflow) sin necesidad de utilizar librerías externas de matemáticas seguras como SafeMath.
+- [x] **`AccessControl` correctamente aplicado:** Se implementa el contrato `AccessControl` de OpenZeppelin. El rol de administrador por defecto (`DEFAULT_ADMIN_ROLE`) gestiona los emisores, y el rol `ISSUER_ROLE` tiene el control exclusivo sobre la emisión y revocación de credenciales. Las funciones correspondientes están protegidas con el modificador `onlyRole`.
+- [x] **Eventos en TODA mutación de estado:** Se emiten eventos en todas las operaciones críticas que modifican el almacenamiento de la blockchain:
+  - `grantIssuer` emite `IssuerGranted`.
+  - `revokeIssuer` emite `IssuerRevoked`.
+  - `issueCredential` emite `CredentialIssued` (además del evento estándar `Transfer` de ERC-721 para la acuñación).
+  - `revoke` emite `CredentialRevoked` (además del evento estándar `Transfer` para la quema).
+- [x] **Validación de inputs:** Todas las funciones verifican sus parámetros de entrada mediante sentencias `require`:
+  - Se prohíbe el uso de `address(0)` tanto para estudiantes como para administración de emisores.
+  - Se prohíbe que el `studentNameHash` o el `documentHash` sean vacíos (`bytes32(0)`).
+  - Se prohíbe que el `degreeName` o el `metadataURI` sean strings vacíos.
+  - La duplicación de un `tokenId` es evitada automáticamente por la validación nativa de la función `_mint` de OpenZeppelin, que revierte si el token ya está en posesión de alguna cuenta.
+- [x] **Soulbound implementado correctamente:** El contrato sobreescribe de forma segura la función interna `_update` de la especificación ERC-721:
+  
+  ```solidity
+  function _update(address to, uint256 tokenId, address auth)
+      internal
+      override(ERC721)
+      returns (address)
+  {
+      address from = _ownerOf(tokenId);
+      if (from != address(0) && to != address(0)) {
+          revert("Soulbound: non-transferable");
+      }
+      return super._update(to, tokenId, auth);
+  }
+  ```
+  
+  Esto bloquea cualquier intento de transferencia entre dos direcciones válidas, limitando la transferencia únicamente a procesos de acuñación (`from == address(0)`) y quema/revocación (`to == address(0)`).
+- [x] **Sin funciones peligrosas de control de flujo o auth:** No se utiliza `selfdestruct`, no hay llamadas delegadas dinámicas (`delegatecall`), y las verificaciones de autorización se basan exclusivamente en `msg.sender` (evitando por completo el uso de `tx.origin`).
+- [x] **`documentHash` es de tipo `bytes32`:** Para garantizar la máxima eficiencia en gas y la integridad del archivo PDF adjunto, el hash del documento se almacena y maneja como `bytes32` en lugar de una representación en cadena de texto (`string`).
 
-1.  **Soulbound Tokens (No Transferibles):**
-    El método `_update` está sobreescrito para asegurar que cualquier intento de transferencia entre cuentas distintas de `address(0)` (emisión y revocación) sea revertido inmediatamente con el mensaje `"Soulbound: non-transferable"`.
-2.  **Control de Acceso Basado en Roles (RBAC):**
-    Se utiliza `AccessControl` de OpenZeppelin. Únicamente las cuentas con `DEFAULT_ADMIN_ROLE` pueden administrar (otorgar o revocar) el rol de emisor (`ISSUER_ROLE`). Y únicamente las cuentas con `ISSUER_ROLE` pueden ejecutar `issueCredential` y `revoke`.
-3.  **Privacidad de Datos:**
-    Para proteger los datos personales de los estudiantes en la blockchain pública, el nombre y DNI del estudiante se almacenan en forma de hash (`studentNameHash = keccak256(...)`), impidiendo la exposición directa de información de identificación personal (PII) on-chain.
-4.  **Validaciones de Entrada (Check-Effects-Interactions):**
-    Cada función externa contiene validaciones estrictas (`require`) para evitar direcciones nulas (`address(0)`), strings vacíos o identificadores incorrectos.
+---
+
+## 🔍 Análisis Propio de Amenazas y Vectores de Ataque
+
+Todo el analisis a continuación asume la implementación actual del repositorio (Junio 2026). Se entiende que la misma es deficiente y se dan indicios de posibles caminos a adoptar a futuro.
+
+### 1. Pérdida de la clave del Administrador (`DEFAULT_ADMIN_ROLE`)
+
+En la implementación actual, el creador del contrato recibe el rol `DEFAULT_ADMIN_ROLE` en el constructor. Si el rector de la universidad (poseedor de esta clave privada) pierde la wallet o sus palabras semilla, el contrato entrará en un estado de **bloqueo administrativo irreversible**. No se podrán agregar nuevos emisores (`ISSUER_ROLE`) ni retirar permisos a emisores actuales si alguna de sus cuentas se ve comprometida.
+
+* **Estrategia de mitigación y recuperación:** La wallet inicial del rector no debería ser una cuenta de clave única (EOA). El despliegue debe asignar el control administrativo a una wallet multifirma (por ejemplo, **Gnosis Safe**) gestionada de forma colectiva por múltiples autoridades académicas (ej. Rectorado, Secretaría Académica, Dirección de Sistemas). De este modo, si una de las firmas individuales se pierde, las firmas restantes pueden ejecutar una recuperación o reconfiguración de la administración. Ademas esto es necesario por el recambio natural de autoridades y personal de las instituciones. Todo esto queda fuera del alcance de este proyecto.
+
+### 2. Compromiso de una wallet Emisora (`ISSUER_ROLE`)
+
+En caso de que un atacante consiga acceso a las llaves privadas de una cuenta con rol de emisor (como una secretaría académica de facultad), este podrá llamar inmediatamente a la función `issueCredential` e emitir una cantidad indefinida de certificados falsos hacia direcciones de su elección en cuestión de segundos. Asimismo, podría revocar títulos legítimos llamando a `revoke`.
+
+* **Estimación de impacto y detección:** Al ejecutarse en una red de Layer 2 como Base Sepolia (con tiempos de bloque de ~2 segundos y fees casi imperceptibles), un script automatizado del atacante podría emitir cientos o miles de credenciales truchas antes de que un operador humano lo note. La detección se realiza mediante el monitoreo off-chain de los eventos `CredentialIssued` (usando herramientas como Defender Sentinels o Tenderly alerts).
+* **Procedimiento de contingencia:**
+  1. El administrador (`DEFAULT_ADMIN_ROLE`) debe llamar a `revokeIssuer(addressComprometida)` para retirar los privilegios de emisión de inmediato.
+  2. Se debe realizar una auditoría de los últimos bloques para identificar todos los `tokenId` generados durante el período de compromiso.
+  3. Dado que los tokens son *Soulbound*, no pueden transferirse fuera de las wallets atacantes. Una wallet emisora autorizada legítima deberá proceder a llamar a `revoke` para cada credencial inválida, dejando registro on-chain de su invalidez (`active = false` y quemada).
+
+### 3. Emisión de credenciales con datos erróneos
+
+Si un emisor comete una equivocación manual durante el proceso de acuñación (por ejemplo, asocia un `tokenId` al alumno equivocado, escribe mal el nombre de la carrera o introduce un hash de documento corrupto), la naturaleza Soulbound del token impide que el alumno pueda devolver el token o transferirlo al estudiante correcto.
+
+* **Corrección y Trazabilidad:** Para enmendar el error sin perder la auditoría histórica:
+  1. El emisor debe llamar a `revoke(tokenId, "Error de carga: Datos de estudiante incorrectos")`. Esto marca el estado de la credencial como inactivo y destruye el token (quema).
+  2. Posteriormente, el emisor genera una nueva credencial con un nuevo `tokenId` y los datos corregidos para el estudiante correspondiente.
+  3. Este flujo es transparente y auditable: cualquier verificador podrá comprobar que la credencial inicial fue expresamente anulada por la universidad debido a un error administrativo, y que la nueva credencial es la válida, garantizando trazabilidad total.
+
+### 4. Riesgos de Front-Running
+
+El front-running en blockchains públicas ocurre cuando un actor malicioso ve una transacción en el mempool y paga un precio de gas más alto para que su transacción se ejecute primero.
+
+* **Análisis del vector en este contrato:**
+  - Para la administración de roles (`grantIssuer`, `revokeIssuer`) y las mutaciones de estado académicas (`issueCredential`, `revoke`), el contrato utiliza el modificador `onlyRole`. Por ende, si un atacante copia una transacción del mempool modificando los parámetros, la transacción revertirá porque la dirección del atacante no posee el rol requerido.
+  - El único caso de competencia (race condition) ocurriría si dos emisores legítimos intentan emitir por separado una credencial usando el mismo `tokenId` exacto al mismo tiempo en el mempool. La transacción que sea procesada primero (por ejemplo, la que ofrezca mayor gas) se acuñará con éxito, mientras que la segunda fallará por duplicado. Esto no representa una vulnerabilidad de seguridad, sino una colisión operativa mitigable mediante un secuenciador incremental de IDs en el frontend o servidor emisor.
+
+### 5. Privacidad y ataques de diccionario contra el `studentNameHash`
+
+El campo `studentNameHash` se define como el hash criptográfico `keccak256(Nombre Completo + DNI)` para evitar almacenar datos personales en claro (cumplimiento de regulaciones de privacidad como GDPR). Sin embargo, al ser un hash estático guardado de forma pública en la blockchain, es vulnerable a ataques de fuerza bruta o diccionario.
+
+* **Viabilidad del ataque:** El espacio de búsqueda es sumamente reducido. El DNI en Argentina consta de un número de 8 dígitos, lo cual representa un espacio de apenas 50 millones de posibilidades. Si un atacante conoce el nombre completo de una persona (fácil de obtener por redes sociales u otras bases públicas) y desea adivinar su DNI, o viceversa, puede precalcular los 50 millones de hashes correspondientes en pocos segundos mediante un script en una GPU ordinaria, comparándolos con el hash público de la credencial.
+* **Mitigación recomendada:** Para neutralizar los ataques de diccionario, la solución recomendada es añadir entropía al proceso de hashing introduciendo una **sal criptográfica (salt)** de alta entropía gestionada de forma privada por la universidad y provista al alumno:
+  
+  ```solidity
+  // studentNameHash = keccak256(abi.encodePacked(nombreCompleto, dni, saltPrivado))
+  ```
+  
+  Sin conocimiento del `saltPrivado`, es computacionalmente imposible para un tercero adivinar el nombre o el DNI del alumno asociado a la credencial, protegiendo con total seguridad su identidad digital. Vale la aclaración que esta sal y el hash debe hacerse en la capa de backend/web2, porque el código y estado del contrato es completamente público y decodificable.

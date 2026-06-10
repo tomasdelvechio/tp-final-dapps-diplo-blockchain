@@ -292,6 +292,8 @@ El mismo se puede [consultar aquí](https://github.com/tomasdelvechio/tp-final-d
 
 # Parte 3: Seguridad
 
+Todo el análisis se encuentra en el documento [SECURITY.md](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/SECURITY.md) según fuera solicitado.
+
 # Parte 4: Frontend
 
 # Parte 5: Entregables
