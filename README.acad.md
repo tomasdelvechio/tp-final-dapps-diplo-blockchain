@@ -12,6 +12,16 @@ Este repositorio es un monorepo que contiene la solución para el Trabajo Final 
 
 **Docentes**: Dr. David Petrocelli y Esp. Ciro Edgardo Romero
 
+**Rubrica**: [Link de la asignatura](https://dpetrocelli.github.io/diplounq2026/tp-final.html).
+
+**Direcciónes relevantes**:
+
+* [Address del contrato en Base Sepolia](https://sepolia.basescan.org/token/0x9e32a1c171adda640c02ae92398c16f31a865ca2): 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2
+
+* [Basescan verificado](https://sepolia.basescan.org/token/0x9e32a1c171adda640c02ae92398c16f31a865ca2#code)
+
+* [Frontend desplegado](https://dapps-academic-credentials.vercel.app/)
+
 ---
 
 # Parte 0: Definiciones generales y modelado
@@ -292,11 +302,40 @@ El mismo se puede [consultar aquí](https://github.com/tomasdelvechio/tp-final-d
 
 # Parte 3: Seguridad
 
-Todo el análisis se encuentra en el documento [SECURITY.md](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/SECURITY.md) según fuera solicitado.
+Todo el análisis se encuentra en el documento [SECURITY.md](https://github.com/tomasdelvechio/tp-final-dapps-diplo-blockchain/blob/main/unlu-cert-token/SECURITY.md) tal como es solicitado en la [rubrica del enunciado](https://dpetrocelli.github.io/diplounq2026/tp-final.html#slither).
 
 # Parte 4: Frontend
 
+Se desplegó en https://dapps-academic-credentials.vercel.app/
+
+
+
 # Parte 5: Entregables
+
+## Flujo 1: Emisión de Título
+
+https://sepolia.basescan.org/tx/0xc6cb6b7e4a703ebcf859a71fe12cf83698474e9c3d8efe3fb784f62c91aa4efd
+
+Se puede verificar [ingresando al sistema en linea]([UNLu Academic Credentials](https://dapps-academic-credentials.vercel.app/?tokenId=1)) y poniendo el ID 1. Esto demuestra que es posible una verificación anonima, y el id debería ser algo tipo ULID o UUID para evitar ataques de prueba y error. Si el egresado lo comparte, puede habilitar verificación. Una versión mas compleja podría habilitar generación temporal de UUID para verificación.
+
+## Flujo 2: Posesión de NFT y rechazo de transferencia
+
+Captura de Metamask con el NFT
+
+
+![](/home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/docs/assets/metamask-nft-snapshot.png)
+
+Si se intenta transferir, Metamask advierte el fallo de la transacción
+
+![](/home/tomas/workspace/diplomatura-blockchain/dApps/tp-final/docs/assets/metamask-soulbound-non-transferable.png)
+
+## Flujo 3: Emisión y revocación
+
+La transacción de emisión [se puede ver en esta url](https://sepolia.basescan.org/tx/0x12c47a9292539fddf39d7542a2fe8d260311a2bec0fe6fe8c6b4da97204616e4).
+
+La transacción de revocación [está acá](https://sepolia.basescan.org/tx/0xe0210e1d817b8e6cc242bd23a1a55a86b1b288e8487d4b1ab18724308c0bd496).
+
+Si se intenta [consultar desde el verificador en linea]([UNLu Academic Credentials](https://dapps-academic-credentials.vercel.app/?tokenId=2)), se podrá observar el estado revocado y el motivo de la baja.
 
 # Referencias bibliográficas
 

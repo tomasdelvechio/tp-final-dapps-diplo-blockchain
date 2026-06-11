@@ -8,9 +8,31 @@ Este repositorio es un monorepo que contiene la solución para el Trabajo Final 
 
 ---
 
-Indice principal
+**Asignatura**: Desarrollo de Smart Contracts y DApps
 
-- [README Académico](README.acad.md) (Respuestas al TP Final)
+**Carrera**: Diplomatura en Transparencia y Gestión de Credenciales Digitales: Blockchain y Gestión Académica Universitaria - UNQ
+
+**Estudiante**: Esp. Pablo Tomás Delvechio
+
+**Docentes**: Dr. David Petrocelli y Esp. Ciro Edgardo Romero
+
+**Rubrica**: [Link de la asignatura](https://dpetrocelli.github.io/diplounq2026/tp-final.html).
+
+**Direcciónes relevantes**:
+
+- [Address del contrato en Base Sepolia](https://sepolia.basescan.org/token/0x9e32a1c171adda640c02ae92398c16f31a865ca2): 0x9E32A1C171aDDa640C02Ae92398c16F31A865ca2
+
+- [Basescan verificado](https://sepolia.basescan.org/token/0x9e32a1c171adda640c02ae92398c16f31a865ca2#code)
+
+- [Frontend desplegado](https://dapps-academic-credentials.vercel.app/)
+
+---
+
+## Indice principal
+
+Por razones de organización, la documentación se organiza como sigue:
+
+- [README Académico](README.acad.md) (Respuestas a los [enunciados del TP Final](https://dpetrocelli.github.io/diplounq2026/tp-final.html))
 
 - El resto de este README es **Técnico**.
 
